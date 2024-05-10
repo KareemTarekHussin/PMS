@@ -1,33 +1,60 @@
-import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import NotFound from './Modules/SharedModule/components/NotFound/NotFound'
+import Login from './Modules/AuthenticationModule/components/Login/Login'
+import AuthLayout from './Modules/SharedModule/components/AuthLayout/AuthLayout'
+import ForgetPass from './Modules/AuthenticationModule/components/ForgetPass/ForgetPass'
+import ResetPass from './Modules/AuthenticationModule/components/ResetPass/ResetPass'
+import VerifyAccount from './Modules/AuthenticationModule/components/VerifyAccount/VerifyAccount'
+import Register from './Modules/AuthenticationModule/components/Register/Register'
+import MasterLayout from './Modules/SharedModule/components/MasterLayout/MasterLayout'
+import ProjectsList from './Modules/ProjectsModule/components/ProjectsList/ProjectsList'
+import ProtectedRoute from './Modules/SharedModule/components/ProtectedRoute/ProtectedRoute'
+import TasksList from './Modules/TasksModule/components/TasksList/TasksList'
+import UsersList from './Modules/UsersModule/components/UsersList/UsersList'
+import Dashboard from './Modules/DashboardModule/components/Dashboard/Dashboard'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  let routes = createBrowserRouter([
+    {path:"/",
+    element:<AuthLayout/>,
+    errorElement: <NotFound/>,
+    children:[
+    {path:"",element:<Login />},
+    {path:"login",element:<Login />},
+    {path:"register",element:<Register/>},
+    {path:"forgetpass",element:<ForgetPass/>},
+    {path:"resetpass",element:<ResetPass/>},
+    {path:"verify",element:<VerifyAccount/>}
+
+    ]
+
+
+  },
+    {path:'DashBoard',
+      element:
+     
+      <MasterLayout />
+    ,
+      errorElement: <NotFound/>,
+      children:[{path:"",element:<Dashboard/>}, 
+      {path:"projects",element:<ProjectsList/>},
+      {path:"tasks",element:<TasksList/>},
+      {path:"users",element:<UsersList/>},
+     
+  
+      ]
+  
+    }
+   
+  ])
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <RouterProvider router={routes}/>
     </>
   )
 }
