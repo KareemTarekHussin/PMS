@@ -5,11 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import logo from "../../../../assets/images/PMS 3.png";
 import "./Register.css"
 
-import profileImg from "../../../..//assets/images/8550fbcbe60cd242d12760784feff287.jpeg";
+import img from "../../../..//assets/images/8550fbcbe60cd242d12760784feff287.jpeg";
 
 export default function Register() {
 
   const [visible, setVisible] = useState(false);
+  
   const navigate = useNavigate();
   let {
     register,
@@ -17,6 +18,10 @@ export default function Register() {
     formState: { errors },
     watch,
   } = useForm();
+  const imgValue = watch()
+ 
+  
+  
   const password = useRef({});
   password.current = watch("password", "");
   const appendToFormData = (data:any) => {
@@ -45,6 +50,7 @@ export default function Register() {
       console.log(error);
     }
   };
+  
   return (
     <>
       <div className="auth-container p-5 ">
@@ -66,7 +72,7 @@ export default function Register() {
                       <label htmlFor="file">
                         <img
                           className="profileImg"
-                          src={profileImg}
+                          src={imgValue?.profileImage? (URL.createObjectURL (imgValue.profileImage[0])):(img)}
                           alt="profileImg"
                         />
 
