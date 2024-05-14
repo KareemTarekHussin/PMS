@@ -176,7 +176,6 @@ export default function SideBar() {
                 </div>
                 {errors.newPassword && <p className='text-warning mt-1'>{(errors.newPassword as FieldError).message}</p>}
                 {/* {errors.oldPassword && <p className='text-warning'>{errors.newPassword.message}</p>} */}
-
               </div>
 
               <div>
