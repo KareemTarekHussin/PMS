@@ -43,6 +43,7 @@
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
     opacity: 50%;
+    object-fit: cover;
 }
 
 .profile-icon {
