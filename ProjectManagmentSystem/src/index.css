@@ -5,13 +5,6 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  
-/* 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale; */
 }
 
 *{
@@ -25,21 +18,25 @@ p{
   margin: 0;
 }
 
+.w-fit{
+  width: fit-content;
+}
+
 .text-main{
   color:#EF9B28 ;
 }
 
 .bg-main{
   background-color: #315951E5;
+  /* background-color: #0A2721; */
+  
+  /* background-image: linear-gradient(rgba(14, 56, 47), rgba(0, 0, 0)) */
 
 }
-
 
 input:focus{
   outline: 0;
 }
-
-
 
 /** =====================================><==================================== */
 .sidebar-container .ps-sidebar-container{
@@ -50,13 +47,16 @@ input:focus{
   background-position: center;
   background-size: cover;
   height: 100vh;
-  /* border-top-right-radius: 50px; */
   & .ps-menu-button{
     transition: all 0.15s;
   }
   & .ps-menu-button:hover{
     background-color: #00924D1A;
   }
+}
+
+.sidebar-container .icon-container{
+  transition: transform 0.5s ease-in;
 }
 
 .form-container p{
@@ -67,6 +67,7 @@ input:focus{
 .form-container h3{
   padding-bottom: 3px;
 }
+
 .form-container h3::before{
   content: '';
   position: absolute;
@@ -82,11 +83,11 @@ input:focus{
 }
 
 .form-container input::placeholder{
-  font-size: 14px ;
+  font-size: 13px ;
+  font-style: italic;
   color: rgb(226, 226, 226);
+  /* color: rgb(172, 172, 172); */
 }
-
-
 
 .form-container .btn{
   --bs-btn-padding-x: 0.75rem;
@@ -121,15 +122,13 @@ input:focus{
 
 .form-container i{
   
-  color: rgb(226, 226, 226);
+  color: rgb(199, 199, 199);
   margin-bottom: 10px;
 }
 
 .form-container i:hover{
   cursor: pointer;
 }
-
-
 
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px inset #315951E5 !important; /* Set a box shadow to cover the background */
