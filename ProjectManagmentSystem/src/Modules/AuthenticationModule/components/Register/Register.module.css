@@ -1,4 +1,4 @@
-.auth-container {
+.authcontainer {
     background-image: url("/src/assets/images/bg1.png");
     background-size: cover;
 }
@@ -20,7 +20,7 @@
     color: white;
 }
 
-.bg-form-container {
+.bgFormContainer {
     background-color: rgba(49, 89, 81, 0.692);
     border-radius: 20px;
     -webkit-border-radius: 20px;
@@ -43,27 +43,26 @@
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
     opacity: 50%;
-    object-fit: cover;
 }
 
-.profile-icon {
+.profileIcon {
     right: 49.5%;
     top: 50%;
 }
 
-.text-gold {
+.textGold {
     color: hsla(35, 86%, 55%, 1);
 }
 
-.btn-gold {
+.btnGold {
     background-color: hsla(35, 86%, 55%, 1) !important;
 }
 
-.pass-eye {
+.passEye {
 
     right: 48%;
 }
 
-.pass-eye2 {
+.passEye2 {
     right: 19%;
 }

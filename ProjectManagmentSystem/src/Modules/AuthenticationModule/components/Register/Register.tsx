@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import logo from "../../../../assets/images/PMS 3.png";
-import "./Register.css"
+import Styles from "./Register.module.css"
 
 import img from "../../../..//assets/images/8550fbcbe60cd242d12760784feff287.jpeg";
 
@@ -53,16 +53,16 @@ export default function Register() {
   
   return (
     <>
-      <div className="auth-container p-5 ">
+      <div className={` ${Styles.authcontainer} p-5 `}>
         <div className="container-fluid">
           <div className="row justify-content-center align-items-center  ">
             <div className="col-md-9 ">
               <div className="text-center">
                 <img className="" src={logo} alt="" />
               </div>
-              <div className="bg-form-container p-4 px-5 pt-5">
+              <div className={`  ${Styles.bgFormContainer} p-4 px-5 pt-5 `}>
                 <h6 className="text-white">welcome to PMS</h6>
-                <h2 className="text-gold">
+                <h2 className={`${Styles.textGold}`}>
                   <span className="text-decoration-underline">C</span>reate New
                   Account
                 </h2>
@@ -71,16 +71,16 @@ export default function Register() {
                     <div className="text-center">
                       <label htmlFor="file">
                         <img
-                          className="profileImg"
+                           className={`${Styles.profileImg}`}
                           src={imgValue?.profileImage? (URL.createObjectURL (imgValue.profileImage[0])):(img)}
                           alt="profileImg"
                         />
 
-                        <i className="fa fa-camera position-absolute text-gold profile-icon"></i>
+<i className={`${Styles.profileIcon ,Styles.textGold} fa fa-camera position-absolute`}></i>
                       </label>
                       <input
                         type="file"
-                        className="file"
+                        className={`${Styles.file}`}
                         id="file"
                         {...register("profileImage", {
                           required: "profileImage is required",
@@ -93,11 +93,11 @@ export default function Register() {
                       </p>
                     )}
                     <div className="col-md-6">
-                      <label className="text-gold">Username</label>
+                      <label className={`${Styles.textGold}`}>Username</label>
                       <div>
                         <input
                           type="text"
-                          className="input p-1 w-100 text-white"
+                          className={`${Styles.input} p-1 text-white w-100`}
                           placeholder="Enter your name"
                           {...register("userName", {
                             required: "Username is required",
@@ -111,11 +111,11 @@ export default function Register() {
                       )}
                     </div>
                     <div className="col md-6">
-                      <label className="text-gold">E-mail</label>
+                    <label className={`${Styles.textGold}`}>E-mail</label>
                       <div>
                         <input
                           type="text"
-                          className="input p-1 text-white w-100"
+                          className={`${Styles.input} p-1 text-white w-100`}
                           placeholder="Enter your email"
                           {...register("email", {
                             required: "email is required",
@@ -129,11 +129,11 @@ export default function Register() {
                       )}
                     </div>
                     <div className="col-md-6">
-                      <label className="text-gold">Country</label>
+                    <label className={`${Styles.textGold}`}>Country</label>
                       <div>
                         <input
                           type="text"
-                          className="input p-1 text-white w-100"
+                          className={`${Styles.input} p-1 text-white w-100`}
                           placeholder="Enter your Country"
                           {...register("country", {
                             required: "country is required",
@@ -147,11 +147,11 @@ export default function Register() {
                       )}
                     </div>
                     <div className="col md-6">
-                      <label className="text-gold">Phone Number</label>
+                    <label className={`${Styles.textGold}`}>Phone Number</label>
                       <div>
                         <input
                           type="number"
-                          className="input p-1 text-white w-100"
+                          className={`${Styles.input} p-1 text-white w-100`}
                           placeholder="Enter your Phone Number"
                           {...register("phoneNumber", {
                             required: "phoneNumber is required",
@@ -165,11 +165,11 @@ export default function Register() {
                       )}
                     </div>
                     <div className="col-md-6">
-                      <label className="text-gold">Password</label>
+                      <label className={`${Styles.textGold}`}>Password</label>
                       <div>
                         <input
                           type={visible ? "text" : "password"}
-                          className="input p-1  text-white w-100 z-0"
+                           className={`${Styles.input} p-1 text-white w-100 z-0`}
                           placeholder="Enter your Password"
                           {...register("password", {
                             required: "password is required",
@@ -177,7 +177,7 @@ export default function Register() {
                         />
                         <span
                           onClick={() => setVisible(!visible)}
-                          className="pass-eye text-white px-5 position-absolute d-inline-block "
+                          className={`${Styles.passEye} text-white px-5 position-absolute d-inline-block`} 
                         >
                           {visible ? (
                             <i className="fa-regular fa-eye  "></i>
@@ -193,11 +193,11 @@ export default function Register() {
                       )}
                     </div>
                     <div className="col md-6">
-                      <label className="text-gold">Confirm Password</label>
+                    <label className={`${Styles.textGold}`}>Confirm Password</label>
                       <div>
                         <input
                           type={visible ? "text" : "password"}
-                          className="input p-1 text-white w-100"
+                          className={`${Styles.input} p-1 text-white w-100`}
                           placeholder="Confirm New Password"
                           {...register("confirmPassword", {
                             required: "confirm Password is required",
@@ -208,7 +208,7 @@ export default function Register() {
                         />
                         <span
                           onClick={() => setVisible(!visible)}
-                          className="pass-eye2 text-white px-3  position-absolute d-inline-block "
+                          className={`${Styles.passEye2} text-white px-3 position-absolute d-inline-block`}
                         >
                           {visible ? (
                             <i className="fa-regular fa-eye  "></i>
@@ -225,7 +225,7 @@ export default function Register() {
                     </div>
                   </div>
                   <div className="text-center">
-                    <button className="btn btn-gold px-5 w-50">Save</button>
+                  <button className={`${Styles.btnGold} btn px-5 w-50`}>Save</button>
                   </div>
                 </form>
               </div>
