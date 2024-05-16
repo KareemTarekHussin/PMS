@@ -15,6 +15,7 @@ import ProtectedRoute from './Modules/SharedModule/components/ProtectedRoute/Pro
 import TasksList from './Modules/TasksModule/components/TasksList/TasksList'
 import UsersList from './Modules/UsersModule/components/UsersList/UsersList'
 import Dashboard from './Modules/DashboardModule/components/Dashboard/Dashboard'
+import { ToastContainer } from 'react-toastify'
 
 function App() {
 
@@ -54,6 +55,7 @@ function App() {
 
   return (
     <>
+    <ToastContainer/>
       <RouterProvider router={routes}/>
     </>
   )

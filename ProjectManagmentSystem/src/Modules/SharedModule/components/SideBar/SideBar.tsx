@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import Style from './sidebar.module.css'
 import axios from 'axios';
 import { Bounce, toast } from 'react-toastify';
+import { FieldError } from 'react-hook-form';
 
 export default function SideBar() {
 
@@ -100,42 +101,13 @@ export default function SideBar() {
           </Menu>
         </Sidebar>
 
-        <Modal className='pt-5' show={show} onHide={handleClose}>
+        <Modal className='pt-4' show={show} onHide={handleClose}>
   
           <Modal.Body className='form-container p-5 bg-main rounded-2'>
             <p className='text-white pt-md-3'>welcome to APP</p>
             <h3 className='fw-bold mb-5 text-main position-relative'>Change Password</h3>
             <form onSubmit={handleSubmit(onSubmit)} className='d-flex flex-column gap-3'>
 
-              {/* <div className="mb-3" style={{ position: 'relative' }}>
-                <label htmlFor="oldpass">
-                  Old Password
-                </label>
-                <input 
-                    type={showPassword? 'text' : 'password'} 
-                    className={`text-white w-100 pb-2 bg-transparent ${Style.inputStyle} ${errors.oldPassword && Style.inputError}`}
-                    placeholder={placeholder}
-                    id="oldpass"
-                    {...register('oldPassword', {
-                      required: 'Old Password is required',
-                      pattern: {
-                        value: /.{3,}/,
-                        message:'Invalid Password'
-                      }
-                    })}      
-                    onFocus={() => setPlaceholder('')}
-                    onBlur={() => setPlaceholder('Enter your old password')}
-                    
-                />
-                {errors.oldPassword && <p className='text-warning mt-1'>{errors.oldPassword.message}</p>}
-                {<span
-                        onClick={togglePassword}
-                        className="cursor-pointer text-white position-absolute end-0 bottom-0 me-1">
-                        {showPassword ?
-                          <i className="fa-regular fa-eye"></i> :
-                          <i className="fa-regular fa-eye-slash"></i>}</span>
-                      }
-              </div> */}
               <div>
                 <div className={`mb- ${Style.inputContainer} ${errors.oldPassword && Style.inputError}`}>
                   <label htmlFor="oldpass" className="me-1">
@@ -148,10 +120,10 @@ export default function SideBar() {
                           placeholder={placeholder}
                           id="oldpass"
                           {...register('oldPassword', {
-                              required: 'Old Password is required',
+                              required: '* Old Password is required',
                               pattern: {
                                   value: /.{3,}/,
-                                  message:'Invalid Password'
+                                  message:'* Invalid Password'
                               }
                           })}
                           onFocus={() => setPlaceholder('')}
@@ -167,7 +139,8 @@ export default function SideBar() {
                       </span>
                   </div>
                 </div>
-                {errors.oldPassword && <p className='text-warning'>{errors.oldPassword.message}</p>}
+                {errors.oldPassword && <p className='text-warning mt-1'>{(errors.oldPassword as FieldError).message}</p>}
+                {/* {errors.oldPassword && <p className='text-warning'>{errors.oldPassword.message}</p>} */}
               </div>
 
               <div>
@@ -179,13 +152,13 @@ export default function SideBar() {
                       <input 
                           type={showPassword ? 'text' : 'password'} 
                           className={`text-white flex-grow-1 pb-2 bg-transparent border-0 `}
-                          placeholder={placeholder}
+                          placeholder={placeholderr}
                           id="new"
                           {...register('newPassword', {
-                              required: 'New Password is required',
+                              required: '* New Password is required',
                               pattern: {
                                   value: /.{3,}/,
-                                  message:'Invalid Password'
+                                  message:'* Invalid Password'
                               }
                           })}
                           onFocus={() => setPlaceholderr('')}
@@ -201,7 +174,8 @@ export default function SideBar() {
                       </span>
                   </div>
                 </div>
-                {errors.oldPassword && <p className='text-warning'>{errors.newPassword.message}</p>}
+                {errors.newPassword && <p className='text-warning mt-1'>{(errors.newPassword as FieldError).message}</p>}
+                {/* {errors.oldPassword && <p className='text-warning'>{errors.newPassword.message}</p>} */}
               </div>
 
               <div>
@@ -213,14 +187,13 @@ export default function SideBar() {
                       <input 
                           type={showPassword ? 'text' : 'password'} 
                           className={`text-white flex-grow-1 pb-2 bg-transparent border-0 `}
-                          placeholder={placeholder}
+                          placeholder={placeholderrr}
                           id="confirm"
                           {...register('confirmNewPassword', {
-                              required: 'Please confirm your password',
-                              pattern: {
-                                  value: /.{3,}/,
-                                  message:'Invalid Password'
-                              }
+                              required: '* Please confirm your password',
+                              validate: (value) =>
+                                value === watch('newPassword') ||
+                                "* Password isn't a match"
                           })}
                           onFocus={() => setPlaceholderrr('')}
                           onBlur={() => setPlaceholderrr('Enter your old password')}
@@ -235,74 +208,10 @@ export default function SideBar() {
                       </span>
                   </div>
                 </div>
-                {errors.confirmNewPassword && <p className='text-warning'>{errors.confirmNewPassword.message}</p>}
+                {/* {errors.confirmNewPassword && <p className='text-warning'>{errors.confirmNewPassword.message}</p>} */}
+                {errors.confirmNewPassword && <p className='text-warning mt-1'>{(errors.confirmNewPassword as FieldError).message}</p>}
+
               </div>
-
-
-              
-
-
-
-              {/* <div className="mb-3" style={{ position: 'relative' }}>
-                <label htmlFor="new">
-                  New Password
-                </label>
-                <input 
-                    type={showPassword? 'text' : 'password'} 
-                    className={`text-white w-100 pb-2 bg-transparent ${Style.inputStyle} ${errors.newPassword && Style.inputError}`}
-                    placeholder={placeholder}
-                    id="new"
-                    {...register('newPassword', {
-                      required: 'New password is required',
-                      pattern: {
-                        value: /.{3,}/,
-                        message:'Invalid Password'
-                      }
-                    })}      
-                    onFocus={() => setPlaceholder('')}
-                    onBlur={() => setPlaceholder('Enter your old password')}
-                    
-                />
-                {errors.newPassword && <p className='text-warning mt-1'>{errors.newPassword.message}</p>}
-                {<span
-                        onClick={togglePassword}
-                        className="cursor-pointer text-white position-absolute end-0 bottom-0 me-1">
-                        {showPassword ?
-                          <i className="fa-regular fa-eye"></i> :
-                          <i className="fa-regular fa-eye-slash"></i>}</span>
-                      }
-              </div>
-
-
-
-              <div className="mb-3" style={{ position: 'relative' }}>
-                <label htmlFor="oldpass">
-                  Confirm New Password
-                </label>
-                <input 
-                    type={showPassword? 'text' : 'password'} 
-                    className={`text-white w-100 pb-2 bg-transparent ${Style.inputStyle} ${errors.confirmNewPassword && Style.inputError}`}
-                    placeholder={placeholder}
-                    id="oldpass"
-                    {...register('confirmNewPassword', {
-                      required: 'Confirm your new password',
-                      validate: (value) =>
-                        value === watch('newPassword') ||
-                        "Password isn't a match"
-                    })}      
-                    onFocus={() => setPlaceholder('')}
-                    onBlur={() => setPlaceholder('Enter your old password')}
-                    
-                />
-                {errors.confirmNewPassword && <p className='text-warning mt-1'>{errors.confirmNewPassword.message}</p>}
-                {<span
-                        onClick={togglePassword}
-                        className="cursor-pointer text-white position-absolute end-0 bottom-0 me-1">
-                        {showPassword ?
-                          <i className="fa-regular fa-eye"></i> :
-                          <i className="fa-regular fa-eye-slash"></i>}</span>
-                      }
-              </div> */}
 
 
 
