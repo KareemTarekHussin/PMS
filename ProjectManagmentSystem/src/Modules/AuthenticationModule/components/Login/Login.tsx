@@ -156,6 +156,6 @@ export default function Login() {
       </div>
     </>
   );
-    <div>welcome </div>
-  )
+    
+  
 }

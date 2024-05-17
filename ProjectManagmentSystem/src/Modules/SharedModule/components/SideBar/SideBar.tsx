@@ -15,18 +15,18 @@ import { FieldError } from 'react-hook-form';
 
 
 export default function SideBar() {
+
   const { setLoginUser } = useAuth();
 
   const navigate = useNavigate();
+
   function logout() {
     localStorage.removeItem("token");
     setLoginUser(null);
     navigate("/login");
   }
 
-  const [placeholder, setPlaceholder] = useState('Enter your old password');
-  const [placeholderr, setPlaceholderr] = useState('Enter your old password');
-  const [placeholderrr, setPlaceholderrr] = useState('Enter your old password');
+
 
   let { register, handleSubmit, formState: { errors }, watch  } = useForm();
   
@@ -150,12 +150,19 @@ export default function SideBar() {
             >
               Change Password
             </MenuItem>
+            <MenuItem 
+              onClick={logout}
+              component={<Link to="projects" />} 
+              icon={<i className="fa-solid fa-unlock"></i>}
+            >
+              Logout
+            </MenuItem>
 
           </Menu>
         </Sidebar>
 
         <Modal className='pt-4' show={show} onHide={handleClose}>
-        <Modal className='pt-4' show={show} onHide={handleClose}>
+    
   
           <Modal.Body className={`${Style.modalBody} form-container p-5 bg-main rounded-2`}>
             <p className='text-white pt-md-3'>welcome to APP</p>
