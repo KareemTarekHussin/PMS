@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
+import { useAuth } from "../../../Context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import { Button, Modal } from 'react-bootstrap';
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
@@ -11,6 +13,14 @@ import { Bounce, toast } from 'react-toastify';
 import { FieldError } from 'react-hook-form';
 
 export default function SideBar() {
+  const { setLoginUser } = useAuth();
+
+  const navigate = useNavigate();
+  function logout() {
+    localStorage.removeItem("token");
+    setLoginUser(null);
+    navigate("/login");
+  }
 
   const [placeholder, setPlaceholder] = useState('Enter your old password');
   const [placeholderr, setPlaceholderr] = useState('Enter your old password');
