@@ -1,58 +1,5 @@
 /* .auth-container {
     background-image: url(/src/assets/images/bg2.png);
-    background-size: cover;
-} */
-
-.form-auth {
-    background-color: rgba(49, 89, 81, 0.9);
-    border-radius: 16px;
-    color: #fff;
-    -webkit-border-radius: 16px;
-    -moz-border-radius: 16px;
-    -ms-border-radius: 16px;
-    -o-border-radius: 16px;
-}
-
-.auth-title {
-    color: rgba(239, 155, 40, 1);
-    font-size: 32px;
-    margin-bottom: 40px;
-    position: relative;
-    line-height: 46px;
-    font-weight: 700;
-}
-.auth-title::after {
-    position: absolute;
-    content: "";
-    width: 15px;
-    height: 3px;
-    background-color: rgba(239, 155, 40, 1);
-    bottom: 0px;
-    left: 0;
-
-}
-
-
-.auth-standard-basic .MuiInputBase-input {
-
-    color:#fff;
-    
-}
-.auth-standard-basic .css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root {
-    color: #fff;
-}
-
-
-.auth-standard-basic .css-1eed5fa-MuiInputBase-root-MuiInput-root::after {
-    border-color: #ffffffc6;
-    color:red;
-    
-}
-.auth-standard-basic .css-1eed5fa-MuiInputBase-root-MuiInput-root::focuss {
-    color:blanchedalmond;
-}
-.auth-container {
-    background-image: url(/src/assets/images/bg2.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: auto;
@@ -66,7 +13,15 @@
     background-size: auto;
 }
 
-
+.form-auth {
+    background-color: rgba(49, 89, 81, 0.9);
+    border-radius: 16px;
+    color: #fff;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    -ms-border-radius: 16px;
+    -o-border-radius: 16px;
+}
 
 .input {
     width: 100%;
@@ -86,6 +41,24 @@
     color: #fff;
 }
 
+.auth-title {
+    position: relative;
+    color: rgba(239, 155, 40, 1);
+    font-size: 32px;
+    margin-bottom: 15px;
+    line-height: 46px;
+    font-weight: 700;
+}
+
+.auth-title::after {
+    position: absolute;
+    content: "";
+    width: 15px;
+    height: 3px;
+    background-color: rgba(239, 155, 40, 1);
+    bottom: 0px;
+    left: 0;
+}
 
 .form-auth .e-mail {
     color: rgba(239, 155, 40, 1);
@@ -107,20 +80,7 @@
     -o-border-radius: 96px;
 }
 
-.form-auth .verify {
-    width: 80%;
-    padding: 20px 0;
-     background-color: rgba(239, 155, 40, 1);
-     border: none;
-     font-size: 16px;
-     font-weight: 500;
-     color:#fff;
-    border-radius: 96px;
-    -webkit-border-radius: 96px;
-    -moz-border-radius: 96px;
-    -ms-border-radius: 96px;
-    -o-border-radius: 96px;
- }
+
 .alert-danger {
     font-size: 12px;
     height: 5px;
@@ -140,9 +100,4 @@
     right: -95%;
     top: -50px;
     cursor: pointer;
-}
-
-
-.input-frgot {
-    border: none;
 }
