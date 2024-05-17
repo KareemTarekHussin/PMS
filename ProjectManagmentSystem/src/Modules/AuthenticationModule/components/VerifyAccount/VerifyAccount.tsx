@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import logo from "../../../../assets/images/PMS 3.png";
 
+import Styles from "./VerifyAccount.module.css";
+
 export default function VerifyAccount() {
   const navigate = useNavigate();
   let {
@@ -26,26 +28,27 @@ export default function VerifyAccount() {
   };
   return (
     <>
-    <div className="auth-container p-5 vh-100">
+    
+    <div className={`${Styles.authcontainer}  p-5 vh-100`}>
       <div className="container-fluid">
         <div className="row justify-content-center align-items-center  ">
           <div className="col-md-5 my-5 ">
             <div className="text-center">
               <img className="" src={logo} alt="" />
             </div>
-            <div className="bg-form-container p-4 px-5 pt-5">
+            <div className= {`${Styles.bgFormContainer} p-4 px-5 pt-5`}>
               <h6 className="text-white">welcome to PMS</h6>
-              <h2 className="text-gold">
+              <h2 className={`${Styles.textGold}`}>
                 <span className="text-decoration-underline">V</span>erify
                 Account
               </h2>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="col md-6">
-                  <label className="text-gold">E-mail</label>
+                  <label className={`${Styles.textGold}`}>E-mail</label>
                   <div>
                     <input
                       type="text"
-                      className="input p-1 text-white w-100"
+                      className={`${Styles.input} p-1 text-white w-100`}
                       placeholder="Enter your email"
                       {...register("email", {
                         required: "email is required",
@@ -59,11 +62,11 @@ export default function VerifyAccount() {
                   )}
                 </div>
                 <div className="col md-6">
-                  <label className="text-gold">OTP Verification</label>
+                  <label className={`${Styles.textGold}`}>OTP Verification</label>
                   <div>
                     <input
                       type="text"
-                      className="input p-1 text-white w-100"
+                      className={`${Styles.input} p-1 text-white w-100`}
                       placeholder="Enter Verification"
                       {...register("code", {
                         required: "code is required",
@@ -77,7 +80,7 @@ export default function VerifyAccount() {
                   )}
                 </div>
                 <div className="text-center">
-                  <button className="btn btn-gold px-5 w-100 my-3">
+                  <button className={`btn ${Styles.btnGold} px-5 w-100 my-3`}>
                     Save
                   </button>
                 </div>
@@ -86,7 +89,8 @@ export default function VerifyAccount() {
           </div>
         </div>
       </div>
-    </div>
+    </div>
+  
   </>
   )
 }

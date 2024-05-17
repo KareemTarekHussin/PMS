@@ -76,23 +76,23 @@ export default function SideBar() {
   const onSubmit = async (data: any) => {
     try{
       
-      // let response = await axios.put('https://upskilling-egypt.com:3003/api/v1/Users/ChangePassword', data,
-      //   {
-      //     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-      //   });
-      // console.log(response);
-      // toast.success(response.data.message, {
-      //   position: "bottom-right",
-      //   autoClose: 3000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: "dark",
-      //   transition: Bounce,
-      // });
-      
+      let response = await axios.put('https://upskilling-egypt.com:3003/api/v1/Users/ChangePassword', data,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+        });
+      console.log(response);
+      toast.success(response.data.message, {
+        position: "bottom-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+        transition: Bounce,
+      });
+      logout()
       console.log(data);
       
     }
