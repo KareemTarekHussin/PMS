@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import { toast } from "react-toastify";
+import { Bounce, toast } from "react-toastify";
 
 // type ToastValue = {
 //   type: ;
@@ -32,7 +32,15 @@ export default function ToastContextProvider({
     message: string
   ) => {
     return toast[type](message, {
-      autoClose: 1500,
+      position: "bottom-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+      transition: Bounce,
     });
   };
   return (

@@ -11,31 +11,37 @@ import Style from './sidebar.module.css'
 import axios from 'axios';
 import { Bounce, toast } from 'react-toastify';
 import { FieldError } from 'react-hook-form';
+import { useToast } from "../../../Context/ToastContext";
+
 
 
 
 export default function SideBar() {
 
-  const { setLoginUser } = useAuth();
-
+  
   const navigate = useNavigate();
-
-  function logout() {
-    localStorage.removeItem("token");
-    setLoginUser(null);
-    navigate("/login");
-  }
-
-
-
-  let { register, handleSubmit, formState: { errors }, watch  } = useForm();
+  
+  // & =========================>Context<=========================>
+    const { getToast } = useToast();
+    const { setLoginUser, baseUrl, requestHeaders } = useAuth();
+  // & ===========================================================>
+    
+  // & =========================>logout<=========================>
+    function logout() {
+      localStorage.removeItem("token");
+      getToast('success', 'Logged out');
+      setLoginUser(null);
+      navigate("/login");
+    }
+  // & ==========================================================>
+      
+  let { register, handleSubmit, formState: { errors }, watch , reset  } = useForm();
   
   const [show, setShow] = useState(false);
   
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   
-  // ?============================================================================================
   interface PasswordState {
     oldPassword: boolean;
     newPassword: boolean;
@@ -62,8 +68,6 @@ export default function SideBar() {
   const togglePassword = (field: keyof PasswordState) => {
     setShowPassword((prevState) => ({ ...prevState, [field]: !prevState[field] }));
   };
-  // ?============================================================================================
-
 
   let [isCollapse, setIsCollapse] = useState(true);
   const [iconRotation, setIconRotation] = useState(1);
@@ -76,33 +80,25 @@ export default function SideBar() {
   const onSubmit = async (data: any) => {
     try{
       
-      // let response = await axios.put('https://upskilling-egypt.com:3003/api/v1/Users/ChangePassword', data,
-      //   {
-      //     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
-      //   });
-      // console.log(response);
-      // toast.success(response.data.message, {
-      //   position: "bottom-right",
-      //   autoClose: 3000,
-      //   hideProgressBar: false,
-      //   closeOnClick: true,
-      //   pauseOnHover: true,
-      //   draggable: true,
-      //   progress: undefined,
-      //   theme: "dark",
-      //   transition: Bounce,
-      // });
-      
+      let response = await axios.put(`${baseUrl}/Users/ChangePassword`, data,
+        {
+          headers: requestHeaders
+        });
+      console.log(response);
+      getToast("success", response.data.message);
+      handleClose();
+      reset();
       console.log(data);
       
     }
-    catch (error) {
+    catch (error: any) {
+      console.log(baseUrl);
       
-      console.log(error);
+      getToast("error", error.response.data.message);
     }
   }
 
-  // *========================================><=============================================//
+  // *========================================>UI<=============================================//
   return (
     <>
       <div className='sidebar-container'>
@@ -112,12 +108,6 @@ export default function SideBar() {
           >
           <Menu className='my-5 pt-5'>
 
-            {/* <MenuItem
-              className='bg-inf'
-              onClick={handleCollapse}
-              icon={isCollapse ? <i className="fa-solid fa-arrow-right"></i> : <i className="fa-solid fa-arrow-left"></i>}
-            >
-            </MenuItem> */}
             <MenuItem
               className='bg-inf text-center'
               onClick={handleCollapse}
@@ -152,8 +142,8 @@ export default function SideBar() {
             </MenuItem>
             <MenuItem 
               onClick={logout}
-              component={<Link to="projects" />} 
-              icon={<i className="fa-solid fa-unlock"></i>}
+              // component={<Link to="projects" />} 
+              icon={<i className="fa-solid fa-circle-left"></i>}
             >
               Logout
             </MenuItem>

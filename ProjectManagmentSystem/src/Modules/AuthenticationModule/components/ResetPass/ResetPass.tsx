@@ -1,6 +1,6 @@
 
 import logo from '../../../../Modules/../assets/images/PMS 3.svg'
-import { TextField } from '@mui/material';
+// import { TextField } from '@mui/material';
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +15,7 @@ export default function ResetPass() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit =  async (data) => {
+  const onSubmit =  async (data :any) => {
     console.log(data)
     try {
       let response = await axios.post("https://upskilling-egypt.com:3003/api/v1/Users/Reset",data)
