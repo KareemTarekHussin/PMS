@@ -10,8 +10,8 @@ export const useAuth = () => {
 
 export default function AuthContextProvider(props: any) {
   const [loginUser, setLoginUser] = useState(null);
-
-
+  let requestHeaders = {Authorization:`Bearer ${localStorage.getItem('token')}`}
+  let baseUrl = 'https://upskilling-egypt.com:3003/api/v1'
 
   const getUserData = () => {
     const encodedToken: any = localStorage.getItem("token");
@@ -25,10 +25,10 @@ export default function AuthContextProvider(props: any) {
     }
   }, []);
 
-
+ 
 
   return (
-    <AuthContext.Provider value={{ getUserData, loginUser,setLoginUser }}>
+    <AuthContext.Provider value={{ getUserData, loginUser,setLoginUser,baseUrl,requestHeaders}}>
       {props.children}
     </AuthContext.Provider>
   );

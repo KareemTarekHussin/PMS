@@ -112,12 +112,7 @@ export default function SideBar() {
           >
           <Menu className='my-5 pt-5'>
 
-            {/* <MenuItem
-              className='bg-inf'
-              onClick={handleCollapse}
-              icon={isCollapse ? <i className="fa-solid fa-arrow-right"></i> : <i className="fa-solid fa-arrow-left"></i>}
-            >
-            </MenuItem> */}
+         
             <MenuItem
               className='bg-inf text-center'
               onClick={handleCollapse}
@@ -136,23 +131,34 @@ export default function SideBar() {
             </MenuItem>
 
             <MenuItem 
-              component={<Link to="projects" />} 
+              component={<Link to="users" />} 
               icon={<i className="fa-solid fa-users"></i>}
             >
               Users
+            </MenuItem>
+            <MenuItem 
+              component={<Link to="projects" />} 
+              icon={<i className="fa-solid fa-calculator"></i>}
+            >
+            Projects
+            </MenuItem>
+            <MenuItem 
+              component={<Link to="tasks" />} 
+              icon={<i className="fa-solid fa-tasks"></i>}
+            >
+            Tasks
             </MenuItem>
 
 
             <MenuItem 
               onClick={handleShow}
-              component={<Link to="projects" />} 
+              // component={<Link to="projects" />} 
               icon={<i className="fa-solid fa-unlock"></i>}
             >
               Change Password
             </MenuItem>
             <MenuItem 
               onClick={logout}
-              component={<Link to="projects" />} 
               icon={<i className="fa-solid fa-unlock"></i>}
             >
               Logout
