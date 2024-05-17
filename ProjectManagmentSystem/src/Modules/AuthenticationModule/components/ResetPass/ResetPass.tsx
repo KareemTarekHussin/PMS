@@ -1,50 +1,89 @@
 
 import logo from '../../../../Modules/../assets/images/PMS 3.svg'
-import { TextField } from '@mui/material';
 import { useForm } from "react-hook-form";
+import { useState } from 'react';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Icon } from 'react-icons-kit';
+import { eyeOff } from 'react-icons-kit/feather/eyeOff';
+import { eye } from 'react-icons-kit/feather/eye'
+
+
 export default function ResetPass() {
-  let  navigate = useNavigate()
+  const navigate = useNavigate()
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const [type, setType] = useState('password');
+  const [types, setTypes] = useState('password');
+  const [typeOtp, setTypeOtp] = useState('password');
+  const [iconOtp, setIconOtp] = useState(eyeOff);
+  const [icon, setIcon] = useState(eyeOff);
+  const [icons, setIcons] = useState(eyeOff);
+  const handleToggle = () => {
+    if (type === 'password') {
+      setIcon(eye);
+      setType('text')
+    }
 
-  const onSubmit =  async (data) => {
+    else {
+      setIcon(eyeOff)
+      setType('password')
+    }
+  }
+  const handleToggleConfirm = () => {
+    if (types === 'password') {
+      setIcons(eye);
+      setTypes('text')
+    }
+
+    else {
+      setIcons(eyeOff)
+      setTypes('password')
+    }
+  }
+  const handleToggOtp = () => {
+    if (typeOtp === 'password') {
+      setIconOtp(eye);
+      setTypeOtp('text')
+    }
+
+    else {
+      setIconOtp(eyeOff)
+      setTypeOtp('password')
+    }
+  }
+
+  const { register, handleSubmit, getValues, watch, formState: { errors } } = useForm();
+
+  const onSubmit = async (data) => {
     console.log(data)
     try {
-      let response = await axios.post("https://upskilling-egypt.com:3003/api/v1/Users/Reset",data)
-          toast.success('password rest successfu')
+      let response = await axios.post("https://upskilling-egypt.com:3003/api/v1/Users/Reset", data)
+      toast.success('password rest successfu')
       console.log(response)
       navigate('/login')
     }
-       catch (error) {
+    catch (error) {
       toast.error(error.response.data.message)
-
     }
 
   }
   return (
-    <div className='auth-container'>
-      <div className='container-fluid'>
-        <div className="row d-flex vh-100 justify-content-center align-items-center">
+    <div className='auth-container-rest'>
+      <div className='container-fuid'>
+        <div className="row d-flex vh-100 justify-content-center">
           <div className="col-md-6">
             <div className="forgot text-center mb-4">
               <img src={logo} alt="logo" className='w-25' />
             </div>
-
-            <form action="#" onSubmit={handleSubmit(onSubmit)} className='form-auth vh-25' style={{ padding: "30px 30px" }}>
+            <form action="#" onSubmit={handleSubmit(onSubmit)} className='form-auth' style={{ padding: "15px 60px" }}>
               <span className='welcome-pms'>welcome to PMS</span>
               <h1 className='auth-title'>Reset  Password</h1>
               <div className='auth-standard-basic'>
                 <span className='e-mail'>E-mail</span> <br />
-                <TextField className='mb-4 w-75' id="standard-basic" label="Enter your E-mail" variant="standard"
-                  type="text"
+                <input className='input' placeholder='Enter your E-mail'
+                  type="email"
                   {...register("email", {
                     required: "Email is required",
                     pattern: {
@@ -59,88 +98,73 @@ export default function ResetPass() {
               )}
               <div className='auth-standard-basic'>
                 <span className='e-mail'>OTP Verification</span> <br />
-                <TextField className='mb-4 w-75' id="standard-basic" label="Enter Verification" variant="standard"
-                  type="text"
-                 {...register("seed", {
+                <input className='input' placeholder='Enter Verification'
+                  type={typeOtp}
+                  {...register("seed", {
                     required: "OTP is required",
                     pattern: {
-                      message: "Invlid password"
+                      message: "Invlid OTP"
                     }
                   })}
                 />
               </div>
+              <span className="position-relative" onClick={handleToggOtp}>
+                <Icon className="icon-otp" icon={iconOtp} size={25} />
+              </span>
               {errors.seed && (
                 <p className="alert alert-danger">{errors.seed.message} </p>
               )}
               <div className='auth-standard-basic'>
                 <span className='e-mail'>New Password</span> <br />
-                <TextField className='mb-4 w-75' id="standard-basic" label="Enter your New Password" variant="standard"
-                  type="password"
+                <input className='input'
+                  type={type}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
                   {...register("password", {
-                    required: "password is required",
-                    pattern: {
-                      message: "Invlid password"
+                    required: "You must specify a password",
+                    minLength: {
+                      value: 8,
+                      message: "Password must have at least 8 characters"
                     }
                   })}
                 />
+                <span className="position-relative" onClick={handleToggle}>
+                  <Icon className="icon" icon={icon} size={25} />
+                </span>
+
               </div>
               {errors.password && (
                 <p className="alert alert-danger">{errors.password.message} </p>
               )}
+
               <div className='auth-standard-basic'>
                 <span className='e-mail'>confirm Password</span> <br />
-                <TextField className='mb-4 w-75' id="standard-basic" label="Confirm New Password" variant="standard"
-                  type="password"
-                  {...register("confirmPassword", {
-                    required: "confirmPassword is required",
-                    pattern: {
-                      message: "Invlid confirmPassword"
-                    }
-                  })}
-                />
-              </div>
-              {errors.confirmPassword && (
-                <p className="alert alert-danger">{errors.confirmPassword.message} </p>
-              )}
 
+                <input className='input' placeholder='Confirm New Password'
+                  type={types}
+                  onChange={(e) => setPassword(e.target.value)}
+                  autoComplete="current-password"
+                  {...register("confirmPassword", { required: true })}
+
+                />
+                <span className="position-relative" onClick={handleToggleConfirm}>
+                  <Icon className="icon" icon={icons} size={25} />
+                </span>
+                {watch("confirmPassword") !== watch("password") &&
+                  getValues("confirmPassword") ? (
+                  <p className='alert alert-danger'>password not match</p>
+                ) : null}
+
+              </div>
               <div className='text-center mt-5'>
                 <button className="btn btn-warning verify">Save</button>
               </div>
-
-
-
-
-
-
-
-
-
-
-
-
-              {/* <span className='e-mail'>OTP Verification</span> <br />
-              <div className='auth-standard-basic'>
-                <TextField className='mb-4 w-75' id="standard-basic" label="Enter Verification" variant="standard" />
-              </div>
-              <span className='e-mail'>New Password</span> <br />
-              <div className='auth-standard-basic'>
-                <TextField className='mb-4 w-75' id="standard-basic" type='password' label="Enter your New Password" variant="standard" />
-              </div>
-              <span className='e-mail'>Confirm Password</span> <br />
-              <div className='auth-standard-basic'>
-                <TextField className='mb-4 w-75' id="standard-basic" type='password' label="Confirm New Password" variant="standard" />
-              </div>
-              <div className='text-center mt-5'>
-                <button className="btn btn-warning verify">Verify</button>
-              </div> */}
 
             </form>
           </div>
         </div>
 
       </div>
-
-
 
     </div>
   )
