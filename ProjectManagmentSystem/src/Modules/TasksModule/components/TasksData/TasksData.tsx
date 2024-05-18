@@ -5,11 +5,14 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthContext";
 import Styles from "./TasksData.module.css"
+import { useToast } from "../../../Context/ToastContext";
 export default function TasksData() {
   
   const { requestHeaders, baseUrl }: any = useContext(AuthContext);
   const [projectsList, setProjectsList] = useState([]);
   const [usersList, setUsersList] = useState([]);
+  const { getToast } = useToast();
+
   const navigate = useNavigate();
 
   const navigatetoTasks = () => {
@@ -32,10 +35,10 @@ export default function TasksData() {
         headers: requestHeaders,
       });
 
-      console.log(response.data);
+      getToast("success", "Successfully created task");
       navigate("/dashboard/tasks");
-    } catch (error) {
-      console.log(error);
+    } catch (error:any) {
+      getToast('error', error.response.message);
     }
   };
 
