@@ -72,15 +72,15 @@ export default function Register() {
                       <label htmlFor="file">
                         <img
                            className={`${Styles.profileImg}`}
-                          src={imgValue?.profileImage? (URL.createObjectURL (imgValue.profileImage[0])):(img)}
+                          src={imgValue?.profileImage? (URL.createObjectURL(imgValue?.profileImage[0])):(img)}
                           alt="profileImg"
                         />
 
-<i className={`${Styles.profileIcon ,Styles.textGold} fa fa-camera position-absolute`}></i>
+<i className={`${Styles.profileIcon} fa fa-camera position-absolute`}></i>
                       </label>
                       <input
                         type="file"
-                        className={`${Styles.file}`}
+                        className={`${Styles.file} `}
                         id="file"
                         {...register("profileImage", {
                           required: "profileImage is required",
