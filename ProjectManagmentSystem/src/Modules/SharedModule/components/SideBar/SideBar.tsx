@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { Button, Modal } from 'react-bootstrap';
+import {  Modal } from 'react-bootstrap';
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import Form from 'react-bootstrap/Form';
+
+
 import { useForm } from 'react-hook-form';
 import Style from './sidebar.module.css'
 import axios from 'axios';
@@ -152,7 +152,6 @@ export default function SideBar() {
             </MenuItem>
             <MenuItem 
               onClick={logout}
-              component={<Link to="projects" />} 
               icon={<i className="fa-solid fa-unlock"></i>}
             >
               Logout

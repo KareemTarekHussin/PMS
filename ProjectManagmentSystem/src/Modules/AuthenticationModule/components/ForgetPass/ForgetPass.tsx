@@ -15,15 +15,13 @@ export default function ForgetPass() {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data:any) => {
     console.log(data)
     try {
       const res = await axios.post('https://upskilling-egypt.com:3003/api/v1/Users/Reset/Request', data)
       console.log(res)
       toast.success('Your request is being processed, please check your email')
       navigate('/resetpass')
-
-
     }
     catch (error) {
       toast.error(error.response.data.message)

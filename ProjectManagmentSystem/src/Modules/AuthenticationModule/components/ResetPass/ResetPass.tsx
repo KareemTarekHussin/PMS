@@ -72,15 +72,15 @@ export default function ResetPass() {
   }
   return (
     <div className='auth-container-rest'>
-      <div className='container-fuid'>
-        <div className="row d-flex vh-100 justify-content-center">
+      <div className='container-fluid'>
+        <div className="row d-flex vh-100 justify-content-center align-items-center">
           <div className="col-md-6">
             <div className="forgot text-center mb-4">
               <img src={logo} alt="logo" className='w-25' />
             </div>
             <form action="#" onSubmit={handleSubmit(onSubmit)} className='form-auth' style={{ padding: "15px 60px" }}>
               <span className='welcome-pms'>welcome to PMS</span>
-              <h1 className='auth-title'>Reset  Password</h1>
+              <h1 className='auth-title'>Reset Password</h1>
               <div className='auth-standard-basic'>
                 <span className='e-mail'>E-mail</span> <br />
                 <input className='input' placeholder='Enter your E-mail'
@@ -139,7 +139,7 @@ export default function ResetPass() {
               )}
 
               <div className='auth-standard-basic'>
-                <span className='e-mail'>confirm Password</span> <br />
+                <span className='e-mail'>Confirm Password</span> <br />
 
                 <input className='input' placeholder='Confirm New Password'
                   type={types}
@@ -153,7 +153,7 @@ export default function ResetPass() {
                 </span>
                 {watch("confirmPassword") !== watch("password") &&
                   getValues("confirmPassword") ? (
-                  <p className='alert alert-danger'>password not match</p>
+                  <p className='alert alert-danger'>Passwords not match</p>
                 ) : null}
 
               </div>

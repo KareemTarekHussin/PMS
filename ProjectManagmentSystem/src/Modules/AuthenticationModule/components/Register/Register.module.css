@@ -1,6 +1,8 @@
 .authcontainer {
     background-image: url("/src/assets/images/bg1.png");
     background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .input {
@@ -64,5 +66,5 @@
 }
 
 .passEye2 {
-    right: 19%;
+    right: 26%;
 }
