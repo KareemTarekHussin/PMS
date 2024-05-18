@@ -71,24 +71,24 @@ export default function ProjectsList() {
         <ul className="list-group mt-3 ">
             <li className={`${Styles.backgroundgreen} list-group-item fw-semibold py-3 text-white d-flex justify-content-between align-items-center`}>
               <div className="row w-100">
-                <div className="col-md-2  text-white">Title</div>
-                <div className="col-md-2  text-white">Description</div>
-                <div className="col-md-2  text-white">Modification Date</div>
-                <div className="col-md-2  text-white">Tasks</div>
-                <div className="col-md-2  text-white">Creation Date</div>
-                <div className="col-md-2  text-white">Actions</div>
+                <div className="col-12 col-md-2  text-white">Title</div>
+                <div className="col-12 col-md-2  text-white">Description</div>
+                <div className="col-12 col-md-2  text-white">Modification Date</div>
+                <div className="col-12 col-md-2  text-white">Tasks</div>
+                <div className="col-12 col-md-2  text-white">Creation Date</div>
+                <div className="col-12 col-md-2  text-white">Actions</div>
               </div>
           </li>
           {projectsList.length > 0 ? (
               projectsList.map((project: any) => (
               <li key={project.id} className="list-group-item d-flex justify-content-between align-items-center">
                 <div className="row w-100">
-                  <div className="col-md-2">{project.title}</div>
-                  <div className="col-md-2">{project.description}</div>
-                  <div className="col-md-2">{project.modificationDate.slice(0, 10)}</div>
-                  <div className="col-md-2">{project.task?.length}</div>
-                  <div className="col-md-2">{project.creationDate.slice(0, 10)}</div>
-                  <div className='col-md-2 bg-body-secondar bg-info-subtl w-fit p-md-0 px-md-3 px-lg- rounded-3 d-flex justify-content-center align-items-center'>
+                  <div className="col-12 col-md-2">{project.title}</div>
+                  <div className="col-12 col-md-2">{project.description}</div>
+                  <div className="col-12 col-md-2">{project.modificationDate.slice(0, 10)}</div>
+                  <div className="col-12 col-md-2">{project.task?.length}</div>
+                  <div className="col-12 col-md-2">{project.creationDate.slice(0, 10)}</div>
+                  <div className='col-12 col-md-2 bg-body-secondar bg-info-subtl w-fit p-md-0 px-md-3 px-lg- rounded-3 d-flex justify-content-center align-items-center'>
                     <div className="dropdown">
                       <button
                         className="btn"
