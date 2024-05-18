@@ -1,7 +1,86 @@
 import React from 'react'
+import logo from '../../../../Modules/../assets/images/PMS 3.svg'
+import { TextField } from '@mui/material';
+import { useForm } from "react-hook-form";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 export default function ForgetPass() {
+  const navigate = useNavigate()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmt = async (data) => {
+    console.log(data)
+    try {
+      const res = await axios.post('https://upskilling-egypt.com:3003/api/v1/Users/Reset/Request', data)
+      console.log(res)
+      toast.success('Your request is being processed, please check your email')
+      navigate('/resetpass')
+      
+
+    }
+    catch (error) {
+      toast.error(error.response.data.message)
+    }
+
+  }
   return (
-    <div>ForgetPass</div>
+    <div className='auth-container'>
+      <div className='container-fluid'>
+        <div className="row d-flex vh-100 justify-content-center align-items-center">
+          <div className="col-md-6">
+            <div className="forgot text-center mb-2">
+              <img src={logo} alt="logo" className='w-25' />
+            </div>
+
+            <form action="#" onSubmit={handleSubmit(onSubmt)} className='form-auth vh-50' style={{ padding: "90px 30px" }}>
+              <span className='welcome-pms'>welcome to PMS</span>
+              <h1 className='auth-title'>Forget Password</h1>
+              <span className='e-mail'>E-mail</span> <br />
+              <div className='auth-standard-basic'>
+                <TextField className='mb-4 w-75' id="standard-basic" label="Enter your E-mail" variant="standard"
+                  type="text"
+                  {...register("email", {
+                    required: "Email is required",
+                    pattern: {
+                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                      message: "Invlid mail"
+                    }
+                  })}
+                />
+              </div>
+              {errors.email && (
+                <p className="alert alert-danger">{errors.email.message} </p>
+              )}
+
+              <div className='text-center mt-5'>
+                <button className="btn btn-warning verify">Verify</button>
+              </div>
+
+
+
+
+
+            </form>
+
+
+
+
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div>
   )
 }
