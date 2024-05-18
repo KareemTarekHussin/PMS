@@ -84,9 +84,7 @@ input:focus{
 
 .form-container input::placeholder{
   font-size: 13px ;
-  /* font-style: italic; */
   color: rgb(226, 226, 226);
-  /* color: rgb(172, 172, 172); */
 }
 
 .form-container .btn{

@@ -40,8 +40,8 @@ export default function ToastContextProvider({
       draggable: true,
       progress: undefined,
       theme: "dark",
-      transition: Bounce,
-    });
+      transition: Bounce,
+    });
   };
   return (
     <ToastContext.Provider value={{ getToast }}>
