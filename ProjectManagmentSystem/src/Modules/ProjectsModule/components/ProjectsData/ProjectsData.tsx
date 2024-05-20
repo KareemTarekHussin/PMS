@@ -1,10 +1,18 @@
 import axios from "axios";
 import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthContext";
 import Styles from "./ProjectsData.module.css"
 import { useToast } from "../../../Context/ToastContext";
+
+type Inputs = {
+  title: string;
+  description: string;
+  employeeId: string;
+  projectId: string;
+};
+
 export default function ProjectsData() {
   const { requestHeaders, baseUrl }: any = useContext(AuthContext);
   const {getToast} = useToast()

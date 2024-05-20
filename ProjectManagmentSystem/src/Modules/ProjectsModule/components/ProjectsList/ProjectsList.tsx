@@ -15,9 +15,17 @@ export default function ProjectsList() {
   const [projectsList, setProjectsList] = useState([]);
   const [ProjectId, setProjectId] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-
+  const [employeeId, setEmployeeId] = useState("");
   const [showDelete, setShowDelete] = useState(false);
-
+  const [titleValue, setTitleValue] = useState("");
+  const [statusValue, setStatusValue] = useState("");
+  const [arrayOfPages, setArrayOfPages] = useState<number[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const [showListSize, setShowListSize] = useState(false);
+  const [totalNumberOfRecords, setTotalNumberOfRecords] = useState<number[]>(
+    []
+  );
   const handleDeleteClose = () => setShowDelete(false);
   const handleDeleteShow = (id: number) => {
     setProjectId(id);
@@ -28,14 +36,33 @@ export default function ProjectsList() {
   ////API's
 
   //Get ALL Projects API
-  const getProjectsList = async () => {
+  const getProjectsList = async ( title: string,
+    status: string,
+    pageSize: number,
+    pageNumber: number) => {
     try {
-      let response = await axios.get(`${baseUrl}/Project/manager`, {
+      let {data} = await axios.get(`${baseUrl}/project/manager/?pageSize=${pageSize}&pageNumber=${pageNumber}`,
+      {
         headers: requestHeaders,
+        params: {
+          title,
+          status,
+        },
       });
-      setProjectsList(response.data.data);
+      setTotalNumberOfRecords(
+        Array(data.totalNumberOfRecords)
+          .fill(0)
+          .map((_, i) => i + 1)
+      );
+      setCurrentPage(data.pageNumber);
+      setArrayOfPages(
+        Array(data.totalNumberOfPages)
+          .fill(0)
+          .map((_, i) => i + 1)
+      );
+      setProjectsList(data.data);
 
-      console.log(response.data.data);
+      console.log(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -45,8 +72,17 @@ export default function ProjectsList() {
     setTimeout(() => {
       setIsLoading(false);
     }, 2000);
-    getProjectsList();
+    getProjectsList("", "", pageSize, 1);
   }, []);
+
+  const getName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitleValue(e.target.value);
+    getProjectsList(e.target.value, statusValue, pageSize, 1);
+  };
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setStatusValue(e.target.value);
+    getProjectsList(titleValue, e.target.value, pageSize, 1);
+  };
 
   //Delete Project API
   const onDeleteSubmit = async () => {
@@ -62,7 +98,7 @@ export default function ProjectsList() {
       getToast("success", "Successfully deleted project");
 
       handleDeleteClose();
-      getProjectsList();
+      getProjectsList("", "", pageSize, 1);
     } catch (error:any) {
       getToast("error", error.response.message);
     }
@@ -115,6 +151,7 @@ export default function ProjectsList() {
                   placeholder="Search By Title"
                   aria-label="Username"
                   aria-describedby="basic-addon1"
+                  onChange={getName}
                 />
               </div>
             </div>
@@ -195,8 +232,74 @@ export default function ProjectsList() {
               )}
                       
             </ul>
-            {/* TODO:implement Pagination */}
+            {/* TODO:implement Pagination */} <div className={`${Styles.pagination} text-muted`}>
+          <span>Showing</span>
+          <div className={Styles.contentSize}>
+            <div
+              className={Styles.pageSize}
+              onClick={() => setShowListSize(!showListSize)}
+            >
+              <span>{pageSize}</span>
+              <span>
+                <i className="fa-solid fa-chevron-down"></i>
+              </span>
+            </div>
+            {showListSize && (
+              <div className={`${Styles.listsPage} text-muted`}>
+                {totalNumberOfRecords.map((n) => (
+                  <span
+                    key={n}
+                    onClick={() => {
+                      getProjectsList(titleValue, statusValue, n, 1);
+                      setPageSize(n);
+                    }}
+                  >
+                    {n}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
+          <span>of {totalNumberOfRecords.length} Results</span>
+
+          <div className={Styles.pageNum}>
+            <span>
+              Page {currentPage} of {arrayOfPages.length}
+            </span>
+            <div className={Styles.arrows}>
+              <span
+                onClick={() => {
+                  if (currentPage > 1) {
+                    getProjectsList(
+                      titleValue,
+                      statusValue,
+                      pageSize,
+                      currentPage - 1
+                    );
+                  }
+                }}
+              >
+                <i className="fa-solid fa-chevron-left"></i>
+              </span>
+              <span
+                onClick={() => {
+                  if (currentPage < arrayOfPages.length) {
+                    getProjectsList(
+                      titleValue,
+                      statusValue,
+                      pageSize,
+                      currentPage + 1
+                    );
+                  }
+                }}
+              >
+                <i className="fa-solid fa-chevron-right"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div> 
+          
        
       )}
     </>
