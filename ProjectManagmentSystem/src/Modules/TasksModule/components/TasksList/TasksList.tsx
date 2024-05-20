@@ -99,7 +99,10 @@ export default function TasksList() {
     }
   };
   useEffect(() => {
-    //setloading
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
     getTasksList("", "", pageSize, 1);
   }, []);
 

@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthContext";
 import Styles from "./TasksData.module.css";
 import { useToast } from "../../../Context/ToastContext";
-import { useToast } from "../../../Context/ToastContext";
+
 export default function TasksData() {
   const { requestHeaders, baseUrl }: any = useContext(AuthContext);
   const { getToast } = useToast();
@@ -15,7 +15,7 @@ export default function TasksData() {
   const [usersList, setUsersList] = useState([]);
   const [projectId, setProjectId] = useState("");
   const [employeeId, setEmployeeId] = useState("");
-  const { getToast } = useToast();
+ 
 
   const navigate = useNavigate();
   const location = useLocation();
