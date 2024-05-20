@@ -132,6 +132,62 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px inset #315951E5 !important; /* Set a box shadow to cover the background */
   -webkit-text-fill-color: #fff !important; 
 }
+/** ===================================================================================== */
 
+/*? ===================================================================================== */
+.pagination-container i{
+  transition: all 0.30s;
+}
+.pagination-container i:hover{
+  cursor: pointer;
+  background-color: #E9ECEF;
+}
+.custom-select {
+  -webkit-appearance: none;
+}
 
+.pagination-container .form-control {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 2rem 0.375rem 1rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--bs-body-color);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border-radius: var(--bs-border-radius);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, background-color 0.15s;
+}
 
+.pagination-container .form-control:hover{
+  cursor: pointer;
+  background-color: #E9ECEF;
+}
+
+.pagination-container option{
+  background-color: #f2f2f2;
+  border: 0;
+}
+
+.select-icon {
+  right: 0.8rem;
+  top: 50%;
+  font-size: 14px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #000;
+}
+
+@media (max-width: 768px) {
+  .sidebar-container .sibar,.ps-sidebar-container {
+    /* display: none; */
+    /* width: 10%; */
+  }
+  .content-container {
+    /* height: 100vh; */
+  }
+}

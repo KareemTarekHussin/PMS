@@ -60,8 +60,10 @@ export default function SideBar() {
   const togglePassword = (field: keyof PasswordState) => {
     setShowPassword((prevState) => ({ ...prevState, [field]: !prevState[field] }));
   };
-
+// *==========================================================================>
   let [isCollapse, setIsCollapse] = useState(true);
+   
+
   const [iconRotation, setIconRotation] = useState(1);
 
   const handleCollapse = () => {
@@ -85,17 +87,22 @@ export default function SideBar() {
     }
   }
 
+  let [isToggled, setIsToggled]= useState(false);
+  let handleToggle = ()=>{
+    setIsToggled(!isToggled);
+  }
+
   // *========================================>JSX<=============================================//
   return (
     <>
       <div className='sidebar-container'>
         <Sidebar 
           collapsed={isCollapse} 
-          className='border-0'
+          className='border-0 position-relative bg-danger'
+          toggled={isToggled}
           >
           <Menu className='my-5 pt-5'>
 
-         
             <MenuItem
               className='bg-inf text-center'
               onClick={handleCollapse}
@@ -119,19 +126,20 @@ export default function SideBar() {
             >
               Users
             </MenuItem>
+
             <MenuItem 
               component={<Link to="projects" />} 
               icon={<i className="fa-solid fa-calculator"></i>}
             >
             Projects
             </MenuItem>
+
             <MenuItem 
               component={<Link to="tasks" />} 
               icon={<i className="fa-solid fa-tasks"></i>}
             >
             Tasks
             </MenuItem>
-
 
             <MenuItem 
               onClick={handleShow}
@@ -140,12 +148,15 @@ export default function SideBar() {
             >
               Change Password
             </MenuItem>
+
             <MenuItem 
               onClick={logout}
               icon={<i className="fa-solid fa-circle-left"></i>}
             >
               Logout
             </MenuItem>
+
+            <div className="toggler"></div>
 
           </Menu>
         </Sidebar>
