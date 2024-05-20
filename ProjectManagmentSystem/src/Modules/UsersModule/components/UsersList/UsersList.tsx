@@ -45,6 +45,7 @@ export default function UsersList() {
     }, 2000);
     getUsersList();
   }, []);
+  
   return (
     <>
       <div className="w-100 compTitle d-flex justify-content-between my-5 bg-white p-4">
