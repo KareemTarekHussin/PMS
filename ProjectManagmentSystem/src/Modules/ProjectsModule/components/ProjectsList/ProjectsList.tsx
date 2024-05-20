@@ -3,12 +3,14 @@ import Styles from "./ProjectsList.module.css";
 import axios from "axios";
 import { AuthContext } from "../../../Context/AuthContext";
 import NoData from "../../../SharedModule/components/NoData/NoData";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+
 
 export default function ProjectsList() {
+  const navigate = useNavigate()
   const { requestHeaders, baseUrl }: any = useContext(AuthContext);
   const [projectsList, setProjectsList] = useState([]);
-  const navigate = useNavigate();
 
   ////API's
 
@@ -18,7 +20,7 @@ export default function ProjectsList() {
       let response = await axios.get(`${baseUrl}/Project/manager`, {
         headers: requestHeaders,
       });
-      setProjectsList(response.data.data);
+      setProjectsList(response.data.data); 
       console.log(response.data.data);
     } catch (error) {
       console.log(error);
@@ -26,15 +28,17 @@ export default function ProjectsList() {
   };
   useEffect(() => {
     getProjectsList();
+
   }, []);
 
   //Delete Project API
 
-  //update Project API
-
   const navigateToAdd = () => {
     navigate("/dashboard/projectsdata");
   };
+
+
+
 
   return (
     <>
@@ -67,20 +71,19 @@ export default function ProjectsList() {
           </div>
         </div>
 
-   
         <ul className="list-group mt-3 ">
-            <li className={`${Styles.backgroundgreen} list-group-item fw-semibold py-3 text-white d-flex justify-content-between align-items-center`}>
-              <div className="row w-100">
-                <div className="col-md-2  text-white">Title</div>
-                <div className="col-md-2  text-white">Description</div>
-                <div className="col-md-2  text-white">Modification Date</div>
-                <div className="col-md-2  text-white">Tasks</div>
-                <div className="col-md-2  text-white">Creation Date</div>
-                <div className="col-md-2  text-white">Actions</div>
-              </div>
+          <li className={`${Styles.backgroundgreen} list-group-item fw-semibold py-3 text-white d-flex justify-content-between align-items-center`}>
+            <div className="row w-100">
+              <div className="col-md-2  text-white">Title</div>
+              <div className="col-md-2  text-white">Description</div>
+              <div className="col-md-2  text-white">Modification Date</div>
+              <div className="col-md-2  text-white">Tasks</div>
+              <div className="col-md-2  text-white">Creation Date</div>
+              <div className="col-md-2  text-white">Actions</div>
+            </div>
           </li>
           {projectsList.length > 0 ? (
-              projectsList.map((project: any) => (
+            projectsList.map((project: any) => (
               <li key={project.id} className="list-group-item d-flex justify-content-between align-items-center">
                 <div className="row w-100">
                   <div className="col-md-2">{project.title}</div>
@@ -96,7 +99,7 @@ export default function ProjectsList() {
                         data-bs-toggle="dropdown"
                         aria-expanded="false"
                       >
-                      <i className="fa fa-ellipsis-vertical"></i>
+                        <i className="fa fa-ellipsis-vertical"></i>
                       </button>
                       <ul className="dropdown-menu">
                         <li>
@@ -106,12 +109,12 @@ export default function ProjectsList() {
                           </a>
                         </li>
                         <li>
-                          <a className="dropdown-item" href="#">
-                         
+                          <Link to={`/dashboard/projectsUpdate/${project.id}`} className="dropdown-item"
+                          >
                             <i className="fa fa-edit text-warning mx-2"></i>
                             Edit
                             {/* TODO:implement Update */}
-                          </a>
+                          </Link>
                         </li>
                         <li>
                           <a className="dropdown-item" href="#">
@@ -121,7 +124,7 @@ export default function ProjectsList() {
                         </li>
                       </ul>
                     </div>
-                    
+
                   </div>
 
                 </div>
@@ -132,7 +135,7 @@ export default function ProjectsList() {
               <NoData />
             </li>
           )}
-        </ul>
+        </ul>
         {/* TODO:implement Pagination */}
       </div>
     </>

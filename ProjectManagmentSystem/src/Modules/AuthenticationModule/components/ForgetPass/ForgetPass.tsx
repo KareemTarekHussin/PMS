@@ -1,6 +1,5 @@
 import React from 'react'
 import logo from '../../../../Modules/../assets/images/PMS 3.svg'
-import { TextField } from '@mui/material';
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -46,7 +45,7 @@ export default function ForgetPass() {
               <h1 className='auth-title'>Forget Password</h1>
               <span className='e-mail'>E-mail</span> <br />
               <div className='auth-standard-basic'>
-                <TextField className='mb-4 w-75' id="standard-basic" label="Enter your E-mail" variant="standard"
+                <input className='mb-4 w-75' id="standard-basic" placeholder="Enter your E-mail"
                   type="text"
                   {...register("email", {
                     required: "Email is required",
@@ -64,23 +63,11 @@ export default function ForgetPass() {
               <div className='text-center mt-5'>
                 <button className="btn btn-warning verify">Verify</button>
               </div>
-
-
-
-
-
             </form>
-
-
-
-
           </div>
         </div>
 
       </div>
-
-
-
     </div>
   )
 }
