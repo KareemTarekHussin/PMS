@@ -33,7 +33,7 @@ export default function ProjectsData() {
 
       getToast("success", "Successfully created project");
       navigate("/dashboard/projects")
-    } catch (error) {
+    } catch (error:any) {
       getToast("error", error.response.message);
     }
   };

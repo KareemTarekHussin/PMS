@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthContext";
 import NoData from "../../../SharedModule/components/NoData/NoData";
 import { useToast } from "../../../Context/ToastContext";
-import { useToast } from '../../../Context/ToastContext';
+
 import Loading from '../../../SharedModule/components/Loading/Loading';
 import DeleteData from '../../../SharedModule/components/DeleteData/DeleteData';
 import Button from "react-bootstrap/Button";
@@ -27,7 +27,7 @@ export default function TasksList() {
     setTaskId(id);
     setShowDelete(true);
   };
-  const { getToast } = useToast();
+ 
   
   const [titleValue, setTitleValue] = useState("");
   const [statusValue, setStatusValue] = useState("");
@@ -54,7 +54,7 @@ export default function TasksList() {
       getToast("success", "Successfully deleted task");
 
       handleDeleteClose();
-      getTasksList();
+      getTasksList("", "", pageSize, 1);
     } catch (error:any) {
       getToast("error", error.response.message);
     }
@@ -99,6 +99,7 @@ export default function TasksList() {
     }
   };
   useEffect(() => {
+    //setloading
     getTasksList("", "", pageSize, 1);
   }, []);
 
