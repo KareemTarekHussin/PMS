@@ -4,8 +4,11 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthContext";
 import Styles from "./ProjectsData.module.css"
+import { useToast } from "../../../Context/ToastContext";
 export default function ProjectsData() {
   const { requestHeaders, baseUrl }: any = useContext(AuthContext);
+  const {getToast} = useToast()
+
   const navigate = useNavigate();
 
   const navigatetoProjects = () => {
@@ -28,10 +31,10 @@ export default function ProjectsData() {
         headers: requestHeaders,
       });
 
-      console.log(response.data);
+      getToast("success", "Successfully created project");
       navigate("/dashboard/projects")
     } catch (error) {
-      console.log(error);
+      getToast("error", error.response.message);
     }
   };
 

@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthContext";
 import Styles from "./TasksData.module.css";
 import { useToast } from "../../../Context/ToastContext";
+import { useToast } from "../../../Context/ToastContext";
 export default function TasksData() {
   const { requestHeaders, baseUrl }: any = useContext(AuthContext);
   const { getToast } = useToast();
@@ -14,6 +15,8 @@ export default function TasksData() {
   const [usersList, setUsersList] = useState([]);
   const [projectId, setProjectId] = useState("");
   const [employeeId, setEmployeeId] = useState("");
+  const { getToast } = useToast();
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -50,8 +53,8 @@ export default function TasksData() {
       console.log(response);
       getToast("success", state ? "success edit" : "success create");
       navigate("/dashboard/tasks");
-    } catch (error) {
-      console.log(error);
+    } catch (error:any) {
+      getToast('error', error.response.message);
     }
   };
 

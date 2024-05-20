@@ -1,0 +1,36 @@
+.textGold {
+    color: hsla(35, 86%, 55%, 1);
+}
+.btnGold {
+    background-color: hsla(35, 86%, 55%, 1) !important;
+}
+.headerContainer{
+    background-image: url(../../../../assets/images/home-bg.png);
+    background-size: cover;
+}
+
+.bgProgress{
+    background-color: #E5E6F4;
+}
+.bgTasks{
+    background-color: #F4F4E5;
+}
+.bgProjects{
+    background-color: #F4E5ED;
+}
+.bgProjectNoicon{
+    background-color:  #E7C3D7;
+}
+.bgProjectTaskicon{
+    background-color: #E4E4BC;
+}
+.bgProgressicon{
+    background-color: #CFD1EC;
+}
+
+.textPadding{
+    font-weight: 500!important;
+    font-size: 13px!important;
+    line-height: 15.73px!important;
+   
+}
