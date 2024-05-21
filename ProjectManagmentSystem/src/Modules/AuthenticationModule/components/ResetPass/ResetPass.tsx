@@ -61,7 +61,7 @@ export default function ResetPass() {
     console.log(data)
     try {
       let response = await axios.post("https://upskilling-egypt.com:3003/api/v1/Users/Reset", data)
-      toast.success('password rest successfu')
+      toast.success('Password reset Successfuly')
       console.log(response)
       navigate('/login')
     }
