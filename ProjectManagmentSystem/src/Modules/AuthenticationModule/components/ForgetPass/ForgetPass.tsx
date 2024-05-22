@@ -1,21 +1,24 @@
 import React from 'react'
 import logo from '../../../../Modules/../assets/images/PMS 3.svg'
-import { useForm } from "react-hook-form";
+import { useForm,SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
+type AuthInputs = {
+  email: string;
+  code : string;
+};
 export default function ForgetPass() {
   const navigate = useNavigate()
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<AuthInputs>();
 
-  const onSubmit = async (data:any) => {
+  const onSubmit : SubmitHandler<AuthInputs> = async(data) => {
     console.log(data)
     try {
       const res = await axios.post('https://upskilling-egypt.com:3003/api/v1/Users/Reset/Request', data)
@@ -23,7 +26,7 @@ export default function ForgetPass() {
       toast.success('Your request is being processed, please check your email')
       navigate('/resetpass')
     }
-    catch (error) {
+    catch (error:any) {
       toast.error(error.response.data.message)
     }
 

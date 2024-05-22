@@ -1,19 +1,23 @@
 import axios from 'axios';
 import React from 'react'
-import { useForm } from 'react-hook-form';
+import { useForm ,SubmitHandler} from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import logo from "../../../../assets/images/PMS 3.png";
 
 import Styles from "./VerifyAccount.module.css";
 
+type AuthInputs = {
+  email: string;
+  code : string;
+};
 export default function VerifyAccount() {
   const navigate = useNavigate();
   let {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
-  const onSubmit = async (data:any) => {
+  } = useForm<AuthInputs>();
+  const onSubmit: SubmitHandler<AuthInputs> = async(data) => {
     try {
       const response = await axios.put(
         "https://upskilling-egypt.com:3003/api/v1/Users/verify",

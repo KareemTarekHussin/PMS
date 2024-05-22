@@ -1,16 +1,20 @@
-
 import logo from '../../../../Modules/../assets/images/PMS 3.svg'
-import { useForm } from "react-hook-form";
+import { SubmitHandler,useForm } from "react-hook-form";
 import React, { useState } from 'react';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Icon } from 'react-icons-kit';
-
 import { eyeOff } from 'react-icons-kit/feather/eyeOff';
 import { eye } from 'react-icons-kit/feather/eye'
 
+type AuthInputs = {
+  email: string;
+  password: string;
+  confirmPassword:string;
+  seed :string;
+};
 
 export default function ResetPass() {
   const navigate = useNavigate()
@@ -21,6 +25,9 @@ export default function ResetPass() {
   const [iconOtp, setIconOtp] = useState(eyeOff);
   const [icon, setIcon] = useState(eyeOff);
   const [icons, setIcons] = useState(eyeOff);
+  //i added those 2 states to fix onchange errors
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const handleToggle = () => {
     if (type === 'password') {
       setIcon(eye);
@@ -55,9 +62,9 @@ export default function ResetPass() {
     }
   }
 
-  const { register, handleSubmit, getValues, watch, formState: { errors } } = useForm();
+  const { register, handleSubmit, getValues, watch, formState: { errors } } = useForm<AuthInputs>();
 
-  const onSubmit = async (data:any) => {
+  const onSubmit: SubmitHandler<AuthInputs> = async(data) =>  {
     console.log(data)
     try {
       let response = await axios.post("https://upskilling-egypt.com:3003/api/v1/Users/Reset", data)
@@ -65,7 +72,7 @@ export default function ResetPass() {
       console.log(response)
       navigate('/login')
     }
-    catch (error) {
+    catch (error:any) {
       toast.error(error.response.data.message)
     }
 
@@ -104,6 +111,7 @@ export default function ResetPass() {
                   {...register("seed", {
                     required: "OTP is required",
                     pattern: {
+                       value: /^[0-9]{6}$/,
                       message: "Invlid OTP"
                     }
                   })}
@@ -119,7 +127,6 @@ export default function ResetPass() {
                 <span className='e-mail'>New Password</span> <br />
                 <input className='input'
                   type={type}
-                  onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
                   {...register("password", {
                     required: "You must specify a password",
@@ -128,6 +135,7 @@ export default function ResetPass() {
                       message: "Password must have at least 8 characters"
                     }
                   })}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <span className="position-relative" onClick={handleToggle}>
                   <Icon className="icon" icon={icon} size={25} />
@@ -143,10 +151,13 @@ export default function ResetPass() {
 
                 <input className='input' placeholder='Confirm New Password'
                   type={types}
-                  onChange={(e) => setPassword(e.target.value)}
                   autoComplete="current-password"
-                  {...register("confirmPassword", { required: true })}
-
+                  {...register("confirmPassword", {
+                    required: "You must confirm your password",
+                    validate: (value) =>
+                      value === watch('password') || "Passwords do not match"
+                  })}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
                 <span className="position-relative" onClick={handleToggleConfirm}>
                   <Icon className="icon" icon={icons} size={25} />

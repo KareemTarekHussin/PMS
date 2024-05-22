@@ -1,11 +1,21 @@
 import axios from "axios";
 import React, { useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm ,SubmitHandler} from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../../assets/images/PMS 3.png";
 import Styles from "./Register.module.css";
 
 import img from "../../../..//assets/images/8550fbcbe60cd242d12760784feff287.jpeg";
+
+interface IFormInput {
+  userName: string;
+  email: string;
+  country: string;
+  phoneNumber: string;
+  profileImage: FileList;
+  password: string;
+  confirmPassword: string;
+}
 
 export default function Register() {
   const [visible, setVisible] = useState(false);
@@ -16,7 +26,7 @@ export default function Register() {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm();
+  } = useForm<IFormInput>();
   const imgValue = watch();
 
   const password = useRef({});
@@ -32,7 +42,7 @@ export default function Register() {
     formData.append("confirmPassword", data.confirmPassword);
     return formData;
   };
-  const onSubmit = async (data: any) => {
+  const onSubmit: SubmitHandler<IFormInput> = async(data) =>  {
     try {
       const registerFormData = appendToFormData(data);
 
