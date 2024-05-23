@@ -17,7 +17,7 @@ export default function AuthContextProvider(props: any) {
     const encodedToken: any = localStorage.getItem("token");
     const decodedToken: any = jwtDecode(encodedToken);
     setLoginUser(decodedToken);
-    console.log(decodedToken);
+   
 
   };
 

@@ -36,7 +36,7 @@ export default function TasksData() {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
+   
   } = useForm<Inputs>();
 
   /////////////API's
@@ -94,10 +94,11 @@ export default function TasksData() {
   return (
     <>
       <div className="compTitle  my-5 bg-white p-4 shadow-md">
+        <button className="btn" onClick={navigatetoTasks}>
         <span>
-          <i onClick={navigatetoTasks} className="fa fa-chevron-left"></i>
+          <i  className="fa fa-chevron-left"></i>
           View all Tasks
-        </span>
+        </span></button>
 
         <h2 className="mt-4">Add a New Task</h2>
       </div>

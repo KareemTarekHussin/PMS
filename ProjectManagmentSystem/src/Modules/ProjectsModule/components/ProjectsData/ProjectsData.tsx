@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useContext } from "react";
-import { useForm } from "react-hook-form";
+import { useForm,SubmitHandler } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthContext";
 import Styles from "./ProjectsData.module.css"
@@ -27,13 +27,13 @@ export default function ProjectsData() {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
-  } = useForm();
+  
+  } = useForm<Inputs>();
 
 ////API's
 
 //SubmitProjectAPI
-  const onSubmit = async (data: any) => {
+  const onSubmit: SubmitHandler<Inputs> = async(data) => {
     try {
       let response = await axios.post(`${baseUrl}/Project`, data, {
         headers: requestHeaders,
@@ -51,8 +51,8 @@ export default function ProjectsData() {
     <>
       <div className="compTitle  my-5 bg-white p-4 shadow-lg">
         <span>
-          <i onClick={navigatetoProjects} className="fa fa-chevron-left"></i>
-          View all Projects
+         <button onClick={navigatetoProjects} className="btn"> <i  className="fa fa-chevron-left"></i>
+          View all Projects</button>
         </span>
 
         <h2 className="mt-4">Add a New Project</h2>
@@ -65,9 +65,14 @@ export default function ProjectsData() {
               type="text"
               className="form-control"
               placeholder="Title"
-              {...register("title")}
+              {...register("title", {
+                required: "title is required",
+              })}
             />
           </div>
+          {errors.title && (
+            <div className="p-1 alert alert-danger">{errors.title.message}</div>
+          )}
 
           <h4>Description</h4>
           <textarea
