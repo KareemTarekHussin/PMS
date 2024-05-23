@@ -51,7 +51,7 @@ export default function ProjectsData() {
     <>
       <div className="compTitle  my-5 bg-white p-4 shadow-lg">
         <span>
-          <i onClick={navigatetoProjects} className="fa fa-chevron-left"></i>
+         <button className="btn"><i onClick={navigatetoProjects} className="fa fa-chevron-left"></i></button> 
           View all Projects
         </span>
 
