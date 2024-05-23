@@ -5,6 +5,7 @@ import NoData from "../../../SharedModule/components/NoData/NoData";
 import Styles from "./UsersList.module.css";
 import { useToast } from "../../../Context/ToastContext";
 import Loading from "../../../SharedModule/components/Loading/Loading";
+import { User } from "../../../../Interfaces/Interface";
 
 export default function UsersList() {
   const [usersList, setUsersList] = useState([]);
@@ -23,6 +24,7 @@ export default function UsersList() {
         }
       );
       setUsersList(response.data.data);
+      // console.log(response.data.data);
       
     } catch (error: any) {
       getToast("error", error.response.message);
@@ -89,7 +91,7 @@ export default function UsersList() {
               </div>
             </li>
             {usersList.length > 0 ? (
-              usersList.map((user: any) => (
+              usersList.map((user: User) => (
                 <li
                   key={user.id}
                   className="list-group-item d-flex justify-content-between align-items-center"

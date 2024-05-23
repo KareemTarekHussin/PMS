@@ -9,6 +9,7 @@ import Modal from "react-bootstrap/Modal";
 import DeleteData from "./../../../SharedModule/components/DeleteData/DeleteData";
 import { useToast } from "../../../Context/ToastContext";
 import Loading from "../../../SharedModule/components/Loading/Loading";
+import { ProjectInterface } from "../../../../Interfaces/Interface";
 export default function ProjectsList() {
   const { requestHeaders, baseUrl }: any = useContext(AuthContext);
   const { getToast } = useToast();
@@ -62,7 +63,7 @@ export default function ProjectsList() {
       );
       setProjectsList(data.data);
 
-      console.log(data.data);
+      // console.log(data.data);
     } catch (error) {
       console.log(error);
     }
@@ -170,7 +171,7 @@ export default function ProjectsList() {
                 </div>
               </li>
               {projectsList.length > 0 ? (
-                projectsList.map((project: any) => (
+                projectsList.map((project: ProjectInterface) => (
                   <li
                     key={project.id}
                     className="list-group-item d-flex justify-content-between align-items-center"

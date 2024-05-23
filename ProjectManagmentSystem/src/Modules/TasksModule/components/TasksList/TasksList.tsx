@@ -10,6 +10,7 @@ import Loading from "../../../SharedModule/components/Loading/Loading";
 import DeleteData from "../../../SharedModule/components/DeleteData/DeleteData";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { TaksInterface } from "../../../../Interfaces/Interface";
 
 export default function TasksList() {
   const { requestHeaders, baseUrl }: any = useContext(AuthContext);
@@ -189,7 +190,7 @@ export default function TasksList() {
 
             <>
               {tasksList.length > 0 ? (
-                tasksList.map((task: any) => (
+                tasksList.map((task: TaksInterface) => (
                   <li
                     key={task.id}
                     className="list-group-item d-flex justify-content-between align-items-center"
