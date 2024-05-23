@@ -2,13 +2,17 @@ import React, { useContext, useEffect, useState } from "react";
 import Styles from "./Dashboard.module.css";
 import axios from "axios";
 import { AuthContext } from "../../../Context/AuthContext";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+
+import {  Pie } from 'react-chartjs-2';
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function Dashboard() {
   const [usersList, setUsersList] = useState([]);
   const [projectsList, setProjectsList] = useState([]);
   const [tasksList, setTasksList] = useState([]);
   const { requestHeaders, baseUrl }: any = useContext(AuthContext);
-
+  const [taskData, setTaskData] = useState([]);
   const getUsersList = async () => {
     try {
       let response = await axios.get(`${baseUrl}/Users/manager`, {
@@ -39,10 +43,42 @@ export default function Dashboard() {
       setTasksList(response.data.data);
     } catch (error: any) {}
   };
+
+  const getTaskData = async () => {
+    try {
+      const response = await axios.get(`${baseUrl}/Task/count`, {
+        headers: requestHeaders,
+      });
+      setTaskData(response.data);
+      console.log(response.data);
+    } catch (error: any) {
+      console.log(error.response.message);
+    }
+  };
+  const data = {
+    lable: ["ToDo", "InProgress", "Done"],
+    datasets: [
+      {
+        label: "My Tasks",
+        data:  [taskData.toDo, taskData.inProgress, taskData.done],
+        backgroundColor: [
+          "#E7C3D7",
+          "#E4E4BC",
+          "#CFD1EC",
+        ],
+        hoverOffset: 4,
+      },
+      
+    ],
+  
+    
+  };
+  
   useEffect(() => {
     getUsersList();
     getProjectsList();
     getTasksList();
+    getTaskData();
   }, []);
   const countUsersByActivation = (users: any) => {
     return users.reduce(
@@ -152,6 +188,14 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className="container-fluid">
+        <div className="row p-3 justify-content-around">
+          <div className="col-md-5 tasks-chart">
+            <Pie className="w-50 m-auto" data={data}/>
+          </div>
+          <div className="col-md-5 mx-5"></div>
         </div>
       </div>
     </>
