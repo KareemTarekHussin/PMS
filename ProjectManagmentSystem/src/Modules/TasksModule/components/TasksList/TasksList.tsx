@@ -6,14 +6,14 @@ import { AuthContext } from "../../../Context/AuthContext";
 import NoData from "../../../SharedModule/components/NoData/NoData";
 import { useToast } from "../../../Context/ToastContext";
 
-import Loading from '../../../SharedModule/components/Loading/Loading';
-import DeleteData from '../../../SharedModule/components/DeleteData/DeleteData';
+import Loading from "../../../SharedModule/components/Loading/Loading";
+import DeleteData from "../../../SharedModule/components/DeleteData/DeleteData";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 export default function TasksList() {
   const { requestHeaders, baseUrl }: any = useContext(AuthContext);
-  const {getToast} = useToast()
+  const { getToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [showListSize, setShowListSize] = useState(false);
   const [tasksList, setTasksList] = useState([]);
@@ -27,8 +27,7 @@ export default function TasksList() {
     setTaskId(id);
     setShowDelete(true);
   };
- 
-  
+
   const [titleValue, setTitleValue] = useState("");
   const [statusValue, setStatusValue] = useState("");
   const [arrayOfPages, setArrayOfPages] = useState<number[]>([]);
@@ -55,7 +54,7 @@ export default function TasksList() {
 
       handleDeleteClose();
       getTasksList("", "", pageSize, 1);
-    } catch (error:any) {
+    } catch (error: any) {
       getToast("error", error.response.message);
     }
   };
@@ -95,7 +94,7 @@ export default function TasksList() {
       setTasksList(data.data);
     } catch (error: any) {
       setLoading(false);
-      getToast("error", error.response.data.message)
+      getToast("error", error.response.data.message);
     }
   };
   useEffect(() => {
@@ -120,7 +119,7 @@ export default function TasksList() {
   };
   return (
     <>
-     <Modal show={showDelete} onHide={handleDeleteClose}>
+      <Modal show={showDelete} onHide={handleDeleteClose}>
         <Modal.Body>
           <DeleteData deleteItem={"task"} />
         </Modal.Body>
@@ -142,49 +141,52 @@ export default function TasksList() {
           </button>
         </div>
       </div>
-      {isLoading ? <Loading/> :   <div className="listContainer bg-white p-5 rounded-3 ">
-        {/* //TODO: implement Search*/}
-        <div className="container fuild">
-          <div className="row align-items-center">
-            <div className="col-md-4">
-              <div className={`${Styles.inputGroup}`}>
-                <i className="fa fa-search"></i>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <div className="listContainer bg-white p-5 rounded-3 ">
+          {/* //TODO: implement Search*/}
+          <div className="container fuild">
+            <div className="row align-items-center">
+              <div className="col-md-4">
+                <div className={`${Styles.inputGroup}`}>
+                  <i className="fa fa-search"></i>
 
-                <input
-                  type="text"
-                  className={Styles.searchInput}
-                  placeholder="Search By Title"
-                  onChange={getName}
-                />
+                  <input
+                    type="text"
+                    className={Styles.searchInput}
+                    placeholder="Search By Title"
+                    onChange={getName}
+                  />
+                </div>
               </div>
-            </div>
-            <div className="col-md-2">
-              <div className={Styles.filterContianer}>
-                <select onChange={handleSelect}>
-                  <option value="">Filter</option>
-                  <option value="ToDo">ToDo</option>
-                  <option value="InProgress">InProgress</option>
-                  <option value="Done">Done</option>
-                </select>
+              <div className="col-md-2">
+                <div className={Styles.filterContianer}>
+                  <select onChange={handleSelect}>
+                    <option value="">Filter</option>
+                    <option value="ToDo">ToDo</option>
+                    <option value="InProgress">InProgress</option>
+                    <option value="Done">Done</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <ul className="list-group mt-3 ">
-          <li
-            className={`${Styles.backgroundgreen} list-group-item fw-semibold py-3 text-white d-flex justify-content-between align-items-center`}
-          >
-            <div className="row w-100">
-              <div className="col-md-2  text-white">Title</div>
-              <div className="col-md-2  text-white">Status</div>
-              <div className="col-md-2  text-white">User</div>
-              <div className="col-md-2  text-white">Project</div>
-              <div className="col-md-2  text-white">Date Created</div>
-              <div className="col-md-2  text-white">Actions</div>
-            </div>
-          </li>
-          {!loading ? (
+          <ul className="list-group mt-3 ">
+            <li
+              className={`${Styles.backgroundgreen} list-group-item fw-semibold py-3 text-white d-flex justify-content-between align-items-center`}
+            >
+              <div className="row w-100">
+                <div className="col-md-2  text-white">Title</div>
+                <div className="col-md-2  text-white">Status</div>
+                <div className="col-md-2  text-white">User</div>
+                <div className="col-md-2  text-white">Project</div>
+                <div className="col-md-2  text-white">Date Created</div>
+                <div className="col-md-2  text-white">Actions</div>
+              </div>
+            </li>
+
             <>
               {tasksList.length > 0 ? (
                 tasksList.map((task: any) => (
@@ -229,7 +231,11 @@ export default function TasksList() {
                               </Link>
                             </li>
                             <li>
-                              <a   onClick={() => handleDeleteShow(task.id)} className="dropdown-item" href="#">
+                              <a
+                                onClick={() => handleDeleteShow(task.id)}
+                                className="dropdown-item"
+                                href="#"
+                              >
                                 <i className="fa fa-trash text-danger mx-2"></i>
                                 Delete{/* TODO:implement Delete */}
                               </a>
@@ -246,79 +252,75 @@ export default function TasksList() {
                 </li>
               )}
             </>
-          ) : (
-            <>loaddddddddddddddddddddddddddng</>
-          )}
-              {/* implement Pagination */}     
-        </ul>
-        <div className={`${Styles.pagination} text-muted`}>
-          <span>Showing</span>
-          <div className={Styles.contentSize}>
-            <div
-              className={Styles.pageSize}
-              onClick={() => setShowListSize(!showListSize)}
-            >
-              <span>{pageSize}</span>
-              <span>
-                <i className="fa-solid fa-chevron-down"></i>
-              </span>
-            </div>
-            {showListSize && (
-              <div className={`${Styles.listsPage} text-muted`}>
-                {totalNumberOfRecords.map((n) => (
-                  <span
-                    key={n}
-                    onClick={() => {
-                      getTasksList(titleValue, statusValue, n, 1);
-                      setPageSize(n);
-                    }}
-                  >
-                    {n}
-                  </span>
-                ))}
+          </ul>
+          <div className={`${Styles.pagination} text-muted`}>
+            <span>Showing</span>
+            <div className={Styles.contentSize}>
+              <div
+                className={Styles.pageSize}
+                onClick={() => setShowListSize(!showListSize)}
+              >
+                <span>{pageSize}</span>
+                <span>
+                  <i className="fa-solid fa-chevron-down"></i>
+                </span>
               </div>
-            )}
-          </div>
-          <span>of {totalNumberOfRecords.length} Results</span>
+              {showListSize && (
+                <div className={`${Styles.listsPage} text-muted`}>
+                  {totalNumberOfRecords.map((n) => (
+                    <span
+                      key={n}
+                      onClick={() => {
+                        getTasksList(titleValue, statusValue, n, 1);
+                        setPageSize(n);
+                      }}
+                    >
+                      {n}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+            <span>of {totalNumberOfRecords.length} Results</span>
 
-          <div className={Styles.pageNum}>
-            <span>
-              Page {currentPage} of {arrayOfPages.length}
-            </span>
-            <div className={Styles.arrows}>
-              <span
-                onClick={() => {
-                  if (currentPage > 1) {
-                    getTasksList(
-                      titleValue,
-                      statusValue,
-                      pageSize,
-                      currentPage - 1
-                    );
-                  }
-                }}
-              >
-                <i className="fa-solid fa-chevron-left"></i>
+            <div className={Styles.pageNum}>
+              <span>
+                Page {currentPage} of {arrayOfPages.length}
               </span>
-              <span
-                onClick={() => {
-                  if (currentPage < arrayOfPages.length) {
-                    getTasksList(
-                      titleValue,
-                      statusValue,
-                      pageSize,
-                      currentPage + 1
-                    );
-                  }
-                }}
-              >
-                <i className="fa-solid fa-chevron-right"></i>
-              </span>
+              <div className={Styles.arrows}>
+                <span
+                  onClick={() => {
+                    if (currentPage > 1) {
+                      getTasksList(
+                        titleValue,
+                        statusValue,
+                        pageSize,
+                        currentPage - 1
+                      );
+                    }
+                  }}
+                >
+                  <i className="fa-solid fa-chevron-left"></i>
+                </span>
+                <span
+                  onClick={() => {
+                    if (currentPage < arrayOfPages.length) {
+                      getTasksList(
+                        titleValue,
+                        statusValue,
+                        pageSize,
+                        currentPage + 1
+                      );
+                    }
+                  }}
+                >
+                  <i className="fa-solid fa-chevron-right"></i>
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      </div> }
-      
+      )}
     </>
   );
 }
