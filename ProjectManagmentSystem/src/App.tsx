@@ -16,6 +16,8 @@ import UsersList from "./Modules/UsersModule/components/UsersList/UsersList";
 import Dashboard from "./Modules/DashboardModule/components/Dashboard/Dashboard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProjectsData from "./Modules/ProjectsModule/components/ProjectsData/ProjectsData";
+import TasksData from "./Modules/TasksModule/components/TasksData/TasksData";
 
 function App() {
   const routes = createBrowserRouter([
@@ -43,7 +45,10 @@ function App() {
       children: [
         { path: "", element: <Dashboard /> },
         { path: "projects", element: <ProjectsList /> },
+        { path: "projectsdata", element: <ProjectsData /> },
         { path: "tasks", element: <TasksList /> },
+        { path: "tasksdata", element: <TasksData /> },
+        { path: "tasksedit/:id", element: <TasksData /> },
         { path: "users", element: <UsersList /> },
       ],
     },

@@ -9,14 +9,16 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Style from './sidebar.module.css'
 import axios from 'axios';
-import { Bounce, toast } from 'react-toastify';
 import { FieldError } from 'react-hook-form';
+import { useToast } from "../../../Context/ToastContext";
 
 
-
+// ^==============================>>SideBar Component<<=============================
 export default function SideBar() {
 
-  const { setLoginUser } = useAuth();
+  const { setLoginUser, baseUrl, requestHeaders } = useAuth();
+
+  const { getToast } = useToast();
 
   const navigate = useNavigate();
 
@@ -24,18 +26,15 @@ export default function SideBar() {
     localStorage.removeItem("token");
     setLoginUser(null);
     navigate("/login");
+    getToast("success", "Logged out successfully");
   }
 
-
-
-  let { register, handleSubmit, formState: { errors }, watch  } = useForm();
+  let { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
   
   const [show, setShow] = useState(false);
-  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   
-  // ?============================================================================================
   interface PasswordState {
     oldPassword: boolean;
     newPassword: boolean;
@@ -59,11 +58,10 @@ export default function SideBar() {
     newPassword: true,
     confirmNewPassword: true,
   })
+
   const togglePassword = (field: keyof PasswordState) => {
     setShowPassword((prevState) => ({ ...prevState, [field]: !prevState[field] }));
   };
-  // ?============================================================================================
-
 
   let [isCollapse, setIsCollapse] = useState(true);
   const [iconRotation, setIconRotation] = useState(1);
@@ -76,33 +74,20 @@ export default function SideBar() {
   const onSubmit = async (data: any) => {
     try{
       
-      let response = await axios.put('https://upskilling-egypt.com:3003/api/v1/Users/ChangePassword', data,
+      let response = await axios.put(`${baseUrl}/Users/ChangePassword`, data,
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+          headers: requestHeaders
         });
-      console.log(response);
-      toast.success(response.data.message, {
-        position: "bottom-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-      });
-      logout()
-      console.log(data);
-      
+      reset();
+      handleClose();
+      getToast("success", response.data.message);
     }
-    catch (error) {
-      
-      console.log(error);
+    catch (error:any) {
+      getToast("error", error.response.data.message);
     }
   }
 
-  // *========================================><=============================================//
+  // *========================================>JSX<=============================================//
   return (
     <>
       <div className='sidebar-container'>
@@ -112,12 +97,7 @@ export default function SideBar() {
           >
           <Menu className='my-5 pt-5'>
 
-            {/* <MenuItem
-              className='bg-inf'
-              onClick={handleCollapse}
-              icon={isCollapse ? <i className="fa-solid fa-arrow-right"></i> : <i className="fa-solid fa-arrow-left"></i>}
-            >
-            </MenuItem> */}
+         
             <MenuItem
               className='bg-inf text-center'
               onClick={handleCollapse}
@@ -136,23 +116,35 @@ export default function SideBar() {
             </MenuItem>
 
             <MenuItem 
-              component={<Link to="projects" />} 
+              component={<Link to="users" />} 
               icon={<i className="fa-solid fa-users"></i>}
             >
               Users
+            </MenuItem>
+            <MenuItem 
+              component={<Link to="projects" />} 
+              icon={<i className="fa-solid fa-calculator"></i>}
+            >
+            Projects
+            </MenuItem>
+            <MenuItem 
+              component={<Link to="tasks" />} 
+              icon={<i className="fa-solid fa-tasks"></i>}
+            >
+            Tasks
             </MenuItem>
 
 
             <MenuItem 
               onClick={handleShow}
-              component={<Link to="projects" />} 
+              // component={<Link to="projects" />} 
               icon={<i className="fa-solid fa-unlock"></i>}
             >
               Change Password
             </MenuItem>
             <MenuItem 
               onClick={logout}
-              icon={<i className="fa-solid fa-unlock"></i>}
+              icon={<i className="fa-solid fa-circle-left"></i>}
             >
               Logout
             </MenuItem>

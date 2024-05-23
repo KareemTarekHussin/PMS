@@ -95,7 +95,7 @@ export default function Register() {
                       </label>
                       <input
                         type="file"
-                        className={`${Styles.file}`}
+                        className={`${Styles.file} `}
                         id="file"
                         {...register("profileImage", {
                           required: "profileImage is required",
