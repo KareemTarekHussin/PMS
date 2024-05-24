@@ -11,7 +11,7 @@ import { useToast } from "../../../Context/ToastContext";
 import Loading from "../../../SharedModule/components/Loading/Loading";
 import { ProjectInterface } from "../../../../Interfaces/Interface";
 export default function ProjectsList() {
-  const { requestHeaders, baseUrl }: any = useContext(AuthContext);
+  const { requestHeaders, baseUrl,loginUser }: any = useContext(AuthContext);
   const { getToast } = useToast();
   const [projectsList, setProjectsList] = useState([]);
   const [ProjectId, setProjectId] = useState(0);
@@ -41,8 +41,15 @@ export default function ProjectsList() {
     status: string,
     pageSize: number,
     pageNumber: number) => {
+      let dataUrl="";
+      if(loginUser?.userGroup=='Manager'){
+        dataUrl=`${baseUrl}/project/manager/?pageSize=${pageSize}&pageNumber=${pageNumber}`
+      }
+    else{dataUrl=`${baseUrl}/project/employee/?pageSize=${pageSize}&pageNumber=${pageNumber}`}
+
+
     try {
-      let {data} = await axios.get(`${baseUrl}/project/manager/?pageSize=${pageSize}&pageNumber=${pageNumber}`,
+      let {data} = await axios.get(dataUrl,
       {
         headers: requestHeaders,
         params: {
@@ -125,13 +132,14 @@ export default function ProjectsList() {
       <div className="w-100 compTitle d-flex justify-content-between my-5 bg-white p-4">
             <h2>Projects</h2>
             <div>
-              <button
+              {loginUser?.userGroup=='Manager'? <button
                 className={`${Styles.btnOrangeColor} text-white btn rounded-5 p-3`}
                 onClick={navigateToAdd}
               >
                 <i className="fa fa-plus"></i>
                 Add New Project
-              </button>
+              </button>:''}
+             
             </div>
           </div>
       {isLoading ? (
@@ -187,7 +195,7 @@ export default function ProjectsList() {
                         {project.creationDate.slice(0, 10)}
                       </div>
                       <div className="col-md-2 bg-body-secondar bg-info-subtl w-fit p-md-0 px-md-3 px-lg- rounded-3 d-flex justify-content-center align-items-center">
-                        <div className="dropdown">
+                        {loginUser?.userGroup=="Manager"? <div className="dropdown">
                           <button
                             className="btn"
                             type="button"
@@ -221,7 +229,15 @@ export default function ProjectsList() {
                               </a>
                             </li>
                           </ul>
-                        </div>
+                        </div>:
+                        <div>
+                            
+                                <i className="fa fa-eye text-info mx-2"></i>
+                                View
+                              
+                            </div>}
+                       
+                        
                       </div>
                     </div>
                   </li>

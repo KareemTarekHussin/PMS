@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useAuth } from "../../../Context/AuthContext";
+import React, { useContext, useState } from "react";
+import { AuthContext, useAuth } from "../../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import {  Modal } from 'react-bootstrap';
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
@@ -9,15 +9,16 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Style from './sidebar.module.css'
 import axios from 'axios';
-import { Bounce, toast } from 'react-toastify';
+
 import { FieldError } from 'react-hook-form';
+import { useToast } from "../../../Context/ToastContext";
 
 
 
 export default function SideBar() {
-
+  const { getToast } = useToast();
   const { setLoginUser } = useAuth();
-
+  const { loginUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   function logout() {
@@ -80,18 +81,10 @@ export default function SideBar() {
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
         });
-      console.log(response);
-      toast.success(response.data.message, {
-        position: "bottom-right",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-        transition: Bounce,
-      });
+     
+     
+     
+     getToast("success", response.data.message)
       logout()
       console.log(data);
       
@@ -127,15 +120,16 @@ export default function SideBar() {
               component={<Link to="" />} 
               icon={<i className="fa-solid fa-house"></i>}
             >
-              Dashboard
+              Home
             </MenuItem>
 
-            <MenuItem 
+            {loginUser?.userGroup=='Manager'? <MenuItem 
               component={<Link to="users" />} 
               icon={<i className="fa-solid fa-users"></i>}
             >
               Users
-            </MenuItem>
+            </MenuItem>:''}
+           
             <MenuItem 
               component={<Link to="projects" />} 
               icon={<i className="fa-solid fa-calculator"></i>}

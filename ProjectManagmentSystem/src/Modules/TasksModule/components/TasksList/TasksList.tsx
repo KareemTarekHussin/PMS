@@ -13,7 +13,7 @@ import Modal from "react-bootstrap/Modal";
 import { TaksInterface } from "../../../../Interfaces/Interface";
 
 export default function TasksList() {
-  const { requestHeaders, baseUrl }: any = useContext(AuthContext);
+  const { requestHeaders, baseUrl,loginUser }: any = useContext(AuthContext);
   const { getToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [showListSize, setShowListSize] = useState(false);
@@ -68,10 +68,16 @@ export default function TasksList() {
     pageSize: number,
     pageNumber: number
   ) => {
+    let dataUrl="";
+    if(loginUser?.userGroup=='Manager'){
+      dataUrl=`${baseUrl}/Task/manager/?pageSize=${pageSize}&pageNumber=${pageNumber}`
+    }
+  else{dataUrl=`${baseUrl}/Task/?pageSize=${pageSize}&pageNumber=${pageNumber}`}
+
     setLoading(true);
     try {
       let { data } = await axios.get(
-        `${baseUrl}/Task/manager/?pageSize=${pageSize}&pageNumber=${pageNumber}`,
+        dataUrl,
         {
           headers: requestHeaders,
           params: {
@@ -133,13 +139,14 @@ export default function TasksList() {
       <div className="w-100 compTitle d-flex justify-content-between my-5 bg-white p-4">
         <h2>Tasks</h2>
         <div>
-          <button
+          {loginUser?.userGroup=='Manager'? <button
             className={`${Styles.btnOrangeColor} text-white btn rounded-5 p-3`}
             onClick={navigateToAddTask}
           >
             <i className="fa fa-plus"></i>
             Add New Task
-          </button>
+          </button>:''}
+         
         </div>
       </div>
       {isLoading ? (
