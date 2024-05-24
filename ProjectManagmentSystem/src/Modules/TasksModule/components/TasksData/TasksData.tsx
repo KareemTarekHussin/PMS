@@ -76,62 +76,90 @@ export default function TasksData() {
   }, []);
   return (
     <>
-      <div className="compTitle  my-5 bg-white p-4 shadow-lg">
+      <div className="add-headers rounded-3 my-5 bg-white p-4 shadow-lg">
         <span>
-          <i onClick={navigatetoTasks} className="fa fa-chevron-left"></i>
-          View all Tasks
+          <i onClick={navigatetoTasks} className="fa fa-chevron-left me-2"></i>
+          <span>View all Tasks</span>
         </span>
 
-        <h2 className="mt-4">Add a New Task</h2>
+        <h3 className="mt-4">Add a New Task</h3>
       </div>
-      <div className="formContainer w-75 m-auto bg-white p-5 rounded-4">
+
+
+      <div className="containe">
+        <div className="row justify-content-center">
+          <div className="col-md-10 col-lg-9">
+            <div className="bg-inf">
+      <div className="formContainer container m-auto bg-white p-4 p-lg-5 rounded-4">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h4>Title</h4>
+          <h5 className="text-muted">Title</h5>
           <div className="input-group mb-3">
             <input
               type="text"
-              className="form-control"
+              className="form-control p-2 rounded-3"
               placeholder="Title"
               {...register("title")}
             />
           </div>
 
-          <h4>Description</h4>
+          <h5 className=" text-muted">Description</h5>
           <textarea
             rows={4}
-            className="form-control"
+            className="form-control rounded-3"
             placeholder="Description"
             {...register("description")}
           >
            
           </textarea>
-          <div className="row my-3">
+
+          <div className="row my-3 gap-4 gap-md-0">
             <div className="col-md-6">
-              <h4 className="text-muted">User</h4>
-              <select className="form-control rounded-4 p-3" {...register("employeeId")}>
+              <h5 className="text-muted">User</h5>
+              <select 
+                className="form-control rounded-3 p-2" 
+                {...register("employeeId")}
+                defaultValue=""
+                >
+              <option value="" disabled>
+                Select user
+              </option>
               {usersList.map((user:any)=> <option value={user.id}>{user.userName}</option>)}
                
               </select>
             </div>
             <div className="col-md-6">
-              <h4>Project</h4>
-              <select className="form-control rounded-4 p-3" {...register("projectId")}>
+              <h5 className="text-muted">Project</h5>
+              <select 
+                className="form-control rounded-3 p-2" 
+                {...register("projectId")}
+                defaultValue=""
+                >
+                <option value="" className="text-danger" disabled>
+                  Select project
+                </option>
                 {projectsList.map((project:any)=> <option value={project.id}>{project.title}</option>)}
                
               </select>
             </div>
           </div>
 
-          <div className="d-flex justify-content-between my-4">
-            <button onClick={navigatetoTasks} className="btn bg-light rounded-pill p-4 text-black border-black">
+          <div className="d-flex justify-content-between my-5">
+            <button onClick={navigatetoTasks} className="white-btn rounded-pill px-4">
               Cancel
             </button>
-            <button type="submit" className={`${Styles.btnOrangeColor} btn rounded-pill p-4 text-white`}>
+            <button type="submit" className='orange-btn rounded-pill px-4 py-2'>
               Save
             </button>
           </div>
         </form>
       </div>
+      
+      </div>
+          </div>
+        </div>
+      </div>
+
+
     </>
   );
 }
