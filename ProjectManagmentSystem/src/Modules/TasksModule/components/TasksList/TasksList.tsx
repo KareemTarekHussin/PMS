@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import Styles from "./TasksList.module.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthContext";
@@ -37,16 +36,10 @@ export default function TasksList() {
     setShowDelete(true);
   };
 
-  const [titleValue, setTitleValue] = useState("");
-  const [statusValue, setStatusValue] = useState("");
-  const [arrayOfPages, setArrayOfPages] = useState<number[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
-  const [totalNumberOfRecords, setTotalNumberOfRecords] = useState<number[]>(
-    []
-  );
+ 
+  
+  
 
-  const { getToast } = useToast();
   const navigate = useNavigate();
 
   const onDeleteSubmit = async () => {
@@ -200,7 +193,7 @@ export default function TasksList() {
           </ul>
 
           {tasksList.length > 0 ? (
-            tasksList.map((task:any) => (
+            tasksList.map((task:TaksInterface) => (
               <ul className="responsive-table-categories">
                 <li key={task.id} className="table-row">
                   <div className="col col-1" data-label="Title :"><span className='fw-semibold'>{task.title}</span></div>
@@ -224,10 +217,19 @@ export default function TasksList() {
                         </li>
                         
                         <li>
+                        <Link
+                                className="dropdown-item"
+                                to={`/dashboard/tasksedit/${task.id}`}
+                                state={{ taskData: task, type: "edit" }}
+                              >
                           <a className="dropdown-item text-decoration-none text-black" href="#">
+                         
                             <i className="fa fa-edit text-warning me-2"></i>
+                           
                             <span>Edit</span>
+                          
                           </a>
+                          </Link>
                         </li>
 
                         <li>

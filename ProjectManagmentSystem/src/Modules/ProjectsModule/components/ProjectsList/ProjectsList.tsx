@@ -102,7 +102,7 @@ export default function ProjectsList() {
       getToast("success", "Successfully deleted project");
 
       handleDeleteClose();
-      getProjectsList("", "", pageSize, 1);
+      getProjectsList();
     } catch (error:any) {
       getToast("error", error.response.message);
     }
@@ -165,7 +165,7 @@ export default function ProjectsList() {
             </li>
           </ul>
           {projectsList.length > 0 ? (
-            projectsList.map((project:any, index) => (
+            projectsList.map((project:ProjectInterface, index) => (
               <ul  className="responsive-table-categories">
                 <li key={project.id} className="table-row">
                   <div className="col col-1 fw-semibold" data-label="#">{index + 1}</div>
