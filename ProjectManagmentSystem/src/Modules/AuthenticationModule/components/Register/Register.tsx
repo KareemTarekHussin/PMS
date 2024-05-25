@@ -6,6 +6,7 @@ import logo from "../../../../assets/images/PMS 3.png";
 import Styles from "./Register.module.css";
 
 import img from "../../../..//assets/images/8550fbcbe60cd242d12760784feff287.jpeg";
+import { useToast } from "../../../Context/ToastContext";
 
 interface IFormInput {
   userName: string;
@@ -19,7 +20,7 @@ interface IFormInput {
 
 export default function Register() {
   const [visible, setVisible] = useState(false);
-
+  const { getToast } = useToast();
   const navigate = useNavigate();
   let {
     register,
@@ -51,10 +52,13 @@ export default function Register() {
         registerFormData
       );
       console.log(response);
-
+{/* TODO:add gettoast*/}
+getToast("success","Registerd Successfully" );
       navigate("/verify");
-    } catch (error) {
-      console.log(error);
+    } catch (error:any) {
+      
+      {/* TODO:add gettoast*/}
+      getToast("error", error.response.data.message);
     }
   };
 

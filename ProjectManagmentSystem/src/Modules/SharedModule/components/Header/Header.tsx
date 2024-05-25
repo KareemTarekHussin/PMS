@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../../../Context/AuthContext'
 
 export const Header = (props:any) => {
+  const { loginUser }: any = useContext(AuthContext);
   return (
     <>
       <div
@@ -9,13 +11,14 @@ export const Header = (props:any) => {
         <h1 className="fw-semibold mb-2 mb-md-0">{props.title}</h1>
 
         <div>
-          <button
+{loginUser?.userGroup=='Manager'? <button
             className='orange-btn rounded-5 px-4 py-2'
             onClick={props.method}
           >
             <i className="fa fa-plus me-2 fw-lighter"></i>
             {props.button}
-          </button>
+          </button>:''}
+         
         </div>
 
       </div>
