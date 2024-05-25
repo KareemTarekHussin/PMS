@@ -19,6 +19,7 @@
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.3",
     "formik": "^2.4.6",
+    "framer-motion": "^11.2.6",
     "generate-react-cli": "^8.4.1",
     "jwt-decode": "^4.0.0",
     "react": "^18.2.0",

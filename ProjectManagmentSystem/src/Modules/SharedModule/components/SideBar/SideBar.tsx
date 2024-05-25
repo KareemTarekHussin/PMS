@@ -88,7 +88,7 @@ export default function SideBar() {
   // *========================================>JSX<=============================================//
   return (
     <>
-      <div className='sidebar-container'>
+      <div className= "sidebar-container sticky-top ">
         <Sidebar 
           collapsed={isCollapse} 
           className='border-0'

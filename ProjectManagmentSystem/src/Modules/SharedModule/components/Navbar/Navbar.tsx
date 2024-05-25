@@ -12,7 +12,7 @@ export default function CustomNavbar() {
 
   return (
     <>
-      <Navbar expand="md" className="bg-white p-0 fixed-top shadow-sm">
+      <Navbar expand="md" className="bg-white p-0  shadow-sm">
       <Container>
         <Navbar.Brand href="#home">
             <img src={navLogo} className='' alt="" />

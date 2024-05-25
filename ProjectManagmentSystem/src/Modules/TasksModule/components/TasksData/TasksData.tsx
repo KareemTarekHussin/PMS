@@ -72,12 +72,14 @@ export default function TasksData() {
   //Get ALL Users API
   const getUsersList = async () => {
     try {
-      let response = await axios.get(`${baseUrl}/Users/manager`, {
+      let response = await axios.get(`${baseUrl}/Users/Manager`, {
         headers: requestHeaders,
       });
+      console.log(response.data.data);
+      
       setUsersList(response.data.data);
-    } catch (error) {
-      console.log(error);
+    } catch (error:any) {
+      console.log(error.response.message);
     }
   };
 
@@ -148,7 +150,7 @@ export default function TasksData() {
               >
                 <option value="">select</option>
                 {usersList.map((user: any) => (
-                  <option value={user.id}>{user.userName}</option>
+                  <option key={user.id} value={user.id}>{user.userName}</option>
                 ))}
               </select>
               {errors.employeeId && (
@@ -169,7 +171,7 @@ export default function TasksData() {
               >
                 <option value="">select</option>
                 {projectsList.map((project: any) => (
-                  <option value={project.id}>{project.title}</option>
+                  <option key={project.id} value={project.id}>{project.title}</option>
                 ))}
               </select>
               {errors.projectId && (

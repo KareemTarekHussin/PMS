@@ -18,6 +18,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProjectsData from "./Modules/ProjectsModule/components/ProjectsData/ProjectsData";
 import TasksData from "./Modules/TasksModule/components/TasksData/TasksData";
+import TaskBoard from "./Modules/TasksModule/components/TaskBoard/TaskBoard";
 
 function App() {
   const routes = createBrowserRouter([
@@ -48,6 +49,7 @@ function App() {
         { path: "projectsdata", element: <ProjectsData /> },
         { path: "tasks", element: <TasksList /> },
         { path: "tasksdata", element: <TasksData /> },
+        { path: "taskboard", element: <TaskBoard /> },
         { path: "tasksedit/:id", element: <TasksData /> },
         { path: "users", element: <UsersList /> },
       ],
