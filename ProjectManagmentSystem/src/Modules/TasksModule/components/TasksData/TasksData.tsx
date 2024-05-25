@@ -93,22 +93,27 @@ export default function TasksData() {
 
   return (
     <>
-      <div className="compTitle  my-5 bg-white p-4 shadow-md">
-        <button className="btn" onClick={navigatetoTasks}>
+      <div className="add-headers rounded-3 my-5 bg-white p-4 shadow-lg">
         <span>
-          <i  className="fa fa-chevron-left"></i>
-          View all Tasks
-        </span></button>
+          <i onClick={navigatetoTasks} className="fa fa-chevron-left me-2"></i>
+          <span>View all Tasks</span>
+        </span>
 
-        <h2 className="mt-4">Add a New Task</h2>
+        <h3 className="mt-4">Add a New Task</h3>
       </div>
-      <div className={`${Styles.formContainer} bg-white p-5 rounded-4`}>
+
+
+      <div className="containe">
+        <div className="row justify-content-center">
+          <div className="col-md-10 col-lg-9">
+            <div className="bg-inf">
+      <div className="formContainer container m-auto bg-white p-4 p-lg-5 rounded-4">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h6>Title</h6>
+          <h5 className="text-muted">Title</h5>
           <div className="input-group mb-3">
             <input
               type="text"
-              className="form-control"
+              className="form-control p-2 rounded-3"
               placeholder="Title"
               defaultValue={state ? taskData?.title : null}
               {...register("title", {
@@ -120,37 +125,29 @@ export default function TasksData() {
             <div className="p-1 alert alert-danger">{errors.title.message}</div>
           )}
 
-          <h6>Description</h6>
+          <h5 className=" text-muted">Description</h5>
           <textarea
             rows={4}
-            className="form-control"
+            className="form-control rounded-3"
             placeholder="Description"
-            defaultValue={state ? taskData?.title : null}
-            {...register("description", {
-              required: "Description is required",
-            })}
-          ></textarea>
-          {errors.description && (
-            <div className="p-1 alert alert-danger">
-              {errors.description.message}
-            </div>
-          )}
-          <div className="row my-3">
-            <div className="col-md-6">
-              <h6 className="text-muted">User</h6>
+            {...register("description")}
+          >
+           
+          </textarea>
 
-              <select
-                className="form-control rounded-4 p-3"
-                {...register("employeeId", {
-                  required: "User is required",
-                })}
-                value={employeeId}
-                onChange={(e) => setEmployeeId(e.target.value)}
-              >
-                <option value="">select</option>
-                {usersList.map((user: any) => (
-                  <option value={user.id}>{user.userName}</option>
-                ))}
+          <div className="row my-3 gap-4 gap-md-0">
+            <div className="col-md-6">
+              <h5 className="text-muted">User</h5>
+              <select 
+                className="form-control rounded-3 p-2" 
+                {...register("employeeId")}
+                defaultValue=""
+                >
+              <option value="" disabled>
+                Select user
+              </option>
+              {usersList.map((user:any)=> <option value={user.id}>{user.userName}</option>)}
+               
               </select>
               {errors.employeeId && (
                 <div className="p-1 alert alert-danger">
@@ -159,19 +156,17 @@ export default function TasksData() {
               )}
             </div>
             <div className="col-md-6">
-              <h6>Project</h6>
-              <select
-                className="form-control rounded-4 p-3"
-                {...register("projectId", {
-                  required: "Project is required",
-                })}
-                value={projectId}
-                onChange={(e) => setProjectId(e.target.value)}
-              >
-                <option value="">select</option>
-                {projectsList.map((project: any) => (
-                  <option value={project.id}>{project.title}</option>
-                ))}
+              <h5 className="text-muted">Project</h5>
+              <select 
+                className="form-control rounded-3 p-2" 
+                {...register("projectId")}
+                defaultValue=""
+                >
+                <option value="" className="text-danger" disabled>
+                  Select project
+                </option>
+                {projectsList.map((project:any)=> <option value={project.id}>{project.title}</option>)}
+               
               </select>
               {errors.projectId && (
                 <div className="p-1 alert alert-danger">
@@ -181,22 +176,23 @@ export default function TasksData() {
             </div>
           </div>
 
-          <div className="d-flex justify-content-between my-4">
-            <button
-              onClick={navigatetoTasks}
-              className="btn bg-light px-4 py-2 rounded-5 text-black border-black"
-            >
+          <div className="d-flex justify-content-between my-5">
+            <button onClick={navigatetoTasks} className="white-btn rounded-pill px-4">
               Cancel
             </button>
-            <button
-              type="submit"
-              className={`${Styles.btnOrangeColor} btn  px-4 py-2 rounded-5  text-white`}
-            >
+            <button type="submit" className='orange-btn rounded-pill px-4 py-2'>
               Save
             </button>
           </div>
         </form>
       </div>
+      
+      </div>
+          </div>
+        </div>
+      </div>
+
+
     </>
   );
 }
