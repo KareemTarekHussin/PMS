@@ -40,7 +40,7 @@ export default function Login() {
         navigate("/dashboard", { replace: true });
       }, 2000);
       setLoading(false);
-      getToast("success", "Success Login");
+      getToast("success", "Logged in Successfuly");
     } catch (err: any) {
       setLoading(false);
       getToast("error", err.response.data.message);

@@ -1,17 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { useAuth } from "../../../Context/AuthContext";
+import React, { useEffect, useContext, useState } from "react";
+import { AuthContext, useAuth } from "../../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import {  Modal } from 'react-bootstrap';
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
+
+
 import { useForm } from 'react-hook-form';
 import Style from './sidebar.module.css'
 import axios from 'axios';
+
 import { FieldError } from 'react-hook-form';
 import { useToast } from "../../../Context/ToastContext";
 
 
-// ^==============================>>SideBar Component<<=============================
+
 export default function SideBar() {
 
   const { setLoginUser, baseUrl, requestHeaders } = useAuth();
@@ -59,9 +62,9 @@ export default function SideBar() {
     localStorage.removeItem("token");
     setLoginUser(null);
     navigate("/login");
-    getToast("success", "Logged out successfully");
   }
   
+  // ?============================================================================================
   interface PasswordState {
     oldPassword: boolean;
     newPassword: boolean;
@@ -86,27 +89,32 @@ export default function SideBar() {
   const onSubmit = async (data: any) => {
     try{
       
-      let response = await axios.put(`${baseUrl}/Users/ChangePassword`, data,
+      let response = await axios.put('https://upskilling-egypt.com:3003/api/v1/Users/ChangePassword', data,
         {
-          headers: requestHeaders
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
         });
-      reset();
-      handleClose();
-      getToast("success", response.data.message);
+     
+     
+     
+     getToast("success", response.data.message)
+      logout()
+      console.log(data);
+      
     }
-    catch (error:any) {
-      getToast("error", error.response.data.message);
+    catch (error) {
+      
+      console.log(error);
     }
   }
   
 
-  // *========================================>JSX<=============================================//
+  // *========================================><=============================================//
   return (
     
     <>
 
       <div className='sidebar-container'>
-        <Sidebar 
+      <Sidebar 
           collapsed={isCollapse} 
           // breakPoint={breakPoint}
           collapsedWidth={collapsedWidth}

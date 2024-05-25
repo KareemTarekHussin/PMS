@@ -1,30 +1,37 @@
-import axios from 'axios';
-import React, { useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import React, { useRef, useState } from "react";
+import { useForm ,SubmitHandler} from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import logo from "../../../../assets/images/PMS 3.png";
-import Styles from "./Register.module.css"
+import Styles from "./Register.module.css";
 
 import img from "../../../..//assets/images/8550fbcbe60cd242d12760784feff287.jpeg";
 
-export default function Register() {
+interface IFormInput {
+  userName: string;
+  email: string;
+  country: string;
+  phoneNumber: string;
+  profileImage: FileList;
+  password: string;
+  confirmPassword: string;
+}
 
+export default function Register() {
   const [visible, setVisible] = useState(false);
-  
+
   const navigate = useNavigate();
   let {
     register,
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm();
-  const imgValue = watch()
- 
-  
-  
+  } = useForm<IFormInput>();
+  const imgValue = watch();
+
   const password = useRef({});
   password.current = watch("password", "");
-  const appendToFormData = (data:any) => {
+  const appendToFormData = (data: any) => {
     const formData = new FormData();
     formData.append("userName", data.userName);
     formData.append("email", data.email);
@@ -35,7 +42,7 @@ export default function Register() {
     formData.append("confirmPassword", data.confirmPassword);
     return formData;
   };
-  const onSubmit = async (data:any) => {
+  const onSubmit: SubmitHandler<IFormInput> = async(data) =>  {
     try {
       const registerFormData = appendToFormData(data);
 
@@ -50,13 +57,13 @@ export default function Register() {
       console.log(error);
     }
   };
-  
+
   return (
     <>
-      <div className={` ${Styles.authcontainer} p-5 `}>
+      <div className={` ${Styles.authcontainer}  `}>
         <div className="container-fluid">
-          <div className="row justify-content-center align-items-center  ">
-            <div className="col-md-9 ">
+          <div className="row d-flex justify-content-center vh-100 align-items-center  ">
+            <div className="col-md-7 ">
               <div className="text-center">
                 <img className="" src={logo} alt="" />
               </div>
@@ -71,12 +78,20 @@ export default function Register() {
                     <div className="text-center">
                       <label htmlFor="file">
                         <img
-                           className={`${Styles.profileImg}`}
-                          src={imgValue?.profileImage? (URL.createObjectURL(imgValue?.profileImage[0])):(img)}
+                          className={`${Styles.profileImg}`}
+                          src={
+                            imgValue?.profileImage
+                              ? URL.createObjectURL(imgValue.profileImage[0])
+                              : img
+                          }
                           alt="profileImg"
                         />
 
-<i className={`${Styles.profileIcon} fa fa-camera position-absolute`}></i>
+                        <i
+                          className={`${
+                            (Styles.profileIcon, Styles.textGold)
+                          } fa fa-camera position-absolute`}
+                        ></i>
                       </label>
                       <input
                         type="file"
@@ -111,7 +126,7 @@ export default function Register() {
                       )}
                     </div>
                     <div className="col md-6">
-                    <label className={`${Styles.textGold}`}>E-mail</label>
+                      <label className={`${Styles.textGold}`}>E-mail</label>
                       <div>
                         <input
                           type="text"
@@ -129,7 +144,7 @@ export default function Register() {
                       )}
                     </div>
                     <div className="col-md-6">
-                    <label className={`${Styles.textGold}`}>Country</label>
+                      <label className={`${Styles.textGold}`}>Country</label>
                       <div>
                         <input
                           type="text"
@@ -147,7 +162,9 @@ export default function Register() {
                       )}
                     </div>
                     <div className="col md-6">
-                    <label className={`${Styles.textGold}`}>Phone Number</label>
+                      <label className={`${Styles.textGold}`}>
+                        Phone Number
+                      </label>
                       <div>
                         <input
                           type="number"
@@ -169,7 +186,7 @@ export default function Register() {
                       <div>
                         <input
                           type={visible ? "text" : "password"}
-                           className={`${Styles.input} p-1 text-white w-100 z-0`}
+                          className={`${Styles.input} p-1 text-white w-100 z-0`}
                           placeholder="Enter your Password"
                           {...register("password", {
                             required: "password is required",
@@ -177,7 +194,7 @@ export default function Register() {
                         />
                         <span
                           onClick={() => setVisible(!visible)}
-                          className={`${Styles.passEye} text-white px-5 position-absolute d-inline-block`} 
+                          className={`${Styles.passEye} text-white px-5 position-absolute d-inline-block`}
                         >
                           {visible ? (
                             <i className="fa-regular fa-eye  "></i>
@@ -193,7 +210,9 @@ export default function Register() {
                       )}
                     </div>
                     <div className="col md-6">
-                    <label className={`${Styles.textGold}`}>Confirm Password</label>
+                      <label className={`${Styles.textGold}`}>
+                        Confirm Password
+                      </label>
                       <div>
                         <input
                           type={visible ? "text" : "password"}
@@ -225,7 +244,9 @@ export default function Register() {
                     </div>
                   </div>
                   <div className="text-center">
-                  <button className={`${Styles.btnGold} btn px-5 w-50`}>Save</button>
+                    <button className={`${Styles.btnGold} btn px-5 w-50 text-white rounded-pill p-2 my-4`}>
+                      Save
+                    </button>
                   </div>
                 </form>
               </div>
@@ -234,5 +255,5 @@ export default function Register() {
         </div>
       </div>
     </>
-  )
+  );
 }

@@ -1,19 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react'
-import Styles from "./TasksList.module.css"
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../../Context/AuthContext';
-import NoData from '../../../SharedModule/components/NoData/NoData';
-import { useToast } from '../../../Context/ToastContext';
-import Loading from '../../../SharedModule/components/Loading/Loading';
-import DeleteData from '../../../SharedModule/components/DeleteData/DeleteData';
+import React, { useContext, useEffect, useState } from "react";
+import Styles from "./TasksList.module.css";
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../Context/AuthContext";
+import NoData from "../../../SharedModule/components/NoData/NoData";
+import { useToast } from "../../../Context/ToastContext";
+
+import Loading from "../../../SharedModule/components/Loading/Loading";
+import DeleteData from "../../../SharedModule/components/DeleteData/DeleteData";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { Header } from '../../../SharedModule/components/Header/Header';
 import Pagination from '../../../SharedModule/components/Pagination/Pagination';
+import { TaksInterface } from "../../../../Interfaces/Interface";
 
 export default function TasksList() {
-  const { requestHeaders, baseUrl }: any = useContext(AuthContext);
+  const { requestHeaders, baseUrl,loginUser }: any = useContext(AuthContext);
+  const { getToast } = useToast();
+  const [loading, setLoading] = useState(false);
+  const [showListSize, setShowListSize] = useState(false);
   const [tasksList, setTasksList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [taskId, setTaskId] = useState(0);
@@ -31,6 +36,16 @@ export default function TasksList() {
     setTaskId(id);
     setShowDelete(true);
   };
+
+  const [titleValue, setTitleValue] = useState("");
+  const [statusValue, setStatusValue] = useState("");
+  const [arrayOfPages, setArrayOfPages] = useState<number[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const [totalNumberOfRecords, setTotalNumberOfRecords] = useState<number[]>(
+    []
+  );
+
   const { getToast } = useToast();
   const navigate = useNavigate();
 
@@ -47,8 +62,8 @@ export default function TasksList() {
       getToast("success", "Successfully deleted task");
 
       handleDeleteClose();
-      getTasksList();
-    } catch (error:any) {
+      getTasksList("", "", pageSize, 1);
+    } catch (error: any) {
       getToast("error", error.response.message);
     }
   };

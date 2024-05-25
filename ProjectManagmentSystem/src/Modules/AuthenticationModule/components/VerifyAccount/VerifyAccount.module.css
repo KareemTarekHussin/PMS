@@ -1,8 +1,6 @@
 .authcontainer {
     background-image: url("/src/assets/images/bg1.png");
     background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
 }
 
 .input {
@@ -49,8 +47,8 @@
 
 .profileIcon {
     right: 49.5%;
-    top: 49.5%;
-    color: hsla(35, 86%, 55%, 1)}
+    top: 50%;
+}
 
 .textGold {
     color: hsla(35, 86%, 55%, 1);
@@ -66,5 +64,5 @@
 }
 
 .passEye2 {
-    right: 26%;
+    right: 19%;
 }

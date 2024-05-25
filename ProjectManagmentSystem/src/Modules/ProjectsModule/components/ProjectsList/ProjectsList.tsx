@@ -17,8 +17,9 @@ import projectImg from "../../../../assets/images/projects.jpg";
 
 
 
+import { ProjectInterface } from "../../../../Interfaces/Interface";
 export default function ProjectsList() {
-  const { requestHeaders, baseUrl }: any = useContext(AuthContext);
+  const { requestHeaders, baseUrl,loginUser }: any = useContext(AuthContext);
   const { getToast } = useToast();
   const [projectsList, setProjectsList] = useState([]);
   const [ProjectId, setProjectId] = useState(0);
@@ -101,7 +102,7 @@ export default function ProjectsList() {
       getToast("success", "Successfully deleted project");
 
       handleDeleteClose();
-      getProjectsList();
+      getProjectsList("", "", pageSize, 1);
     } catch (error:any) {
       getToast("error", error.response.message);
     }

@@ -1,41 +1,57 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useContext } from "react";
-import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthContext";
-import Styles from "./TasksData.module.css"
+import Styles from "./TasksData.module.css";
 import { useToast } from "../../../Context/ToastContext";
+
 export default function TasksData() {
-  
   const { requestHeaders, baseUrl }: any = useContext(AuthContext);
-  const [projectsList, setProjectsList] = useState([]);
-  const [usersList, setUsersList] = useState([]);
   const { getToast } = useToast();
 
+  const [projectsList, setProjectsList] = useState([]);
+  const [usersList, setUsersList] = useState([]);
+  const [projectId, setProjectId] = useState("");
+  const [employeeId, setEmployeeId] = useState("");
+ 
+
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const state = location.state?.type === "edit";
+  const taskData = location.state?.taskData;
 
   const navigatetoTasks = () => {
     navigate("/dashboard/tasks");
   };
-
+  type Inputs = {
+    title: string;
+    description: string;
+    employeeId: string;
+    projectId: string;
+  };
   let {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
-  } = useForm();
+   
+  } = useForm<Inputs>();
 
   /////////////API's
 
   //SubmitProjectAPI for Task
-  const onSubmit = async (data: any) => {
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      let response = await axios.post(`${baseUrl}/Task`, data, {
+      let response = await axios({
+        method: state ? "put" : "post",
+        url: state ? `${baseUrl}/Task/${taskData.id}` : `${baseUrl}/Task`,
+        data,
         headers: requestHeaders,
       });
-
-      getToast("success", "Successfully created task");
+      console.log(response);
+      getToast("success", state ? "success edit" : "success create");
       navigate("/dashboard/tasks");
     } catch (error:any) {
       getToast('error', error.response.message);
@@ -49,7 +65,6 @@ export default function TasksData() {
         headers: requestHeaders,
       });
       setProjectsList(response.data.data);
-      console.log(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -61,19 +76,21 @@ export default function TasksData() {
         headers: requestHeaders,
       });
       setUsersList(response.data.data);
-      console.log(response.data.data);
     } catch (error) {
       console.log(error);
     }
   };
 
-
-
-
   useEffect(() => {
     getProjectsList();
     getUsersList();
+
+    if (state && taskData) {
+      setProjectId(taskData.project.id);
+      setEmployeeId(taskData.employee.id);
+    }
   }, []);
+
   return (
     <>
       <div className="add-headers rounded-3 my-5 bg-white p-4 shadow-lg">
@@ -98,9 +115,15 @@ export default function TasksData() {
               type="text"
               className="form-control p-2 rounded-3"
               placeholder="Title"
-              {...register("title")}
+              defaultValue={state ? taskData?.title : null}
+              {...register("title", {
+                required: "title is required",
+              })}
             />
           </div>
+          {errors.title && (
+            <div className="p-1 alert alert-danger">{errors.title.message}</div>
+          )}
 
           <h5 className=" text-muted">Description</h5>
           <textarea
@@ -126,6 +149,11 @@ export default function TasksData() {
               {usersList.map((user:any)=> <option value={user.id}>{user.userName}</option>)}
                
               </select>
+              {errors.employeeId && (
+                <div className="p-1 alert alert-danger">
+                  {errors.employeeId.message}
+                </div>
+              )}
             </div>
             <div className="col-md-6">
               <h5 className="text-muted">Project</h5>
@@ -140,6 +168,11 @@ export default function TasksData() {
                 {projectsList.map((project:any)=> <option value={project.id}>{project.title}</option>)}
                
               </select>
+              {errors.projectId && (
+                <div className="p-1 alert alert-danger">
+                  {errors.projectId.message}
+                </div>
+              )}
             </div>
           </div>
 
