@@ -15,7 +15,7 @@ export default function CustomNavbar() {
       <Navbar expand="md" className="bg-white p-0 fixed-top shadow-sm">
       <Container>
         <Navbar.Brand href="#home">
-            <img src={navLogo} className='' alt="" />
+            <img src={navLogo} className='w-na bg-dange' alt="" />
         </Navbar.Brand>
           
         <Navbar.Toggle aria-controls="basic-navbar-nav" />

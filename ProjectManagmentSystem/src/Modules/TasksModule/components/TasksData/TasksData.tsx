@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthContext";
 import Styles from "./TasksData.module.css";
 import { useToast } from "../../../Context/ToastContext";
@@ -95,7 +95,9 @@ export default function TasksData() {
     <>
       <div className="add-headers rounded-3 my-5 bg-white p-4 shadow-lg">
         <span>
-          <i onClick={navigatetoTasks} className="fa fa-chevron-left me-2"></i>
+          <Link to='/dashboard/tasks'>
+            <i className="fa fa-chevron-left me-2 text-black"></i>
+          </Link>
           <span>View all Tasks</span>
         </span>
 

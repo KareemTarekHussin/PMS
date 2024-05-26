@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import Styles from "./ProjectsList.module.css";
 import axios from "axios";
 import { AuthContext } from "../../../Context/AuthContext";
 import NoData from "../../../SharedModule/components/NoData/NoData";
@@ -12,14 +11,14 @@ import Loading from "../../../SharedModule/components/Loading/Loading";
 import Pagination from "../../../SharedModule/components/Pagination/Pagination";
 import { Header } from "../../../SharedModule/components/Header/Header";
 import projectImg from "../../../../assets/images/projects.jpg";
-
-
-
-
-
 import { ProjectInterface } from "../../../../Interfaces/Interface";
+
+
+
+
+
 export default function ProjectsList() {
-  const { requestHeaders, baseUrl,loginUser }: any = useContext(AuthContext);
+  const { requestHeaders, baseUrl, loginUser }: any = useContext(AuthContext);
   const { getToast } = useToast();
   const [projectsList, setProjectsList] = useState([]);
   const [ProjectId, setProjectId] = useState(0);
@@ -36,10 +35,19 @@ export default function ProjectsList() {
     setProjectId(id);
     setShowDelete(true);
   };
+
+  const [viewedProject, setViewedProject] = useState<ProjectInterface | null>(null); 
+  const [modalShow, setModalShow] = React.useState(false);
+  const handleCloseViewModal = () => setModalShow(false);
+  const handleViewModal = (project: ProjectInterface)=>{
+    setViewedProject(project); // Set the user data
+    setModalShow(true);
+  }
   const navigate = useNavigate();
 
   //*==========================> Get ALL Projects API <===============================>> 
   const getProjectsList = async (title='', pageSize=5, pageNumber=1  ) => {
+    setIsLoading(true);
     try {
       let response = await axios.get(`${baseUrl}/Project/manager`, {
         headers: requestHeaders,
@@ -57,17 +65,14 @@ export default function ProjectsList() {
 
     } catch (error) {
       console.log(error);
+    }finally {
+      setIsLoading(false);
     }
   };
   
-    //?============================> useEffect <=================================>> 
-
+    //*============================> useEffect <=================================>> 
   useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 0);
-    getProjectsList('',5,1);
+    getProjectsList();
   }, []);
 
   //^=================================> Searching <======================================>> 
@@ -90,6 +95,7 @@ export default function ProjectsList() {
 
   //!=================================> Delete Project API <==============================>> 
   const onDeleteSubmit = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.delete(
         `${baseUrl}/Project/${ProjectId}`,
@@ -102,9 +108,11 @@ export default function ProjectsList() {
       getToast("success", "Successfully deleted project");
 
       handleDeleteClose();
-      getProjectsList("", "", pageSize, 1);
+      getProjectsList();
     } catch (error:any) {
       getToast("error", error.response.message);
+    }finally {
+      setIsLoading(false);
     }
   };
 
@@ -112,6 +120,8 @@ export default function ProjectsList() {
     navigate("/dashboard/projectsdata");
   };
 
+  // *=========================================================================================>>
+  // *=========================================================================================>>
   // *====================================> UI <===============================================>>
   return (
     <>
@@ -128,16 +138,55 @@ export default function ProjectsList() {
         </Modal.Footer>
       </Modal>
 
+      <Modal
+      show={modalShow}
+      onHide={handleCloseViewModal}
+      className="font-main"
+      // size="md"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Project Details
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {viewedProject && (
+            <>
+              <h4 className="fst-italic fw-semibold text-success">
+                {viewedProject.title}
+                </h4>
+              <p><span className="fw-bold">Creation Date : </span> {viewedProject.creationDate}</p>
+              <p><span className="fw-bold">Last Update : </span> {viewedProject.modificationDate}</p>
+            </>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={handleCloseViewModal} className="btn btn-success">Close</Button>
+        </Modal.Footer>
+    </Modal>
 
-      
+      <div
+      className="w-100 compTitle header-project d-flex flex-column align-items-center flex-md-row justify-content-md-between mt-5 mb-4 bg-whit rounded-3 p-4 gap-2 gap-md-0 shadow-sm">
 
-      <Header title='Projects' button='Add New Project' method={navigateToAdd} imgUrl={projectImg} />
+        <h1 className="fw-semibold mb-2 mb-md-0 title-project">Projects</h1>
 
-      {isLoading ? (
-        <Loading />
-      ) : (
+        <div>
+          <button
+            className='orange-btn rounded-5 px-4 py-2'
+            onClick={navigateToAdd}
+          >
+            <i className="fa fa-plus me-2 fw-lighter"></i>
+            Add New Project
+          </button>
+        </div>
+
+      </div>
+
 
       <div className='py-4 bg-inf px-lg-5 rounded-3 shadow-s'>
+
         <div className="col-lg-4">
           <div className="input-group mb-3">
             <span className="input-group-text rounded-5 rounded-end-0" id="basic-addon1">
@@ -164,73 +213,78 @@ export default function ProjectsList() {
               <div className="col col-5">Actions</div>
             </li>
           </ul>
-          {projectsList.length > 0 ? (
-            projectsList.map((project:any, index) => (
-              <ul  className="responsive-table-categories">
-                <li key={project.id} className="table-row">
-                  <div className="col col-1 fw-semibold" data-label="#">{index + 1}</div>
-                  <div className="col col-2" data-label="Category Name :">{project.title}</div>
-                  <div className="col col-3" data-label="Creation Date :">{project.creationDate.slice(0, 10)}</div>
-                  <div className="col col-4" data-label="Last Update :">{project.modificationDate.slice(0, 10)}</div>
-                  <div className="col col-5" data-label="Actions :">
-                    <div className="dropdown">
-                      <button className="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i className="fa fa-ellipsis-vertical"></i>
-                      </button>
-                      <ul className="dropdown-menu bg-success-subtl border-0 shadow-lg rounded-5 pt-2">
-                        <div>
 
-                        <li>
-                          <a className="dropdown-item text-decoration-none text-black" href="#">
-                            <i className="fa fa-eye text-info me-2"></i>
-                            <span>View</span>
-                          </a>
-                        </li>
-                        
-                        <li>
-                          <a className="dropdown-item text-decoration-none text-black" href="#">
-                            <i className="fa fa-edit text-warning me-2"></i>
-                            <span>Edit</span>
-                          </a>
-                        </li>
-
-                        <li>
-                          <a className="dropdown-item text-decoration-none text-black" onClick={() => handleDeleteShow(project.id)}  href="#">
-                            <i className="fa fa-trash text-danger me-2"></i>
-                            <span>Delete</span>
-                          </a>
-                        </li>
-                        </div>
-
-                        
-                      </ul>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            ))
+          {isLoading ? (
+            <Loading />
           ) : (
-            <ul className="responsive-table-categories">
-              <li className="table-row">
-                <div className="col col-1">No data</div>
-              </li>
-            </ul>
+            <>
+              {projectsList.length > 0 ? (
+                projectsList.map((project:any, index) => (
+                  <ul  className="responsive-table-categories">
+                    <li key={project.id} className="table-row">
+                      <div className="col col-1 fw-semibold" data-label="#">{index + 1}</div>
+                      <div className="col col-2" data-label="Category Name :">{project.title}</div>
+                      <div className="col col-3" data-label="Creation Date :">{project.creationDate.slice(0, 10)}</div>
+                      <div className="col col-4" data-label="Last Update :">{project.modificationDate.slice(0, 10)}</div>
+                      <div className="col col-5" data-label="Actions :">
+                        <div className="dropdown">
+                          <button className="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i className="fa fa-ellipsis-vertical"></i>
+                          </button>
+                          <ul className="dropdown-menu bg-success-subtl border-0 shadow-lg rounded-5 pt-2">
+                            <div>
+
+                            <li className="dropdown-option">
+                              <a className="dropdown-item text-decoration-none text-black" href="#" onClick={()=>handleViewModal(project)}>
+                                <i className="fa fa-eye text-info me-2"></i>
+                                <span>View</span>
+                              </a>
+                            </li>
+                            
+                            <li className="dropdown-option">
+                              <a className="dropdown-item text-decoration-none text-black" href="#">
+                                <i className="fa fa-edit text-warning me-2"></i>
+                                <span>Edit</span>
+                              </a>
+                            </li>
+
+                            <li className="dropdown-option">
+                              <a className="dropdown-item text-decoration-none text-black" onClick={() => handleDeleteShow(project.id)}  href="#">
+                                <i className="fa fa-trash text-danger me-2"></i>
+                                <span>Delete</span>
+                              </a>
+                            </li>
+                            </div>
+
+                            
+                          </ul>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                ))
+              ) : (
+                <ul className="responsive-table-categories">
+                  <li className="table-row">
+                    <div className="col col-1">No data</div>
+                  </li>
+                </ul>
+              )}
+            </>
           )}
         </div>
 
-  
-        <Pagination
-        currentPage={currentPage}
+        <Pagination currentPage={currentPage}
         totalPages={arrayOfPages.length}
         pageSize={pageSize}
         totalResults={totalResults}
         onPageChange={handlePageChange}
         onPageSizeChange={handlePageSizeChange}
-      />
-
+        />
+        
       </div>
        
-      )}
+      
     </div>
     </>
   );
