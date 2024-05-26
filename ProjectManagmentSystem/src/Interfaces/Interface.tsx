@@ -32,8 +32,9 @@ export interface Employee {
 export interface User {
   country: string;
   email: string;
+  creationDate: string;
   id: number;
-  imagePath: string | null;
+  imagePath: string | undefined;
   isActivated: boolean;
   task: TaksInterface;
   userName: string;

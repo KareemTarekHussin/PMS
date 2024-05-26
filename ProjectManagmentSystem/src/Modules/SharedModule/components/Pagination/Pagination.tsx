@@ -25,7 +25,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, pageSi
   return (
     <>
 
-    <div className="bg-inf container mt-4 pt-2 pt-lg-1 pagination-container">
+    <div className="bg-inf container mt-4 mb-2   pt-2 pt-lg-2 pagination-container">
       <div className="row">
         <div className="col-md-12">
           <div className="d-flex justify-content-center justify-content-lg-end">
@@ -47,7 +47,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, pageSi
                   </select>
                   <i className="fa-solid fa-chevron-down text-muted position-absolute select-icon"></i>
                 </div>
-                <div>of {totalResults} Results</div>
+                <div>of &nbsp; {totalResults} &nbsp; Results</div>
               </div>
 
               <div className=" d-flex flex-column gap-4 align-items-center flex-lg-row pb-3 pb-md-0">
