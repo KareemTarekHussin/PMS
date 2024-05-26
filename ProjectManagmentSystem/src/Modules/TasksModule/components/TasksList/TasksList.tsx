@@ -279,7 +279,7 @@ export default function TasksList() {
           {isLoading ? <Loading/> : (
             <>
               {tasksList.length > 0 ? (
-                tasksList.map((task:any) => (
+                tasksList.map((task:TaksInterface) => (
                   <ul className="responsive-table-categories">
                     <li key={task.id} className="table-row">
                       <div className="col col-1" data-label="Title :"><span className='fw-semibold'>{task.title}</span></div>
@@ -340,7 +340,7 @@ export default function TasksList() {
         </div>
 
 
-   {/* TODO:implement Pagination */}
+   
    <Pagination
    currentPage={currentPage}
    totalPages={arrayOfPages.length}
@@ -349,7 +349,7 @@ export default function TasksList() {
    onPageChange={handlePageChange}
    onPageSizeChange={handlePageSizeChange}
  />
- </div> }
+ </div> 
 </div>:<TaskBoard/>}
   
       
