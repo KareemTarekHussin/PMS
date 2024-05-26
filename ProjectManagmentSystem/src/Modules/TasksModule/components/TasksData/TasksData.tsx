@@ -169,7 +169,7 @@ export default function TasksData() {
                 </option>
                 {projectsList.map((project:any)=> <option value={project.id}>{project.title}</option>)}
                
-              </select>
+              </select> 
               {errors.projectId && (
                 <div className="p-1 alert alert-danger">
                   {errors.projectId.message}

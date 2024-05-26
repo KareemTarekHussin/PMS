@@ -48,8 +48,13 @@ export default function ProjectsList() {
   //*==========================> Get ALL Projects API <===============================>> 
   const getProjectsList = async (title='', pageSize=5, pageNumber=1  ) => {
     setIsLoading(true);
+    let dataUrl ="";
+    if(loginUser?.userGroup=='Manager'){
+      dataUrl=`${baseUrl}/Project/manager`
+    }
+    else{  dataUrl=`${baseUrl}/Project/employee`}
     try {
-      let response = await axios.get(`${baseUrl}/Project/manager`, {
+      let response = await axios.get(dataUrl, {
         headers: requestHeaders,
         params:{
           'title':title,
@@ -60,7 +65,7 @@ export default function ProjectsList() {
       setProjectsList(response.data.data);
       setArrayOfPages(Array.from({ length: response.data.totalNumberOfPages }, (_, i) => i + 1));
       setTotalResults(response.data.totalNumberOfRecords);
-      console.log(arrayOfPages);
+      // console.log(arrayOfPages);
 
 
     } catch (error) {

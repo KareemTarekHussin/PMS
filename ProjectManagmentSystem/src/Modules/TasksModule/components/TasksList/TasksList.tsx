@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import Styles from "./TasksList.module.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthContext";
@@ -13,6 +12,7 @@ import Modal from "react-bootstrap/Modal";
 import { Header } from '../../../SharedModule/components/Header/Header';
 import Pagination from '../../../SharedModule/components/Pagination/Pagination';
 import { TaksInterface } from "../../../../Interfaces/Interface";
+import TaskBoard from "../TaskBoard/TaskBoard";
 
 export default function TasksList() {
   const { requestHeaders, baseUrl,loginUser }: any = useContext(AuthContext);
@@ -82,8 +82,13 @@ export default function TasksList() {
   
   const getTasksList = async (title= '', status= '', pageSize= 5, pageNumber= 1) => {
     setIsLoading(true);
+    let dataUrl ="";
+    if(loginUser?.userGroup=='Manager'){
+      dataUrl=`${baseUrl}/Task/manager`
+    }
+    else{  dataUrl=`${baseUrl}/Task`}
     try {
-      let response = await axios.get(`${baseUrl}/Task/manager`, {
+      let response = await axios.get(dataUrl, {
         headers: requestHeaders,
         params: {
           'title': title,
@@ -95,7 +100,7 @@ export default function TasksList() {
       setTasksList(response.data.data);
       setTotalResults(response.data.totalNumberOfRecords);
       setArrayOfPages(Array.from({ length: response.data.totalNumberOfPages }, (_, i) => i + 1));
-      console.log(arrayOfPages);
+      // console.log(arrayOfPages);
       
     } 
     
@@ -151,7 +156,7 @@ export default function TasksList() {
 
   return (
     <>
-    <div className='font-main'>
+    {loginUser?.userGroup=='Manager'?  <div className='font-main'>
 
      <Modal show={showDelete} onHide={handleDeleteClose}>
         <Modal.Body>
@@ -256,9 +261,9 @@ export default function TasksList() {
           </div>
         </div>
 
-        </div>
-        
-        <div className="categories-body">
+   </div>
+   
+   <div className="categories-body">
 
           <ul className="responsive-table-categories">
             <li className="table-header">
@@ -334,15 +339,19 @@ export default function TasksList() {
           )}
         </div>
 
-        <Pagination currentPage={currentPage}
-        totalPages={arrayOfPages.length}
-        pageSize={pageSize}
-        totalResults={totalResults}
-        onPageChange={handlePageChange}
-        onPageSizeChange={handlePageSizeChange}
-      />
-      </div> 
-    </div>
+
+   {/* TODO:implement Pagination */}
+   <Pagination
+   currentPage={currentPage}
+   totalPages={arrayOfPages.length}
+   pageSize={pageSize}
+   totalResults={totalResults}
+   onPageChange={handlePageChange}
+   onPageSizeChange={handlePageSizeChange}
+ />
+ </div> }
+</div>:<TaskBoard/>}
+  
       
     </>
   )

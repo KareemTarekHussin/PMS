@@ -14,10 +14,10 @@ import { FieldError } from 'react-hook-form';
 import { useToast } from "../../../Context/ToastContext";
 
 
-
+  
 export default function SideBar() {
 
-  const { setLoginUser, baseUrl, requestHeaders } = useAuth();
+  const { setLoginUser, baseUrl, requestHeaders,loginUser } = useAuth();
   let { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
   const { getToast } = useToast();
   const navigate = useNavigate();
@@ -136,16 +136,17 @@ export default function SideBar() {
               component={<Link to="" />} 
               icon={<i className="fa-solid fa-house"></i>}
             >
-              <span>Dashboard</span>
+              <span>Home</span>
             </MenuItem>
-
-            <MenuItem 
+{/* TODO:employee portal kareem*/}
+{loginUser?.userGroup=='Manager'?  <MenuItem 
             className="mb-2"
               component={<Link to="users" />} 
               icon={<i className="fa-solid fa-users"></i>}
             >
               Users
-            </MenuItem>
+            </MenuItem>:''}
+          
 
             <MenuItem 
             className="mb-2"

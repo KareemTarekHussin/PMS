@@ -4,15 +4,35 @@ import axios from "axios";
 import { AuthContext } from "../../../Context/AuthContext";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 
-import {  Pie } from 'react-chartjs-2';
+import { Pie } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
+
+interface TaskData {
+  toDo: number;
+  inProgress: number;
+  done: number;
+}
+
+interface ActiveUserData {
+  activatedEmployeeCount: number;
+  deactivatedEmployeeCount: number;
+}
 
 export default function Dashboard() {
   const [usersList, setUsersList] = useState([]);
   const [projectsList, setProjectsList] = useState([]);
   const [tasksList, setTasksList] = useState([]);
-  const { requestHeaders, baseUrl }: any = useContext(AuthContext);
-  const [taskData, setTaskData] = useState([]);
+  const { requestHeaders, baseUrl,loginUser }: any = useContext(AuthContext);
+  const [taskData, setTaskData] = useState<TaskData>({
+    toDo: 0,
+    inProgress: 0,
+    done: 0,
+  });
+
+  const [isAciveUser, setActiveUser] = useState<ActiveUserData>({
+    activatedEmployeeCount: 0,
+    deactivatedEmployeeCount: 0,
+  });
   const getUsersList = async () => {
     try {
       let response = await axios.get(`${baseUrl}/Users/manager`, {
@@ -20,7 +40,7 @@ export default function Dashboard() {
       });
       setUsersList(response.data.data);
 
-      console.log("Number try", response.data.data);
+      // console.log("Number try", response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -50,35 +70,56 @@ export default function Dashboard() {
         headers: requestHeaders,
       });
       setTaskData(response.data);
-      console.log(response.data);
     } catch (error: any) {
       console.log(error.response.message);
     }
   };
+
+  const getIsActive = async () => {
+    try {
+      const response = await axios.get(`${baseUrl}/Users/count`, {
+        headers: requestHeaders,
+      });
+      // console.log(response.data);
+      setActiveUser(response.data);
+    } catch (error: any) {
+      console.log(error.response.message);
+    }
+  };
+
   const data = {
     lable: ["ToDo", "InProgress", "Done"],
     datasets: [
       {
         label: "My Tasks",
-        data:  [taskData.toDo, taskData.inProgress, taskData.done],
-        backgroundColor: [
-          "#E7C3D7",
-          "#E4E4BC",
-          "#CFD1EC",
-        ],
+        data: [taskData.toDo, taskData.inProgress, taskData.done],
+        backgroundColor: ["#E7C3D7", "#E4E4BC", "#CFD1EC"],
         hoverOffset: 4,
       },
-      
     ],
-  
-    
   };
-  
+
+  const isActive = {
+    lable: ["Active", "InActive"],
+    datasets: [
+      {
+        label: "Users",
+        data: [
+          isAciveUser.activatedEmployeeCount,
+          isAciveUser.deactivatedEmployeeCount,
+        ],
+        backgroundColor: ["#E7C3D7", "#E4E4BC"],
+        hoverOffset: 4,
+      },
+    ],
+  };
+
   useEffect(() => {
     getUsersList();
     getProjectsList();
     getTasksList();
     getTaskData();
+    getIsActive();
   }, []);
   const countUsersByActivation = (users: any) => {
     return users.reduce(
@@ -97,13 +138,13 @@ export default function Dashboard() {
   return (
     <>
       <div
-        className={`${Styles.headerContainer} container-fluid p-5 my-5 rounded-4`}
+        className={`${Styles.headerContainer} container-fluid p-4 my-5 rounded-4`}
       >
         <div className="row align-items-center my-5">
           <div className="col-md-8 ">
             <div className="content text-white">
               <h1>
-                Welcome <span className={`${Styles.textGold}`}>Upskilling</span>
+                Welcome <span className={`${Styles.textGold}`}>{loginUser.userName}</span>
               </h1>
               <h3 className="my-5">
                 You can add project and assign tasks to your team lorem
@@ -112,11 +153,13 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <div className={`${Styles.textPadding} container-fluid`}>
+{loginUser?.userGroup=='Manager'?
+<div>
+<div className={`${Styles.textPadding} container-fluid`}>
         <div className="row  d-flex">
           <div className="col-md-5 bg-white rounded-2 p-3 my-2">
             <b>Tasks</b>
-            <p className="text-muted">Lorem ipsum dolor sit amet.</p>
+            <p className="text-muted">Number of Projects that have Tasks in Progress </p>
             <div className="d-flex mt-4">
               <div
                 className={`${Styles.bgProgress} col-md-3 rounded-4 p-2 mx-3`}
@@ -160,7 +203,7 @@ export default function Dashboard() {
           <div className="col-md-1"></div>
           <div className="col-md-5 bg-white rounded-2 p-3 my-2">
             <b>Users</b>
-            <p className="text-muted">Lorem ipsum dolor sit amet.</p>
+            <p className="text-muted">Number of Users Active and Inactive</p>
             <div className="d-flex mt-4">
               <div
                 className={`${Styles.bgProgress} col-md-3 rounded-4 p-2 mx-3`}
@@ -193,11 +236,17 @@ export default function Dashboard() {
       <div className="container-fluid">
         <div className="row p-3 justify-content-around">
           <div className="col-md-5 tasks-chart">
-            <Pie className="w-50 m-auto" data={data}/>
+            <Pie className="w-50 m-auto" data={data} />
           </div>
-          <div className="col-md-5 mx-5"></div>
+          <div className="col-md-5 mx-5">
+          <Pie className="w-50 m-auto" data={isActive} />
+          </div>
         </div>
       </div>
+      </div>
+      :''}
+
+      
     </>
   );
 }
