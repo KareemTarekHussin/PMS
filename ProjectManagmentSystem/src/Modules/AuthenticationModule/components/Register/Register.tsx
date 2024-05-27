@@ -52,12 +52,12 @@ export default function Register() {
         registerFormData
       );
       console.log(response);
-{/* TODO:add gettoast*/}
+
 getToast("success","Registerd Successfully" );
       navigate("/verify");
     } catch (error:any) {
       
-      {/* TODO:add gettoast*/}
+ 
       getToast("error", error.response.data.message);
     }
   };

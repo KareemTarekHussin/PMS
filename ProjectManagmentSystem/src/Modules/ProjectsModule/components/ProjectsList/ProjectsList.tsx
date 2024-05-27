@@ -178,13 +178,16 @@ export default function ProjectsList() {
         <h1 className="fw-semibold mb-2 mb-md-0 title-project">Projects</h1>
 
         <div>
-          <button
-            className='orange-btn rounded-5 px-4 py-2'
-            onClick={navigateToAdd}
-          >
-            <i className="fa fa-plus me-2 fw-lighter"></i>
-            Add New Project
-          </button>
+        {loginUser?.userGroup=='Manager'?
+        <button
+        className='orange-btn rounded-5 px-4 py-2'
+        onClick={navigateToAdd}
+      >
+        <i className="fa fa-plus me-2 fw-lighter"></i>
+        Add New Project
+      </button>
+          :''}
+          
         </div>
 
       </div>

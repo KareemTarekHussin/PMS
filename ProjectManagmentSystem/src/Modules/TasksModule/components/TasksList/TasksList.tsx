@@ -78,7 +78,7 @@ export default function TasksList() {
       setIsLoading(false);
     }
   };
-  //*=============================================GET TaskList==============================================//
+ 
   
   const getTasksList = async (title= '', status= '', pageSize= 5, pageNumber= 1) => {
     setIsLoading(true);

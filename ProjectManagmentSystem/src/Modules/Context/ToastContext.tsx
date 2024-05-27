@@ -1,9 +1,7 @@
 import React, { createContext, useContext } from "react";
 import { Bounce, toast } from "react-toastify";
 
-// type ToastValue = {
-//   type: ;
-// };
+
 
 type ToastProps = {
   message: string;
