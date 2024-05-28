@@ -52,6 +52,7 @@ function App() {
         { path: "taskboard", element: <TaskBoard /> },
         { path: "tasksedit/:id", element: <TasksData /> },
         { path: "users", element: <UsersList /> },
+        { path: "taskboard", element: <TaskBoard /> },
       ],
     },
   ]);

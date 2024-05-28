@@ -1,38 +1,70 @@
-import React, { useState } from "react";
-import { useAuth } from "../../../Context/AuthContext";
+import React, { useEffect, useContext, useState } from "react";
+import { AuthContext, useAuth } from "../../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import {  Modal } from 'react-bootstrap';
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
+
+
 import { useForm } from 'react-hook-form';
 import Style from './sidebar.module.css'
 import axios from 'axios';
+
 import { FieldError } from 'react-hook-form';
 import { useToast } from "../../../Context/ToastContext";
 
 
-// ^==============================>>SideBar Component<<=============================
+  
 export default function SideBar() {
 
-  const { setLoginUser, baseUrl, requestHeaders } = useAuth();
-
+  const { setLoginUser, baseUrl, requestHeaders,loginUser } = useAuth();
+  let { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
   const { getToast } = useToast();
-
   const navigate = useNavigate();
+  const [placeholder, setPlaceholder] = useState<Placeholders>({
+    oldPassword: 'Enter your old password',
+    newPassword: 'Enter your new password',
+    confirmNewPassword: 'Confirm your new password',
+  });  
+  const [showPassword, setShowPassword] = useState({
+    oldPassword: true,
+    newPassword: true,
+    confirmNewPassword: true,
+  });
+  
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [iconRotation, setIconRotation] = useState(1);
+  let [isCollapse, setIsCollapse] = useState(true);
+  let [collapsedWidth, setCollapsedWidth] = useState("80px");
+
+  const updateCollapsedWidth = () => {
+    const width = window.innerWidth;
+    if (width <= 576) {
+      setCollapsedWidth("60px");
+    } else if (width <= 768) {
+      setCollapsedWidth("80px");
+    } else if (width <= 992) {
+      setCollapsedWidth("80px");
+    } else {
+      setCollapsedWidth("80px");
+    }
+  };
+
+  useEffect(() => {
+    updateCollapsedWidth();
+    window.addEventListener('resize', updateCollapsedWidth);
+    return () => window.removeEventListener('resize', updateCollapsedWidth);
+  }, []);
 
   function logout() {
     localStorage.removeItem("token");
     setLoginUser(null);
     navigate("/login");
-    getToast("success", "Logged out successfully");
   }
-
-  let { register, handleSubmit, formState: { errors }, watch, reset } = useForm();
   
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-  
+  // ?============================================================================================
   interface PasswordState {
     oldPassword: boolean;
     newPassword: boolean;
@@ -45,59 +77,52 @@ export default function SideBar() {
     confirmNewPassword: string;
   }
 
-  const [placeholder, setPlaceholder] = useState<Placeholders>({
-    oldPassword: 'Enter your old password',
-    newPassword: 'Enter your new password',
-    confirmNewPassword: 'Confirm your new password',
-  });  
-  
-  const [showPassword, setShowPassword] = useState({
-    oldPassword: true,
-    newPassword: true,
-    confirmNewPassword: true,
-  })
-
   const togglePassword = (field: keyof PasswordState) => {
     setShowPassword((prevState) => ({ ...prevState, [field]: !prevState[field] }));
   };
-
-  let [isCollapse, setIsCollapse] = useState(true);
-  const [iconRotation, setIconRotation] = useState(1);
-
+  
   const handleCollapse = () => {
     setIsCollapse(!isCollapse);
     setIconRotation(prevRotation => prevRotation === 1 ? -1 : 1);
   }
-
+  
   const onSubmit = async (data: any) => {
     try{
       
-      let response = await axios.put(`${baseUrl}/Users/ChangePassword`, data,
+      let response = await axios.put('https://upskilling-egypt.com:3003/api/v1/Users/ChangePassword', data,
         {
-          headers: requestHeaders
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
         });
-      reset();
-      handleClose();
-      getToast("success", response.data.message);
+     
+     
+     
+     getToast("success", response.data.message)
+      logout()
+      console.log(data);
+      
     }
-    catch (error:any) {
-      getToast("error", error.response.data.message);
+    catch (error) {
+      
+      console.log(error);
     }
   }
+  
 
-  // *========================================>JSX<=============================================//
+  // *========================================><=============================================//
   return (
+    
     <>
-      <div className= "sidebar-container sticky-top ">
+      <div className='sidebar-container'>
         <Sidebar 
           collapsed={isCollapse} 
-          className='border-0'
+          // breakPoint={breakPoint}
+          collapsedWidth={collapsedWidth}
+          className='border-0 bg-danger'
           >
-          <Menu className='my-5 pt-5'>
+          <Menu className='my-5 py-5'>
 
-         
             <MenuItem
-              className='bg-inf text-center'
+              className='text-center d-none d-md-block'
               onClick={handleCollapse}
             >
               <div className="icon-container bg-warnin p-2 rounded-3" style={isCollapse? { transform: `scaleX(${iconRotation})` }: { transform: `scaleX(${iconRotation})` }}>
@@ -106,49 +131,73 @@ export default function SideBar() {
             </MenuItem>
             
             <MenuItem 
-              className='mt-4'
+              className='mt-4 mb-2'
               component={<Link to="" />} 
               icon={<i className="fa-solid fa-house"></i>}
             >
-              Dashboard
+              <span>Home</span>
             </MenuItem>
-
-            <MenuItem 
+{/* TODO:employee portal kareem*/}
+{loginUser?.userGroup=='Manager'?  <MenuItem 
+            className="mb-2"
               component={<Link to="users" />} 
               icon={<i className="fa-solid fa-users"></i>}
             >
               Users
-            </MenuItem>
+            </MenuItem>:''}
+          
+
             <MenuItem 
+            className="mb-2"
               component={<Link to="projects" />} 
-              icon={<i className="fa-solid fa-calculator"></i>}
+              icon={<i className="fa-solid fa-bars-progress"></i>}
             >
             Projects
             </MenuItem>
+
             <MenuItem 
+            className="mb-2"
               component={<Link to="tasks" />} 
               icon={<i className="fa-solid fa-tasks"></i>}
             >
             Tasks
             </MenuItem>
 
-
             <MenuItem 
+            className="mb-2"
               onClick={handleShow}
               // component={<Link to="projects" />} 
               icon={<i className="fa-solid fa-unlock"></i>}
             >
               Change Password
             </MenuItem>
+
             <MenuItem 
+            className="mb-2"
               onClick={logout}
               icon={<i className="fa-solid fa-circle-left"></i>}
             >
               Logout
             </MenuItem>
 
+            
+
           </Menu>
         </Sidebar>
+        {/* <main className="pt-5 mt-5 position-absolut z-3">
+          <div>
+            <button className="btn bg-danger p-2 d-flex justify-content-center align-items-center">
+            <i 
+              onClick={handleBreakPoint}
+              className="fa-solid fa-arrow-circle-left fs-5 text-white" 
+              >
+            </i>
+            </button>
+          </div>
+        </main> */}
+
+        
+        
 
         <Modal className='pt-4' show={show} onHide={handleClose}>
     
@@ -269,6 +318,10 @@ export default function SideBar() {
           </Modal.Body>
         </Modal>
       </div>
+
+
+      
+
     </>
   )
 }

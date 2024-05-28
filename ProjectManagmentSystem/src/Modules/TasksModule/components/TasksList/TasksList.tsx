@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import Styles from "./TasksList.module.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthContext";
@@ -10,15 +9,25 @@ import Loading from "../../../SharedModule/components/Loading/Loading";
 import DeleteData from "../../../SharedModule/components/DeleteData/DeleteData";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { Header } from '../../../SharedModule/components/Header/Header';
+import Pagination from '../../../SharedModule/components/Pagination/Pagination';
+import { TaksInterface } from "../../../../Interfaces/Interface";
+import TaskBoard from "../TaskBoard/TaskBoard";
 
 export default function TasksList() {
-  const { requestHeaders, baseUrl }: any = useContext(AuthContext);
+  const { requestHeaders, baseUrl,loginUser }: any = useContext(AuthContext);
   const { getToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [showListSize, setShowListSize] = useState(false);
   const [tasksList, setTasksList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [taskId, setTaskId] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [arrayOfPages, setArrayOfPages] = useState<number[]>([]);
+  const [pageSize, setPageSize] = useState(5);
+  const [totalResults, setTotalResults] = useState(0);
+  const [title, setTitle] = useState(''); // Add title state
+  const [status, setStatus] = useState(''); // Add status state
 
   const [showDelete, setShowDelete] = useState(false);
 
@@ -28,19 +37,28 @@ export default function TasksList() {
     setShowDelete(true);
   };
 
+  const [viewedTask, setViewedTask] = useState<TaksInterface | null>(null); 
+  const [modalShow, setModalShow] = React.useState(false);
+  const handleCloseViewModal = () => setModalShow(false);
+  const handleViewModal = (task: TaksInterface)=>{
+    setViewedTask(task); 
+    setModalShow(true);
+  }
+
   const [titleValue, setTitleValue] = useState("");
   const [statusValue, setStatusValue] = useState("");
-  const [arrayOfPages, setArrayOfPages] = useState<number[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
+  
+  
+  
   const [totalNumberOfRecords, setTotalNumberOfRecords] = useState<number[]>(
     []
   );
 
+  
   const navigate = useNavigate();
-
-  ////API's
+  // !======================================DELETE==================================================
   const onDeleteSubmit = async () => {
+    setIsLoading(true);
     try {
       const response = await axios.delete(
         `${baseUrl}/Task/${taskId}`,
@@ -56,70 +74,91 @@ export default function TasksList() {
       getTasksList("", "", pageSize, 1);
     } catch (error: any) {
       getToast("error", error.response.message);
-    }
-  };
-
-  //Get ALL Projects API
-
-  const getTasksList = async (
-    title: string,
-    status: string,
-    pageSize: number,
-    pageNumber: number
-  ) => {
-    setLoading(true);
-    try {
-      let { data } = await axios.get(
-        `${baseUrl}/Task/manager/?pageSize=${pageSize}&pageNumber=${pageNumber}`,
-        {
-          headers: requestHeaders,
-          params: {
-            title,
-            status,
-          },
-        }
-      );
-      setLoading(false);
-      setTotalNumberOfRecords(
-        Array(data.totalNumberOfRecords)
-          .fill(0)
-          .map((_, i) => i + 1)
-      );
-      setCurrentPage(data.pageNumber);
-      setArrayOfPages(
-        Array(data.totalNumberOfPages)
-          .fill(0)
-          .map((_, i) => i + 1)
-      );
-      setTasksList(data.data);
-    } catch (error: any) {
-      setLoading(false);
-      getToast("error", error.response.data.message);
-    }
-  };
-  useEffect(() => {
-    setIsLoading(true);
-    setTimeout(() => {
+    }finally{
       setIsLoading(false);
-    }, 2000);
-    getTasksList("", "", pageSize, 1);
-  }, []);
-
-  const getName = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitleValue(e.target.value);
-    getTasksList(e.target.value, statusValue, pageSize, 1);
+    }
   };
-  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setStatusValue(e.target.value);
-    getTasksList(titleValue, e.target.value, pageSize, 1);
+ 
+  
+  const getTasksList = async (title= '', status= '', pageSize= 5, pageNumber= 1) => {
+    setIsLoading(true);
+    let dataUrl ="";
+    if(loginUser?.userGroup=='Manager'){
+      dataUrl=`${baseUrl}/Task/manager`
+    }
+    else{  dataUrl=`${baseUrl}/Task`}
+    try {
+      let response = await axios.get(dataUrl, {
+        headers: requestHeaders,
+        params: {
+          'title': title,
+          'status': status,
+          pageSize: pageSize,
+          pageNumber: pageNumber
+        },
+      });
+      setTasksList(response.data.data);
+      setTotalResults(response.data.totalNumberOfRecords);
+      setArrayOfPages(Array.from({ length: response.data.totalNumberOfPages }, (_, i) => i + 1));
+      // console.log(arrayOfPages);
+      
+    } 
+    
+    catch (error:any) {
+      getToast('error', error.response.message);
+    }
+    finally{
+      setIsLoading(false);
+    }
   };
+  
 
   const navigateToAddTask = () => {
     navigate("/dashboard/tasksdata");
   };
+
+  //&==============================> Functions of Pagination <==============================>> 
+  // Function to handle page change
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    getTasksList(title, status, pageSize, page); 
+  };
+
+  // Function to handle page size change
+  const handlePageSizeChange = (size: number) => {
+    setPageSize(size);
+    setCurrentPage(1); // Reset to first page on page size change
+    getTasksList(title, "", size, 1);
+  };
+  
+  //?=================================>> UseEffect <<==========================================// 
+  useEffect(() => {
+    getTasksList();
+  }, []);
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //   }, 0);
+  //   getTasksList(title,status,5,1);
+  // }, []);
+
+
+  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+    getTasksList(event.target.value, status, pageSize, 1);
+  };
+
+  const handleSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setStatus(event.target.value);
+    getTasksList(title, event.target.value, pageSize, 1);
+  };
+
   return (
     <>
-      <Modal show={showDelete} onHide={handleDeleteClose}>
+    {loginUser?.userGroup=='Manager'?  <div className='font-main'>
+
+     <Modal show={showDelete} onHide={handleDeleteClose}>
         <Modal.Body>
           <DeleteData deleteItem={"task"} />
         </Modal.Body>
@@ -129,198 +168,191 @@ export default function TasksList() {
           </Button>
         </Modal.Footer>
       </Modal>
-      <div className="w-100 compTitle d-flex justify-content-between my-5 bg-white p-4">
-        <h2>Tasks</h2>
+
+      <Modal
+      show={modalShow}
+      onHide={handleCloseViewModal}
+      className="font-main"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Task Details
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {viewedTask && (
+            <>
+              {/* <p>{viewedProject.id}</p> */}
+              <h4 className="fst-italic fw-semibold text-success">
+                {viewedTask.title}
+              </h4>
+              <p><span className="fw-bold">Status : </span> {viewedTask.status}</p>
+              <p><span className="fw-bold">User or Employee : </span> {viewedTask.employee?.userName}</p>
+              <p><span className="fw-bold">Project : </span> {viewedTask.project?.title}</p>
+              <p><span className="fw-bold">Creation Date : </span> {viewedTask.creationDate}</p>
+            </>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={handleCloseViewModal} className="btn btn-success">Close</Button>
+        </Modal.Footer>
+    </Modal>
+      
+      <div
+      className="w-100 header-task d-flex flex-column align-items-center flex-md-row justify-content-md-between mt-5 mb-4 bg-whit rounded-3 p-4 gap-2 gap-md-0 shadow-sm">
+
+        <h1 className="mb-2 mb-md-0 title-task">Tasks</h1>
+
         <div>
           <button
-            className={`${Styles.btnOrangeColor} text-white btn rounded-5 p-3`}
+            className='orange-btn rounded-5 px-4 py-2'
             onClick={navigateToAddTask}
           >
-            <i className="fa fa-plus"></i>
+            <i className="fa fa-plus me-2 fw-lighter"></i>
             Add New Task
           </button>
         </div>
+
       </div>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        <div className="listContainer bg-white p-5 rounded-3 ">
-          {/* //TODO: implement Search*/}
-          <div className="container fuild">
-            <div className="row align-items-center">
-              <div className="col-md-4">
-                <div className={`${Styles.inputGroup}`}>
-                  <i className="fa fa-search"></i>
 
-                  <input
-                    type="text"
-                    className={Styles.searchInput}
-                    placeholder="Search By Title"
-                    onChange={getName}
-                  />
-                </div>
-              </div>
-              <div className="col-md-2">
-                <div className={Styles.filterContianer}>
-                  <select onChange={handleSelect}>
-                    <option value="">Filter</option>
-                    <option value="ToDo">ToDo</option>
-                    <option value="InProgress">InProgress</option>
-                    <option value="Done">Done</option>
-                  </select>
-                </div>
-              </div>
-            </div>
+         
+      <div className="py-4 px-lg-5 rounded-3">
+        <div className="row justify-content-center justify-content-md-start">
+          
+        <div className="col-12 col-md-7 col-lg-4">
+          <div className="input-group mb-3 ">
+            <span className="input-group-text rounded-5 rounded-end-0" id="basic-addon1">
+              <i className="fa fa-search"></i>
+            </span>
+            <input
+              onChange={handleTitleChange}
+              type="text"
+              className="form-control rounded-5 rounded-start-0 py-2 select-hover"
+              placeholder="Search By Title"
+              aria-label="Username"
+              aria-describedby="basic-addon1"
+            />
           </div>
+        </div>
+        
 
-          <ul className="list-group mt-3 ">
-            <li
-              className={`${Styles.backgroundgreen} list-group-item fw-semibold py-3 text-white d-flex justify-content-between align-items-center`}
-            >
-              <div className="row w-100">
-                <div className="col-md-2  text-white">Title</div>
-                <div className="col-md-2  text-white">Status</div>
-                <div className="col-md-2  text-white">User</div>
-                <div className="col-md-2  text-white">Project</div>
-                <div className="col-md-2  text-white">Date Created</div>
-                <div className="col-md-2  text-white">Actions</div>
-              </div>
+        <div className="col-6 col-md-5 col-lg-1 px-lg-2 bg-inf filter-container">
+          <div className="position-relative bg-blac">
+
+            <select 
+              onChange={handleSelect} 
+              className='form-control border-0 rounded-5 py-2 filter-select'
+              defaultValue=''
+              >
+              <option value="" disabled>
+                Filter
+              </option>
+              <option value="ToDo">to do</option>
+              <option value="InProgress">in progress</option>
+              <option value="Done">done</option>
+            </select>   
+
+            <div className="position-absolute filter-icon">
+              <i className="fa-solid fa-filter text-muted"></i>
+            </div>
+
+          </div>
+        </div>
+
+   </div>
+   
+   <div className="categories-body">
+
+          <ul className="responsive-table-categories">
+            <li className="table-header">
+              <div className="col col-1">Title</div>
+              <div className="col col-2">Status</div>
+              <div className="col col-3">User</div>
+              <div className="col col-4">Project</div>
+              <div className="col col-5">Date Created</div>
+              <div className="col col-5">Actions</div>
             </li>
-
+          </ul>
+          
+          {isLoading ? <Loading/> : (
             <>
               {tasksList.length > 0 ? (
-                tasksList.map((task: any) => (
-                  <li
-                    key={task.id}
-                    className="list-group-item d-flex justify-content-between align-items-center"
-                  >
-                    <div className="row w-100">
-                      <div className="col-md-2">{task.title}</div>
-                      <div className="col-md-2">{task.status}</div>
-                      <div className="col-md-2">{task.employee?.userName}</div>
-                      <div className="col-md-2">{task.project?.title}</div>
-                      <div className="col-md-2">
-                        {task.creationDate.slice(0, 10)}
-                      </div>
-                      <div className="col-md-2 bg-body-secondar bg-info-subtl w-fit p-md-0 px-md-3 px-lg- rounded-3 d-flex justify-content-center align-items-center">
+                tasksList.map((task:TaksInterface) => (
+                  <ul className="responsive-table-categories">
+                    <li key={task.id} className="table-row">
+                      <div className="col col-1" data-label="Title :"><span className='fw-semibold'>{task.title}</span></div>
+                      <div className="col col-2" data-label="Status :">{task.status}</div>
+                      <div className="col col-3" data-label="User :">{task.employee?.userName}</div>
+                      <div className="col col-4" data-label="Project :">{task.project?.title}</div>
+                      <div className="col col-5" data-label="Date Created :">{task.creationDate.slice(0, 10)}</div>
+                      <div className="col col-6" data-label="Actions :">
                         <div className="dropdown">
-                          <button
-                            className="btn"
-                            type="button"
-                            data-bs-toggle="dropdown"
-                            aria-expanded="false"
-                          >
+                          <button className="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i className="fa fa-ellipsis-vertical"></i>
                           </button>
-                          <ul className="dropdown-menu">
+                          <ul className="dropdown-menu bg-success-subtl border-0 shadow-lg rounded-5 pt-2">
+                            <div>
+
                             <li>
-                              <a className="dropdown-item" href="#">
-                                <i className="fa fa-eye text-info mx-2"></i>
-                                View
-                              </a>
-                            </li>
-                            <li>
-                              <Link
-                                className="dropdown-item"
-                                to={`/dashboard/tasksedit/${task.id}`}
-                                state={{ taskData: task, type: "edit" }}
-                              >
-                                <i className="fa fa-edit text-warning mx-2"></i>
-                                Edit
-                                {/* TODO:implement Update */}
-                              </Link>
-                            </li>
-                            <li>
-                              <a
-                                onClick={() => handleDeleteShow(task.id)}
-                                className="dropdown-item"
+                              <a 
+                                className="dropdown-item text-decoration-none text-black" 
                                 href="#"
-                              >
-                                <i className="fa fa-trash text-danger mx-2"></i>
-                                Delete{/* TODO:implement Delete */}
+                                onClick={()=>handleViewModal(task)}
+                                >
+                                <i className="fa fa-eye text-info me-2"></i>
+                                <span>View</span>
                               </a>
                             </li>
+                            
+                            <li>
+                              <a className="dropdown-item text-decoration-none text-black" href="#">
+                                <i className="fa fa-edit text-warning me-2"></i>
+                                <span>Edit</span>
+                              </a>
+                            </li>
+
+                            <li>
+                              <a className="dropdown-item text-decoration-none text-black" onClick={() => handleDeleteShow(task.id)}  href="#">
+                                <i className="fa fa-trash text-danger me-2"></i>
+                                <span>Delete</span>
+                              </a>
+                            </li>
+                            </div>
+
+                            
                           </ul>
+                          
+
                         </div>
                       </div>
-                    </div>
-                  </li>
+                    </li>
+                  </ul>
                 ))
               ) : (
                 <li className="list-group-item">
-                  <NoData />
+                        <NoData />
                 </li>
               )}
             </>
-          </ul>
-          <div className={`${Styles.pagination} text-muted`}>
-            <span>Showing</span>
-            <div className={Styles.contentSize}>
-              <div
-                className={Styles.pageSize}
-                onClick={() => setShowListSize(!showListSize)}
-              >
-                <span>{pageSize}</span>
-                <span>
-                  <i className="fa-solid fa-chevron-down"></i>
-                </span>
-              </div>
-              {showListSize && (
-                <div className={`${Styles.listsPage} text-muted`}>
-                  {totalNumberOfRecords.map((n) => (
-                    <span
-                      key={n}
-                      onClick={() => {
-                        getTasksList(titleValue, statusValue, n, 1);
-                        setPageSize(n);
-                      }}
-                    >
-                      {n}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-            <span>of {totalNumberOfRecords.length} Results</span>
-
-            <div className={Styles.pageNum}>
-              <span>
-                Page {currentPage} of {arrayOfPages.length}
-              </span>
-              <div className={Styles.arrows}>
-                <span
-                  onClick={() => {
-                    if (currentPage > 1) {
-                      getTasksList(
-                        titleValue,
-                        statusValue,
-                        pageSize,
-                        currentPage - 1
-                      );
-                    }
-                  }}
-                >
-                  <i className="fa-solid fa-chevron-left"></i>
-                </span>
-                <span
-                  onClick={() => {
-                    if (currentPage < arrayOfPages.length) {
-                      getTasksList(
-                        titleValue,
-                        statusValue,
-                        pageSize,
-                        currentPage + 1
-                      );
-                    }
-                  }}
-                >
-                  <i className="fa-solid fa-chevron-right"></i>
-                </span>
-              </div>
-            </div>
-          </div>
+          )}
         </div>
-      )}
+
+
+   
+   <Pagination
+   currentPage={currentPage}
+   totalPages={arrayOfPages.length}
+   pageSize={pageSize}
+   totalResults={totalResults}
+   onPageChange={handlePageChange}
+   onPageSizeChange={handlePageSizeChange}
+ />
+ </div> 
+</div>:<TaskBoard/>}
+  
+      
     </>
-  );
+  )
 }

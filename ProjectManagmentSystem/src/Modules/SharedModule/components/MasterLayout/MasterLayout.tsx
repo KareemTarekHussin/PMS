@@ -6,15 +6,17 @@ import Styles from  "./MasterLayout.module.css";
 export default function MasterLayout() {
   return (
     <>
-      <Navbar/>
-      <div className="d-flex">
+      <div className="d-flex font-main">
+        <Navbar/>
         <div>
           <SideBar/>
         </div>
-        <div className={`${Styles.greybackground}  w-100  p-2 p-md-3 bg-info-subtl`}>
+        <div className={`${Styles.greybackground}  w-100 vh-100 p-2 p-md-3   overflow-y-auto bg-info-subtl`}>
           <Outlet/>
         </div>
       </div>
+
+    
     </>
   )
 }

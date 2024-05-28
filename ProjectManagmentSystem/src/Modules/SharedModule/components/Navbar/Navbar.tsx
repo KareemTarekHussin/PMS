@@ -1,21 +1,22 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
+
 import navLogo from "../../../../assets/images/nav-logo.png";
 import navImg from "../../../../assets/images/8550fbcbe60cd242d12760784feff287.jpeg";
 import navStyle from "./Navbar.module.css";
+import { AuthContext } from '../../../Context/AuthContext';
 
 export default function CustomNavbar() {
-
+  const { loginUser }: any = useContext(AuthContext);
 
   return (
     <>
       <Navbar expand="md" className="bg-white p-0  shadow-sm">
       <Container>
         <Navbar.Brand href="#home">
-            <img src={navLogo} className='' alt="" />
+            <img src={navLogo} className='w-na bg-dange' alt="" />
         </Navbar.Brand>
           
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -42,7 +43,8 @@ export default function CustomNavbar() {
               </div>
 
               <div className='bg-inf '>
-                <p className={`${navStyle.fs} text-start text-black fw-semibold`}>Upskilling</p>
+                {/* TODO:change login data to user kareem*/}
+                <p className={`${navStyle.fs} text-start text-black fw-semibold`}>{loginUser.userName}</p>
                 <p className={`${navStyle.fs} text-muted fst-italic`}>upskilling.eg1@gmail.com</p>
               </div>
 
