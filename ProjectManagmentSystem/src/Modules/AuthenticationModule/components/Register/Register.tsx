@@ -65,9 +65,9 @@ getToast("success","Registerd Successfully" );
   return (
     <>
       <div className={` ${Styles.authcontainer}  `}>
-        <div className="container-fluid">
-          <div className="row d-flex justify-content-center vh-100 align-items-center  ">
-            <div className="col-md-7 ">
+        <div className="container-fluid bg-blac">
+          <div className="row d-flex justify-content-center vh-10 align-items-center bg-dange  ">
+            <div className="col-md-7 bg-warnin ">
               <div className="text-center">
                 <img className="" src={logo} alt="" />
               </div>

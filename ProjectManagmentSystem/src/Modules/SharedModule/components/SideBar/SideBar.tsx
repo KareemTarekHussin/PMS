@@ -113,7 +113,7 @@ export default function SideBar() {
     
     <>
 
-      <div className='sidebar-container'>
+      <div className='sidebar-container sticky-top'>
       <Sidebar 
           collapsed={isCollapse} 
           // breakPoint={breakPoint}
@@ -167,7 +167,6 @@ export default function SideBar() {
             <MenuItem 
             className="mb-2"
               onClick={handleShow}
-              // component={<Link to="projects" />} 
               icon={<i className="fa-solid fa-unlock"></i>}
             >
               Change Password
@@ -184,21 +183,7 @@ export default function SideBar() {
             
 
           </Menu>
-        </Sidebar>
-        {/* <main className="pt-5 mt-5 position-absolut z-3">
-          <div>
-            <button className="btn bg-danger p-2 d-flex justify-content-center align-items-center">
-            <i 
-              onClick={handleBreakPoint}
-              className="fa-solid fa-arrow-circle-left fs-5 text-white" 
-              >
-            </i>
-            </button>
-          </div>
-        </main> */}
-
-        
-        
+        </Sidebar>        
 
         <Modal className='pt-4' show={show} onHide={handleClose}>
     

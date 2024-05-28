@@ -1,5 +1,5 @@
 import styles from "./Login.module.css";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { FieldError, SubmitHandler, useForm } from "react-hook-form";
 import logo from "../../../../assets/images/PMS 3.png";
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -13,7 +13,7 @@ type AuthInputs = {
 };
 
 export default function Login() {
-  const [showPass, setShowPass] = useState(false);
+  const [showPass, setShowPass] = useState(true);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { getUserData } = useAuth();
@@ -60,68 +60,67 @@ export default function Login() {
           <div
             className={`row vh-100 justify-content-center align-items-center`}
           >
-            <div className={`col-md-6`}>
+            <div className={`col-md-5 bg-inf`}>
               <div className={styles.login}>
                 <div className={`text-center pb-2`}>
                   <img src={logo} className={`w-25`} alt="" />
                 </div>
-                <div className={`${styles.content}`}>
+                <div className={`${styles.content} p-5`}>
                   <div className={`mb-5`}>
                     <p>Welcome to PMS</p>
                     <h4>Login</h4>
                   </div>
-                  <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className={styles.group}>
-                      <label htmlFor="email">E-mail</label>
-                      <input
-                        type="text"
-                        id="email"
-                        {...register("email", {
-                          required: "Email is required",
-                          pattern: {
-                            value: /^[^@]+@[^@]+\.[^@.]{2,}$/,
-                            message: "Invaild mail",
-                          },
-                        })}
-                        className={styles.inputLogin}
-                        placeholder="Enter your E-mail"
-                      />
-                    </div>
-                    {errors.email && (
-                      <div className="alert alert-danger p-1">
-                        {errors.email.message}
-                      </div>
-                    )}
+                  <form className="d-flex flex-column gap-3" onSubmit={handleSubmit(onSubmit)}>
 
-                    <div className={styles.group}>
-                      <label htmlFor="password">Password</label>
-                      <div className="d-flex align-items-center">
+
+                    <div className="bg-blac">
+                      <div className={`${styles.inputContainer} ${errors.email && styles.inputError}`}>
+                        <label htmlFor="email">E-mail</label>
                         <input
-                          type={showPass ? "text" : "password"}
-                          id="password"
-                          {...register("password", {
-                            required: "Password is required",
+                          type="text"
+                          id="email"
+                          {...register("email", {
+                            required: "*Email is required",
                             pattern: {
-                              value:
-                                /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
-                              message:
-                                "The password must include at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 6 characters long.",
+                              value: /^[^@]+@[^@]+\.[^@.]{2,}$/,
+                              message: "Invaild mail",
                             },
                           })}
-                          placeholder="Enter your password"
                           className={styles.inputLogin}
+                          placeholder="Enter your E-mail"
                         />
-                        <i
-                          className={`fa-regular fa-eye-slash ${styles.showPass}`}
-                          onClick={() => setShowPass(!showPass)}
-                        ></i>
                       </div>
+                      {errors.email && <p className='text-warning mt-1'>{(errors.email as FieldError).message}</p>}
                     </div>
-                    {errors.password && (
-                      <div className="alert alert-danger p-1">
-                        {errors.password.message}
+
+                    <div className="bg-inf">
+
+                      <div className={`${styles.inputContainer} ${errors.email && styles.inputError}`}>
+                        <label htmlFor="password">Password</label>
+                        <div className="d-flex align-items-center">
+                          <input
+                            type={showPass ? "text" : "password"}
+                            id="password"
+                            {...register("password", {
+                              required: "*Password is required",
+                              pattern: {
+                                value:
+                                  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,16}$/,
+                                message:
+                                  "The password must include at least one lowercase letter, one uppercase letter, one digit, one special character, and be at least 6 characters long.",
+                              },
+                            })}
+                            placeholder="Enter your password"
+                            className={styles.inputLogin}
+                          />
+                          <i
+                            className={`fa-regular ${showPass ? 'fa-eye' : 'fa-eye-slash'} ${styles.showPass}`}
+                            onClick={() => setShowPass(!showPass)}
+                          ></i>
+                        </div>
                       </div>
-                    )}
+                      {errors.password && <p className='text-warning mt-1'>{(errors.password as FieldError).message}</p>}
+                    </div>
 
                     <div className="d-flex align-items-center justify-content-between mb-4">
                       <Link
