@@ -1,5 +1,5 @@
-import React, { useEffect, useContext, useState } from "react";
-import { AuthContext, useAuth } from "../../../Context/AuthContext";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../../../Context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import {  Modal } from 'react-bootstrap';
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
@@ -89,9 +89,9 @@ export default function SideBar() {
   const onSubmit = async (data: any) => {
     try{
       
-      let response = await axios.put('https://upskilling-egypt.com:3003/api/v1/Users/ChangePassword', data,
+      let response = await axios.put(`${baseUrl}/Users/ChangePassword`, data,
         {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+          headers: requestHeaders
         });
      
      
@@ -138,7 +138,7 @@ export default function SideBar() {
             >
               <span>Home</span>
             </MenuItem>
-{/* TODO:employee portal kareem*/}
+
 {loginUser?.userGroup=='Manager'?  <MenuItem 
             className="mb-2"
               component={<Link to="users" />} 

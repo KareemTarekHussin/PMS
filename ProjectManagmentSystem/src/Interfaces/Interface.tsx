@@ -1,3 +1,21 @@
+import { Dispatch, SetStateAction } from "react";
+
+export interface AuthInterface {
+  loginUser: {
+    exp: number;
+    iat: number;
+    roles: string[];
+    userEmail: string;
+    userGroup: string;
+    userId: number;
+    userName: string;
+  } | null;
+  setLoginUser: Dispatch<SetStateAction<null>>;
+  baseUrl: string;
+  requestHeaders: {};
+  getUserData: () => void;
+}
+
 export interface ProjectInterface {
   creationDate: string;
   description: string;
@@ -40,4 +58,16 @@ export interface User {
   userName: string;
   status: string;
   phoneNumber: string;
+}
+
+
+export interface TaskData {
+  toDo: number;
+  inProgress: number;
+  done: number;
+}
+
+export interface ActiveUserData {
+  activatedEmployeeCount: number;
+  deactivatedEmployeeCount: number;
 }

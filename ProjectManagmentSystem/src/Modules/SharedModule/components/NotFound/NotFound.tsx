@@ -16,7 +16,7 @@ export default function NotFound() {
                 <h1 className='bg-inf fw-bold m-0'>Oops!</h1>
                 <h2 className='bg-inf fw-bold'>Page Not Found!</h2>
                 <p className='mb-4 bg-inf'>This Page doesn’t exist or was removed! We suggest you back to home.</p>
-                <Link to='DashBoard' className="btn btn-success rounded-3 px-5 py-2 mt-1 d-flex align-items-center">
+                <Link to='/DashBoard' className="btn btn-success rounded-3 px-5 py-2 mt-1 d-flex align-items-center">
                   <i className="fa-solid fa-arrow-left me-3"></i>
                   <span>Home</span>
                 </Link>

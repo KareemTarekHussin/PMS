@@ -145,7 +145,7 @@ const Task = ({ task }: TaskProps) => {
         layout={true}
         layoutId={id}
         draggable={true}
-        onDragStart={(e) => {
+        onDragStart={(e:any) => {
           setIsDragging(true);
           e.dataTransfer.setData("id", id);
           e.dataTransfer.setData("status", status);

@@ -6,16 +6,16 @@ import Navbar from 'react-bootstrap/Navbar';
 import navLogo from "../../../../assets/images/nav-logo.png";
 import navImg from "../../../../assets/images/8550fbcbe60cd242d12760784feff287.jpeg";
 import navStyle from "./Navbar.module.css";
-import { AuthContext } from '../../../Context/AuthContext';
+import { useAuth } from '../../../Context/AuthContext';
 
 export default function CustomNavbar() {
-  const { loginUser }: any = useContext(AuthContext);
+  const { loginUser } = useAuth();
 
   return (
     <>
-      <Navbar expand="md" className="bg-white p-0 fixed-top shadow-sm">
+      <Navbar expand="md" className="bg-white p-0  shadow-sm">
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand>
             <img src={navLogo} className='w-na bg-dange' alt="" />
         </Navbar.Brand>
           
@@ -42,10 +42,9 @@ export default function CustomNavbar() {
                   <img src={navImg} className='w-100' alt="" />
               </div>
 
-              <div className='bg-inf '>
-                {/* TODO:change login data to user kareem*/}
-                <p className={`${navStyle.fs} text-start text-black fw-semibold`}>{loginUser.userName}</p>
-                <p className={`${navStyle.fs} text-muted fst-italic`}>upskilling.eg1@gmail.com</p>
+              <div >
+                <p className={`${navStyle.fs} text-start text-black fw-semibold`}>{loginUser?.userName}</p>
+                <p className={`${navStyle.fs} text-muted fst-italic`}>{loginUser?.userEmail}</p>
               </div>
 
               <div>
