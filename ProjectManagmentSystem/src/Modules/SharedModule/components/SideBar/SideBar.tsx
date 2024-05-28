@@ -113,7 +113,7 @@ export default function SideBar() {
     
     <>
 
-      <div className='sidebar-container'>
+      <div className='sidebar-container sticky-top'>
       <Sidebar 
           collapsed={isCollapse} 
           // breakPoint={breakPoint}
