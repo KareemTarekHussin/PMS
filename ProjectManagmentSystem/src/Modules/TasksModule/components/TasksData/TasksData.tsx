@@ -93,18 +93,18 @@ export default function TasksData() {
 
   return (
     <>
-      <div className="compTitle  my-5 bg-white p-4 shadow-md">
+      <div className="compTitle  my-5 p-4 shadow-md">
         <button className="btn" onClick={navigatetoTasks}>
-        <span>
+        <span className="h2-dark">
           <i  className="fa fa-chevron-left"></i>
           View all Tasks
         </span></button>
 
-        <h2 className="mt-4">Add a New Task</h2>
+        <h2 className="mt-4 h2-dark">Add a New Task</h2>
       </div>
-      <div className={`${Styles.formContainer} bg-white p-5 rounded-4`}>
+      <div className={`${Styles.formContainer} bg-white p-5 rounded-4 dark-tabel`}>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <h6>Title</h6>
+          <h6 className="h2-dark">Title</h6>
           <div className="input-group mb-3">
             <input
               type="text"
@@ -120,7 +120,7 @@ export default function TasksData() {
             <div className="p-1 alert alert-danger">{errors.title.message}</div>
           )}
 
-          <h6>Description</h6>
+          <h6 className="h2-dark">Description</h6>
           <textarea
             rows={4}
             className="form-control"
@@ -137,7 +137,7 @@ export default function TasksData() {
           )}
           <div className="row my-3">
             <div className="col-md-6">
-              <h6 className="text-muted">User</h6>
+              <h6 className="h2-dark">User</h6>
 
               <select
                 className="form-control rounded-4 p-3"
@@ -159,7 +159,7 @@ export default function TasksData() {
               )}
             </div>
             <div className="col-md-6">
-              <h6>Project</h6>
+              <h6 className="h2-dark">Project</h6>
               <select
                 className="form-control rounded-4 p-3"
                 {...register("projectId", {

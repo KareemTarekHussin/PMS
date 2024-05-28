@@ -114,7 +114,7 @@ export default function Dashboard() {
       </div>
       <div className={`${Styles.textPadding} container-fluid`}>
         <div className="row  d-flex">
-          <div className="col-md-5 bg-white rounded-2 p-3 my-2">
+          <div className="col-md-5 rounded-2 p-3 my-2">
             <b>Tasks</b>
             <p className="text-muted">Lorem ipsum dolor sit amet.</p>
             <div className="d-flex mt-4">
@@ -158,7 +158,7 @@ export default function Dashboard() {
             </div>
           </div>
           <div className="col-md-1"></div>
-          <div className="col-md-5 bg-white rounded-2 p-3 my-2">
+          <div className="col-md-5 rounded-2 p-3 my-2">
             <b>Users</b>
             <p className="text-muted">Lorem ipsum dolor sit amet.</p>
             <div className="d-flex mt-4">
@@ -169,7 +169,7 @@ export default function Dashboard() {
                   <span className={`${Styles.bgProgressicon} p-2 rounded-3`}>
                     <i className="fa fa-chart-simple"></i>
                   </span>
-                  <p className=" mt-3 text-muted"> Active</p>
+                  <p className="mt-3 text-muted"> Active</p>
                   <p className="my-2">
                     <b>{active}</b>
                   </p>

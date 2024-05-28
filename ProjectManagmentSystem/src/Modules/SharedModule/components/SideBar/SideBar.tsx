@@ -164,7 +164,7 @@ export default function SideBar() {
         <Modal className='pt-4' show={show} onHide={handleClose}>
     
   
-          <Modal.Body className={`${Style.modalBody} form-container p-5 bg-main rounded-2`}>
+          <Modal.Body className={`${Style.modalBody} form-container p-5 bg-main rounded-2 dark-tabel`}>
             <p className='text-white pt-md-3'>welcome to APP</p>
             <h3 className='fw-bold mb-5 text-main position-relative'>Change Password</h3>
             <form onSubmit={handleSubmit(onSubmit)} className='d-flex flex-column gap-2'>

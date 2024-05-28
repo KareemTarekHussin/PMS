@@ -41,9 +41,10 @@ export default function Login() {
       }, 2000);
       setLoading(false);
       getToast("success", "Logged in Successfuly");
-    } catch (err: any) {
+    } catch (error: any) {
+      console.log(error)
       setLoading(false);
-      getToast("error", err.response.data.message);
+      getToast("error", error.response.data.message);
     }
   };
 

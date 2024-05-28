@@ -136,8 +136,8 @@ export default function TasksList() {
           </Button>
         </Modal.Footer>
       </Modal>
-      <div className="w-100 compTitle d-flex justify-content-between my-5 bg-white p-4">
-        <h2>Tasks</h2>
+      <div className="w-100 compTitle d-flex justify-content-between my-5 shadow-lg p-3 mb-5 rounded p-4">
+        <h2 className="h2-dark">Tasks</h2>
         <div>
           {loginUser?.userGroup=='Manager'? <button
             className={`${Styles.btnOrangeColor} text-white btn rounded-5 p-3`}
@@ -152,7 +152,7 @@ export default function TasksList() {
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="listContainer bg-white p-5 rounded-3 ">
+        <div className="listContainer bg-white p-5 rounded-3 dark-tabel">
           {/* //TODO: implement Search*/}
           <div className="container fuild">
             <div className="row align-items-center">
@@ -181,9 +181,9 @@ export default function TasksList() {
             </div>
           </div>
 
-          <ul className="list-group mt-3 ">
+          <ul className="list-group mt-3">
             <li
-              className={`${Styles.backgroundgreen} list-group-item fw-semibold py-3 text-white d-flex justify-content-between align-items-center`}
+              className={`${Styles.backgroundgreen} list-group-item fw-semibold py-3 text-white d-flex justify-content-between align-items-center dark-tabel`}
             >
               <div className="row w-100">
                 <div className="col-md-2  text-white">Title</div>
@@ -262,19 +262,19 @@ export default function TasksList() {
             </>
           </ul>
           <div className={`${Styles.pagination} text-muted`}>
-            <span>Showing</span>
+            <span className="dark-p">Showing</span>
             <div className={Styles.contentSize}>
               <div
                 className={Styles.pageSize}
                 onClick={() => setShowListSize(!showListSize)}
               >
-                <span>{pageSize}</span>
+                <span className="dark-p">{pageSize}</span>
                 <span>
-                  <i className="fa-solid fa-chevron-down"></i>
+                  <i className="fa-solid fa-chevron-down dark-p"></i>
                 </span>
               </div>
               {showListSize && (
-                <div className={`${Styles.listsPage} text-muted`}>
+                <div className={`${Styles.listsPage} text-muted dark-p`}>
                   {totalNumberOfRecords.map((n) => (
                     <span
                       key={n}
@@ -289,10 +289,10 @@ export default function TasksList() {
                 </div>
               )}
             </div>
-            <span>of {totalNumberOfRecords.length} Results</span>
+            <span  className="dark-p">of {totalNumberOfRecords.length} Results</span>
 
             <div className={Styles.pageNum}>
-              <span>
+              <span className="dark-p">
                 Page {currentPage} of {arrayOfPages.length}
               </span>
               <div className={Styles.arrows}>
@@ -308,7 +308,7 @@ export default function TasksList() {
                     }
                   }}
                 >
-                  <i className="fa-solid fa-chevron-left"></i>
+                  <i className="fa-solid fa-chevron-left dark-p"></i>
                 </span>
                 <span
                   onClick={() => {
@@ -322,7 +322,7 @@ export default function TasksList() {
                     }
                   }}
                 >
-                  <i className="fa-solid fa-chevron-right"></i>
+                  <i className="fa-solid fa-chevron-right dark-p"></i>
                 </span>
               </div>
             </div>

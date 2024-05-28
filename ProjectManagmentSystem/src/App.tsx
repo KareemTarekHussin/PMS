@@ -19,7 +19,9 @@ import "react-toastify/dist/ReactToastify.css";
 import ProjectsData from "./Modules/ProjectsModule/components/ProjectsData/ProjectsData";
 import TasksData from "./Modules/TasksModule/components/TasksData/TasksData";
 
+
 function App() {
+  
   const routes = createBrowserRouter([
     {
       path: "/",
@@ -43,7 +45,7 @@ function App() {
       ),
       errorElement: <NotFound />,
       children: [
-        { path: "", element: <Dashboard /> },
+        { path: "", element: <Dashboard />},
         { path: "projects", element: <ProjectsList /> },
         { path: "projectsdata", element: <ProjectsData /> },
         { path: "tasks", element: <TasksList /> },
