@@ -21,7 +21,7 @@ import TasksData from "./Modules/TasksModule/components/TasksData/TasksData";
 import TaskBoard from "./Modules/TasksModule/components/TaskBoard/TaskBoard";
 
 function App() {
-  const routes = createHashRouter([
+  const routes = createBrowserRouter([
     {
       path: "/",
       element: <AuthLayout />,
@@ -47,6 +47,7 @@ function App() {
         { path: "", element: <Dashboard /> },
         { path: "projects", element: <ProjectsList /> },
         { path: "projectsdata", element: <ProjectsData /> },
+        { path: "projectsdata/:id", element: <ProjectsData /> }, // Add this route
         { path: "tasks", element: <TasksList /> },
         { path: "tasksdata", element: <TasksData /> },
         { path: "tasksedit/:id", element: <TasksData /> },
