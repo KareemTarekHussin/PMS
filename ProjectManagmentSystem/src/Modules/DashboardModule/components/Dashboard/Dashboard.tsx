@@ -136,7 +136,7 @@ export default function Dashboard() {
             <div className="content text-white">
               <h1>
                 Welcome
-                <span className={`${Styles.textGold}`}>
+                <span className={`${Styles.textGold} ms-3`}>
                   {loginUser?.userName}
                 </span>
               </h1>
@@ -203,7 +203,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                 </div>
-                <div className={Styles.chart}>
+                <div className={`${Styles.chart} mt-4 pt-1`}>
                   <Pie className="" data={data} />
                 </div>
               </div>
@@ -244,7 +244,7 @@ export default function Dashboard() {
                     </div>
                   </div>
                 </div>
-                <div className={Styles.chart}>
+                <div className={`${Styles.chart} mt-4 pt-1`}>
                   <Pie className="" data={isActive} />
                 </div>
               </div>

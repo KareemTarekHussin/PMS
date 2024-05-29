@@ -12,7 +12,7 @@ export default function MasterLayout() {
         <div>
           <SideBar/>
         </div>
-        <div className={`${Styles.pageOverflow}  w-100 vh-100 overflow-auto  p-2 p-md-3 bg-info-subtl`}>
+        <div className='w-100 overflow-aut p-2 p-md-3 bg-body-secondary'>
           <Outlet/>
         </div>
       </div>
