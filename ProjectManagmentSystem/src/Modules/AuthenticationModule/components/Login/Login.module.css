@@ -85,3 +85,8 @@
     /* border-bottom: 1px #EF9B28 solid; */
     border-bottom: 1px #FFC107 solid;
   }
+
+  .textGold {
+    color: hsla(35, 86%, 55%, 1);
+    /* border-bottom: .3px white solid !important; */
+}

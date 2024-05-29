@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useRef, useState } from "react";
-import { useForm ,SubmitHandler} from "react-hook-form";
+import { useForm ,SubmitHandler, FieldError} from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import logo from "../../../../assets/images/PMS 3.png";
 import Styles from "./Register.module.css";
@@ -66,7 +66,7 @@ getToast("success","Registerd Successfully" );
     <>
       <div className={` ${Styles.authcontainer}  `}>
         <div className="container-fluid bg-blac">
-          <div className="row d-flex justify-content-center vh-10 align-items-center bg-dange  ">
+          <div className="row d-flex justify-content-center vh-100 align-items-center bg-dange  ">
             <div className="col-md-7 bg-warnin ">
               <div className="text-center">
                 <img className="" src={logo} alt="" />
@@ -106,11 +106,6 @@ getToast("success","Registerd Successfully" );
                         })}
                       />
                     </div>
-                    {errors.profileImage && (
-                      <p className="alert alert-danger p-0">
-                        {errors.profileImage.message}
-                      </p>
-                    )}
                     <div className="col-md-6">
                       <label className={`${Styles.textGold}`}>Username</label>
                       <div>
@@ -123,11 +118,7 @@ getToast("success","Registerd Successfully" );
                           })}
                         />
                       </div>
-                      {errors.userName && (
-                        <p className="alert alert-danger p-0">
-                          {errors.userName.message}
-                        </p>
-                      )}
+                      {errors.userName && <p className='text-warning mt-1'>{(errors.userName as FieldError).message}</p>}
                     </div>
                     <div className="col md-6">
                       <label className={`${Styles.textGold}`}>E-mail</label>
@@ -141,11 +132,7 @@ getToast("success","Registerd Successfully" );
                           })}
                         />
                       </div>
-                      {errors.email && (
-                        <p className="alert alert-danger p-0">
-                          {errors.email.message}
-                        </p>
-                      )}
+                      {errors.email && <p className='text-warning mt-1'>{(errors.email as FieldError).message}</p>}
                     </div>
                     <div className="col-md-6">
                       <label className={`${Styles.textGold}`}>Country</label>
@@ -159,11 +146,7 @@ getToast("success","Registerd Successfully" );
                           })}
                         />
                       </div>
-                      {errors.country && (
-                        <p className="alert alert-danger p-0">
-                          {errors.country.message}
-                        </p>
-                      )}
+                      {errors.country && <p className='text-warning mt-1'>{(errors.country as FieldError).message}</p>}
                     </div>
                     <div className="col md-6">
                       <label className={`${Styles.textGold}`}>
@@ -179,26 +162,24 @@ getToast("success","Registerd Successfully" );
                           })}
                         />
                       </div>
-                      {errors.phoneNumber && (
-                        <p className="alert alert-danger p-0">
-                          {errors.phoneNumber.message}
-                        </p>
-                      )}
+                      {errors.phoneNumber && <p className='text-warning mt-1'>{(errors.phoneNumber as FieldError).message}</p>}
                     </div>
                     <div className="col-md-6">
                       <label className={`${Styles.textGold}`}>Password</label>
-                      <div>
+                      
+                      <div className={`${Styles.input} d-flex`}>
                         <input
                           type={visible ? "text" : "password"}
-                          className={`${Styles.input} p-1 text-white w-100 z-0`}
+                          className={`${Styles.input1} p-1 text-white w-100 z-0`}
                           placeholder="Enter your Password"
                           {...register("password", {
                             required: "password is required",
                           })}
+                          
                         />
                         <span
                           onClick={() => setVisible(!visible)}
-                          className={`${Styles.passEye} text-white px-5 position-absolute d-inline-block`}
+                          className={`${Styles.passEye} text-white  `}
                         >
                           {visible ? (
                             <i className="fa-regular fa-eye  "></i>
@@ -207,20 +188,16 @@ getToast("success","Registerd Successfully" );
                           )}
                         </span>
                       </div>
-                      {errors.password && (
-                        <p className="alert alert-danger p-0">
-                          {errors.password.message}
-                        </p>
-                      )}
+                      {errors.password && <p className='text-warning mt-1'>{(errors.password as FieldError).message}</p>}
                     </div>
                     <div className="col md-6">
                       <label className={`${Styles.textGold}`}>
                         Confirm Password
                       </label>
-                      <div>
+                      <div className={`${Styles.input} d-flex`}>
                         <input
                           type={visible ? "text" : "password"}
-                          className={`${Styles.input} p-1 text-white w-100`}
+                          className={`${Styles.input1} p-1 text-white w-100 z-0`}
                           placeholder="Confirm New Password"
                           {...register("confirmPassword", {
                             required: "confirm Password is required",
@@ -231,7 +208,7 @@ getToast("success","Registerd Successfully" );
                         />
                         <span
                           onClick={() => setVisible(!visible)}
-                          className={`${Styles.passEye2} text-white px-3 position-absolute d-inline-block`}
+                          className={`${Styles.passEye2} text-white `}
                         >
                           {visible ? (
                             <i className="fa-regular fa-eye  "></i>
@@ -240,11 +217,7 @@ getToast("success","Registerd Successfully" );
                           )}
                         </span>
                       </div>
-                      {errors.confirmPassword && (
-                        <p className="alert alert-danger p-0">
-                          {errors.confirmPassword.message}
-                        </p>
-                      )}
+                      {errors.confirmPassword && <p className='text-warning mt-1'>{(errors.confirmPassword as FieldError).message}</p>}
                     </div>
                   </div>
                   <div className="text-center">
