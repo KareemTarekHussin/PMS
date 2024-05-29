@@ -122,16 +122,17 @@ export default function Login() {
                       {errors.password && <p className='text-warning mt-1'>{(errors.password as FieldError).message}</p>}
                     </div>
 
-                    <div className="d-flex align-items-center justify-content-between mb-4">
+                    <div className={`d-flex align-items-center justify-content-between mb-4 ${styles.textGold}`}>
                       <Link
                         to="/register"
-                        className="text-decoration-none text-white"
+                        className={`text-decoration-none  ${styles.textGold}`}
                       >
                         Register Now ?
                       </Link>
                       <Link
                         to="/forgetpass"
-                        className="text-decoration-none text-white"
+                        className={`text-decoration-none   ${styles.textGold} `}
+                        
                       >
                         Forget Password ?
                       </Link>

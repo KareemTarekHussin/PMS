@@ -21,6 +21,22 @@
 .input::placeholder {
     color: white;
 }
+.input1 {
+    background-color: transparent !important;
+   
+    border: none;
+    outline: none !important;
+
+}
+
+.input1:focus {
+    background-color: transparent !important;
+
+}
+
+.input1::placeholder {
+    color: white;
+}
 
 .bgFormContainer {
     background-color: rgba(49, 89, 81, 0.692);
@@ -60,11 +76,3 @@
     background-color: hsla(35, 86%, 55%, 1) !important;
 }
 
-.passEye {
-
-    right: 48%;
-}
-
-.passEye2 {
-    right: 26%;
-}
