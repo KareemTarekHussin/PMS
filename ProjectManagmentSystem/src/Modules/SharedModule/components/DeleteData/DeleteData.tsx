@@ -1,6 +1,9 @@
 import React from 'react'
 import noData from "../../../../assets/images/no-data.png"
-export default function DeleteData({deleteItem}) {
+interface DeleteDataProps {
+  deleteItem: string;
+}
+const DeleteData: React.FC<DeleteDataProps> = ({ deleteItem }) => {
   return (
     <>
     <div className="text-center bg-inf p-4">
@@ -13,3 +16,4 @@ export default function DeleteData({deleteItem}) {
    </>
   )
 }
+export default DeleteData;
