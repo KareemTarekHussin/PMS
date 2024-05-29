@@ -1,52 +1,83 @@
+import React, { useContext, useEffect, useState } from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
+import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
-import React, { useContext } from "react";
-import { useForm,SubmitHandler } from "react-hook-form";
-import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthContext";
-import Styles from "./ProjectsData.module.css"
 import { useToast } from "../../../Context/ToastContext";
 
 type Inputs = {
   title: string;
   description: string;
-  employeeId: string;
-  projectId: string;
 };
 
 export default function ProjectsData() {
   const { requestHeaders, baseUrl }: any = useContext(AuthContext);
-  const {getToast} = useToast()
-
+  const [isLoading, setIsLoading] = useState(false);
+  const { getToast } = useToast();
+  const { id } = useParams();
   const navigate = useNavigate();
 
+  // useForm hook for form validation
+  const { register, handleSubmit, setValue } = useForm<Inputs>();
+
+  // Fetch project details if editing
+  useEffect(() => {
+    if (id) {
+      setIsLoading(true);
+      axios
+        .get(`${baseUrl}/Project/${id}`, { headers: requestHeaders })
+        .then((response) => {
+          const project = response.data;
+          setValue("title", project.title);
+          setValue("description", project.description);
+        })
+        .catch((error) => {
+          console.log(error);
+          getToast("error", "Failed to fetch project details");
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, [id, baseUrl, requestHeaders, getToast, setValue]);
+
+  // Submit handler for creating or updating project
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    setIsLoading(true);
+    try {
+      let response;
+      if (id) {
+        // If editing, perform update
+        response = await axios.put(
+          `${baseUrl}/Project/${id}`,
+          {
+            title: data.title,
+            description: data.description,
+          },
+          { headers: requestHeaders }
+        );
+        getToast("success", "Project updated successfully");
+      } else {
+        // If creating, perform create
+        response = await axios.post(`${baseUrl}/Project`, data, {
+          headers: requestHeaders,
+        });
+        getToast("success", "Successfully created project");
+      }
+      navigate("/dashboard/projects");
+    } catch (error) {
+      console.log(error);
+      getToast("error", "Failed to perform action");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Navigation function to projects list
   const navigatetoProjects = () => {
     navigate("/dashboard/projects");
   };
 
-  let {
-    register,
-    handleSubmit,
-    formState: { errors },
-  
-  } = useForm<Inputs>();
-
-////API's
-
-//SubmitProjectAPI
-  const onSubmit: SubmitHandler<Inputs> = async(data) => {
-    try {
-      let response = await axios.post(`${baseUrl}/Project`, data, {
-        headers: requestHeaders,
-      });
-
-      getToast("success", "Successfully created project");
-      navigate("/dashboard/projects")
-    } catch (error:any) {
-      getToast("error", error.response.message);
-    }
-  };
-
-  
   return (
     <>
       <div className="add-headers rounded-3 my-5 bg-white p-4 shadow-lg">
@@ -58,13 +89,10 @@ export default function ProjectsData() {
         <h3 className="mt-4 select-btn">Add a New Project</h3>
       </div>
 
-
-
-      <div className="containe">
+      <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-9">
             <div className="bg-inf">
-
               <div className="formContainer container m-auto bg-white p-4 rounded-4">
                 <form onSubmit={handleSubmit(onSubmit)}>
                   <h5>Title</h5>
@@ -83,21 +111,18 @@ export default function ProjectsData() {
                     className="form-control rounded-3"
                     placeholder="Description"
                     {...register("description")}
-                  >
-                  
-                  </textarea>
+                  ></textarea>
 
                   <div className="d-flex justify-content-between my-4">
                     <button onClick={navigatetoProjects} className="white-btn rounded-pill px-4">
                       Cancel
                     </button>
-                    <button type="submit" className='orange-btn rounded-pill px-4 py-2'>
+                    <button type="submit" className="orange-btn rounded-pill px-4 py-2">
                       Save
                     </button>
                   </div>
                 </form>
               </div>
-
             </div>
           </div>
         </div>

@@ -45,6 +45,7 @@ export default function ProjectsList() {
   }
   const navigate = useNavigate();
 
+
   //*==========================> Get ALL Projects API <===============================>> 
   const getProjectsList = async (title='', pageSize=5, pageNumber=1  ) => {
     setIsLoading(true);
@@ -123,6 +124,10 @@ export default function ProjectsList() {
 
   const navigateToAdd = () => {
     navigate("/dashboard/projectsdata");
+  };
+
+  const navigateToEdit = (projectId: number) => {
+    navigate(`/dashboard/projectsdata/${projectId}`);
   };
 
   // *=========================================================================================>>
@@ -250,7 +255,7 @@ export default function ProjectsList() {
                             </li>
                             
                             <li className="dropdown-option">
-                              <a className="dropdown-item text-decoration-none text-black" href="#">
+                              <a className="dropdown-item text-decoration-none text-black" href="#" onClick={() => navigateToEdit(project.id)}>
                                 <i className="fa fa-edit text-warning me-2"></i>
                                 <span>Edit</span>
                               </a>
