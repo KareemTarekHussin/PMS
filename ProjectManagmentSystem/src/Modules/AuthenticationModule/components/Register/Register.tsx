@@ -218,28 +218,28 @@ getToast("success","Registerd Successfully" );
                         Confirm Password
                       </label>
                       <div>
-                        <input
-                          type={visible ? "text" : "password"}
-                          className={`${Styles.input} p-1 text-white w-100`}
-                          placeholder="Confirm New Password"
-                          {...register("confirmPassword", {
-                            required: "confirm Password is required",
-                            validate: (value) =>
-                              value === password.current ||
-                              "The passwords do not match",
-                          })}
-                        />
-                        <span
-                          onClick={() => setVisible(!visible)}
-                          className={`${Styles.passEye2} text-white px-3 position-absolute d-inline-block`}
-                        >
-                          {visible ? (
-                            <i className="fa-regular fa-eye  "></i>
-                          ) : (
-                            <i className="fa-regular fa-eye-slash "></i>
-                          )}
-                        </span>
-                      </div>
+                          <input
+                            type={visible ? "text" : "password"}
+                            className={`${Styles.input} p-1 text-white w-100`}
+                            placeholder="Confirm New Password"
+                            {...register("confirmPassword", {
+                              required: "confirm Password is required",
+                              validate: (value) =>
+                                value === password.current ||
+                                "The passwords do not match",
+                            })}
+                          />
+                          <span
+                            onClick={() => setVisible(!visible)}
+                            className={`${Styles.passEye2} text-white px-3 position-absolute d-inline-block`}
+                          >
+                            {visible ? (
+                              <i className="fa-regular fa-eye  "></i>
+                            ) : (
+                              <i className="fa-regular fa-eye-slash "></i>
+                            )}
+                          </span>
+                        </div>
                       {errors.confirmPassword && (
                         <p className="alert alert-danger p-0">
                           {errors.confirmPassword.message}
