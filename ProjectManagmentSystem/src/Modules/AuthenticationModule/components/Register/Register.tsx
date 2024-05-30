@@ -28,8 +28,8 @@ export default function Register() {
     formState: { errors },
     watch,
   } = useForm<IFormInput>();
-  const imgValue = watch();
-
+  // const imgValue = watch();
+  const imgValue = watch("profileImage");
   const password = useRef({});
   password.current = watch("password", "");
   const appendToFormData = (data: any) => {
@@ -84,9 +84,9 @@ getToast("success","Registerd Successfully" );
                         <img
                           className={`${Styles.profileImg}`}
                           src={
-                            imgValue?.profileImage
-                              ? URL.createObjectURL(imgValue.profileImage[0])
-                              : img
+                            imgValue && imgValue.length > 0
+                            ? URL.createObjectURL(imgValue[0])
+                            : img
                           }
                           alt="profileImg"
                         />
@@ -106,6 +106,7 @@ getToast("success","Registerd Successfully" );
                         })}
                       />
                     </div>
+                    {errors.profileImage && <p className='text-warning text-center mt-1'>{(errors.profileImage as FieldError).message}</p>}
                     <div className="col-md-6">
                       <label className={`${Styles.textGold}`}>Username</label>
                       <div>
