@@ -21,7 +21,7 @@ import TasksData from "./Modules/TasksModule/components/TasksData/TasksData";
 import TaskBoard from "./Modules/TasksModule/components/TaskBoard/TaskBoard";
 
 function App() {
-  const routes = createBrowserRouter([
+  const routes = createHashRouter([
     {
       path: "/",
       element: <AuthLayout />,
