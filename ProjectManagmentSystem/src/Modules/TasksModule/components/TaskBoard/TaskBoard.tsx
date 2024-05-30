@@ -57,7 +57,7 @@ export default function TaskBoard() {
     <>
      <Header title='Tasks Board' />
       <div
-        className={`${Styles.boardContainer} d-flex container justify-content-center align-items-center my-5 py-5 shadow gap-5`}
+        className={`${Styles.boardContainer} d-flex container justify-content-center bg-white align-items-center my-5 py-5 shadow gap-5 dark-p dark-tabel`}
       >
         <div className="row">
           <Column
@@ -123,7 +123,7 @@ const Column = ({ title, status, tasks, changeStatus }: columnProps) => {
           onDragEnter={(e:any) => {
             e.preventDefault();
           }}
-          className={`d-flex flex-column gap-3 px-5 py-3 ps-4 pe-4 ${Styles.column}`}
+          className={`d-flex flex-column gap-3 px-5 py-3 ps-4 pe-4 dark-hh ${Styles.column}`}
         >
           {filteredCards.map((task) => (
             <Task key={task.id} task={task} />

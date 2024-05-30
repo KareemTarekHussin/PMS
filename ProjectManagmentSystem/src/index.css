@@ -4,7 +4,7 @@
 
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Montserrat, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 }
@@ -12,7 +12,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  /* font-family: "Inter", sans-serif; */
+  font-family: Montserrat, system-ui, Avenir, Helvetica, Arial, sans-serif;
 }
 p{
   margin: 0;
@@ -534,3 +534,73 @@ select.center-text option {
     width: 75%;
   }
  }
+
+ /**  =====================================> DARK THEME <==================================== */
+
+/* NAVBAR */
+
+.dark .navber-darkmood {
+  /* background-color: #181e24 !important; */
+  background-color: #29435a !important;
+  /* background-color: #181e24 !important; */
+}
+
+
+.dark .dark-p {
+color:white !important;
+
+}
+.dark .dark-icon {
+color: white !important;
+
+}
+/* HEADER MASTERLAYOUT */
+.dark .darkMood-MasterLayout {
+background-color: #192734;
+}
+.dark .h2-dark {
+color:#fff;
+
+}
+
+.dark .dark-tabel {
+  background-color: #22303c !important;
+  /* border-color: #192734; */
+  border-color: #192734;
+  background-image: none;
+  
+}
+.dark .dark-input {
+  background-color: #22303c !important;
+  /* border-color: #192734; */
+  border-color: #fff;
+  background-image: none;
+  color:#fff
+  
+}
+.dark .dark-input::placeholder {
+  /* color: #6c757d;  */
+  color: #fff;
+  opacity: 1; 
+}
+.dark .dark-filter {
+  background-color: #22303c !important;
+  background-image: none;
+  
+}
+.dark .dark-hh {
+  background-color: #29435a !important;
+  border-color: #192734;
+  
+}
+.dark .dark-tabel::placeholder {
+  /* color: #6c757d;  */
+  color: #fff;
+  opacity: 1; 
+}
+
+/* SIDEBAR */
+.dark .sidebar-container .ps-sidebar-container {
+  background-color: #22384b !important;
+  background-image: none;
+}

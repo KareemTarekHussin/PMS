@@ -80,44 +80,44 @@ export default function ProjectsData() {
 
   return (
     <>
-      <div className="add-headers rounded-3 my-5 bg-white p-4 shadow-lg">
+      <div className="add-headers rounded-3 my-5 bg-white p-4 shadow-lg dark-tabel">
         <span>
-          <i onClick={navigatetoProjects} className="fa fa-chevron-left me-2"></i>
-          <span>View all Projects</span>
+          <i onClick={navigatetoProjects} className="fa fa-chevron-left me-2 dark-icon"></i>
+          <span className="dark-p">View all Projects</span>
         </span>
 
-        <h3 className="mt-4 select-btn">Add a New Project</h3>
+        <h3 className="mt-4 select-btn h2-dark">Add a New Project</h3>
       </div>
 
-      <div className="container">
+      <div className="container ">
         <div className="row justify-content-center">
-          <div className="col-md-9">
+          <div className="col-md-9 ">
             <div className="bg-inf">
-              <div className="formContainer container m-auto bg-white p-4 rounded-4">
+              <div className="formContainer container m-auto bg-white p-4 rounded-4 dark-tabel">
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <h5>Title</h5>
+                  <h5 className="dark-p">Title</h5>
                   <div className="input-group mb-3">
                     <input
                       type="text"
-                      className="form-control rounded-3"
+                      className="form-control rounded-3 dark-input"
                       placeholder="Name"
                       {...register("title")}
                     />
                   </div>
 
-                  <h5>Description</h5>
+                  <h5 className="dark-p">Description</h5>
                   <textarea
                     rows={4}
-                    className="form-control rounded-3"
+                    className="form-control rounded-3 dark-input "
                     placeholder="Description"
                     {...register("description")}
                   ></textarea>
 
                   <div className="d-flex justify-content-between my-4">
-                    <button onClick={navigatetoProjects} className="white-btn rounded-pill px-4">
+                    <button onClick={navigatetoProjects} className="white-btn rounded-pill px-4 dark-tabel dark-p">
                       Cancel
                     </button>
-                    <button type="submit" className="orange-btn rounded-pill px-4 py-2">
+                    <button type="submit" className="orange-btn rounded-pill px-4 py-2 ">
                       Save
                     </button>
                   </div>

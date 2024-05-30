@@ -179,22 +179,22 @@ export default function UsersList() {
     </Modal>
     {/* ===========================>> HEADER <<========================================= */}
       <div
-        className="w-100 header-user d-flex flex-column align-items-center flex-md-row justify-content-md-between mt-5 mb-4 rounded-3 p-4 gap-2 gap-md-0 shadow-sm">
-        <h1 className="fw-semibold mb-2 mb-md-0 title-user">Users</h1>
+        className="w-100 header-user d-flex flex-column align-items-center flex-md-row justify-content-md-between mt-5 mb-4 rounded-3 p-4 gap-2 gap-md-0 shadow-sm dark-tabel">
+        <h1 className="fw-semibold mb-2 mb-md-0 title-user h2-dark">Users</h1>
       </div>
 
-      <div className='py-4 bg-inf px-lg-5 rounded-3 shadow-s'>
+      <div className='py-4 bg-inf px-lg-5 rounded-3 shadow-s '>
       <div className="row justify-content-center justify-content-md-start">
           {/* ====================>> SEARCH <<=================== */}
           <div className="col-lg-4">
-            <div className="input-group mb-3">
-              <span className="input-group-text rounded-5 rounded-end-0" id="basic-addon1">
-                <i className="fa fa-search"></i>
+            <div className="input-group mb-3 ">
+              <span className="input-group-text rounded-5 rounded-end-0 dark-tabel" id="basic-addon1">
+                <i className="fa fa-search dark-icon"></i>
               </span>
               <input
                 onChange={getNameValue}
                 type="text"
-                className="form-control rounded-5 rounded-start-0 py-2"
+                className="form-control rounded-5 rounded-start-0 py-2 dark-tabel"
                 placeholder="Search By Username"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
@@ -202,9 +202,9 @@ export default function UsersList() {
             </div>
           </div>
 
-          <div className="categories-body">
-            <ul className="responsive-table-categories">
-              <li className="table-header">
+          <div className="categories-body ">
+            <ul className="responsive-table-categories ">
+              <li className="table-header dark-hh">
                 <div className="col col-1">User Name</div>
                 <div className="col col-2">Status</div>
                 <div className="col col-3">Phone Number</div>
@@ -218,10 +218,10 @@ export default function UsersList() {
               <>
                 {usersList.length > 0 ? (
                   usersList.map((user: User) => (
-                    <ul key={user.id} className="responsive-table-categories">
-                      <li  className="table-row">
-                        <div className="col col-1 fw-semibold" data-label="Username :">{user.userName}</div>
-                        <div className="col col-2" data-label="Status :">
+                    <ul key={user.id} className="responsive-table-categories ">
+                      <li  className="table-row dark-tabel">
+                        <div className="col col-1 fw-semibold h2-dark" data-label="Username :">{user.userName}</div>
+                        <div className="col col-2 h2-dark" data-label="Status :">
                         {user.status}
                         {user.isActivated ? (
                           <i
@@ -235,32 +235,32 @@ export default function UsersList() {
                             ></i>
                         )}
                         </div>
-                        <div className="col col-3" data-label="Phone Number :">{user.phoneNumber}</div>
-                        <div className="col col-4" data-label="Email :">{user.email}</div>
-                        <div className="col col-5" data-label="Actions :">
+                        <div className="col col-3 h2-dark" data-label="Phone Number :">{user.phoneNumber}</div>
+                        <div className="col col-4 h2-dark" data-label="Email :">{user.email}</div>
+                        <div className="col col-5 h2-dark" data-label="Actions :">
                           <div className="dropdown">
-                            <button className="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button className="btn dark-icon" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                               <i className="fa fa-ellipsis-vertical"></i>
                             </button>
-                            <ul className="dropdown-menu bg-success-subtl border-0 shadow-lg rounded-5 pt-2">
+                            <ul className="dropdown-menu bg-success-subtl border-0 shadow-lg rounded-5 pt-2 dark-tabel">
                               <div>
       
                               <li>
-                                <a className="dropdown-item text-decoration-none text-black" href="#" onClick={()=>handleViewModal(user)}>
+                                <a className="dropdown-item text-decoration-none text-black dark-p" href="#" onClick={()=>handleViewModal(user)}>
                                   <i className="fa fa-eye text-info me-2"></i>
                                   <span>View</span>
                                 </a>
                               </li>
                               
                               <li>
-                                <a className="dropdown-item text-decoration-none text-black" href="#">
+                                <a className="dropdown-item text-decoration-none text-black dark-p" href="#">
                                   <i className="fa fa-edit text-warning me-2"></i>
                                   <span>Edit</span>
                                 </a>
                               </li>
       
                               <li>
-                                <a className="dropdown-item text-decoration-none text-black" onClick={() => handleDeleteShow(user.id)}  href="#">
+                                <a className="dropdown-item text-decoration-none text-black dark-p" onClick={() => handleDeleteShow(user.id)}  href="#">
                                   <i className="fa fa-trash text-danger me-2"></i>
                                   <span>Delete</span>
                                 </a>

@@ -7,23 +7,29 @@ import navLogo from "../../../../assets/images/nav-logo.png";
 import navImg from "../../../../assets/images/8550fbcbe60cd242d12760784feff287.jpeg";
 import navStyle from "./Navbar.module.css";
 import { useAuth } from '../../../Context/AuthContext';
-
+import styles from "../MasterLayout/MasterLayout.module.css"
+import DarkModeToggle from "react-dark-mode-toggle";
+import { useState, useEffect } from "react";
+import DarkMood from '../../../DarkMood/DarkMood';
 export default function CustomNavbar() {
   const { loginUser } = useAuth();
 
   return (
     <>
-      <Navbar expand="md" className="bg-white p-0 shadow-sm">
+      <Navbar expand="md" className={`${styles.nav} p-1 shadow-sm navber-darkmood`}>
       <Container>
+        
         <Navbar.Brand>
             <img src={navLogo} className='w-na bg-dange' alt="" />
         </Navbar.Brand>
-          
+       
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
           
         <Navbar.Collapse id="basic-navbar-nav" className='bg-dange'>
           <Nav className="text-center ms-md-auto d-flex gap-md-4 bg-blac py-3 py-md-0">
-              
+          <Navbar.Brand>
+            <DarkMood/>
+          </Navbar.Brand>
             <Nav.Link className='d-none d-md-flex d-flex align-items-center justify-content-center justify-content-lg-start p-3 p-md-0 mb-3 mb-md-0 me-md- rounded-4'>
                 
               <i className={`fa-solid fa-bell ${navStyle.mainColor}`}></i>
@@ -43,8 +49,8 @@ export default function CustomNavbar() {
               </div>
 
               <div >
-                <p className={`${navStyle.fs} text-start text-black fw-semibold`}>{loginUser?.userName}</p>
-                <p className={`${navStyle.fs} text-muted fst-italic`}>{loginUser?.userEmail}</p>
+                <p className={`${navStyle.fs} text-start text-black fw-semibold  dark-p`}>{loginUser?.userName}</p>
+                <p className={`${navStyle.fs} text-muted fst-italic  dark-p`}>{loginUser?.userEmail}</p>
               </div>
 
               <div>

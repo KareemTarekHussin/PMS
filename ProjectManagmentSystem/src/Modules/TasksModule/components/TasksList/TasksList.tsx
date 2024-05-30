@@ -216,8 +216,8 @@ export default function TasksList() {
             </Modal.Footer>
           </Modal>
 
-          <div className="w-100 header-task d-flex flex-column align-items-center flex-md-row justify-content-md-between mt-5 mb-4 bg-whit rounded-3 p-4 gap-2 gap-md-0 shadow-sm">
-            <h1 className="mb-2 mb-md-0 title-task">Tasks</h1>
+          <div className="w-100 header-task d-flex flex-column align-items-center flex-md-row justify-content-md-between mt-5 mb-4 bg-whit rounded-3 p-4 gap-2 gap-md-0 shadow-sm dark-tabel">
+            <h1 className="mb-2 mb-md-0 title-task h2-dark">Tasks</h1>
 
             <div>
               <button
@@ -235,15 +235,15 @@ export default function TasksList() {
               <div className="col-12 col-md-7 col-lg-4">
                 <div className="input-group mb-3 ">
                   <span
-                    className="input-group-text rounded-5 rounded-end-0"
+                    className="input-group-text rounded-5 rounded-end-0 dark-tabel"
                     id="basic-addon1"
                   >
-                    <i className="fa fa-search"></i>
+                    <i className="fa fa-search dark-icon"></i>
                   </span>
                   <input
                     onChange={handleTitleChange}
                     type="text"
-                    className="form-control rounded-5 rounded-start-0 py-2 select-hover"
+                    className="form-control rounded-5 rounded-start-0 py-2 select-hover dark-tabel"
                     placeholder="Search By Title"
                     aria-label="Username"
                     aria-describedby="basic-addon1"
@@ -252,10 +252,10 @@ export default function TasksList() {
               </div>
 
               <div className="col-6 col-md-5 col-lg-1 px-lg-2 bg-inf filter-container">
-                <div className="position-relative bg-blac">
+                <div className="position-relative bg-blac ">
                   <select
                     onChange={handleSelect}
-                    className="form-control border-0 rounded-5 py-2 filter-select"
+                    className="form-control border-0 rounded-5 py-2 filter-select dark-p dark-tabel"
                     defaultValue=""
                   >
                     <option value="" disabled>
@@ -267,7 +267,7 @@ export default function TasksList() {
                   </select>
 
                   <div className="position-absolute filter-icon">
-                    <i className="fa-solid fa-filter text-muted"></i>
+                    <i className="fa-solid fa-filter text-muted dark-icon"></i>
                   </div>
                 </div>
               </div>
@@ -275,7 +275,7 @@ export default function TasksList() {
 
             <div className="categories-body">
               <ul className="responsive-table-categories">
-                <li className="table-header">
+                <li className="table-header dark-hh">
                   <div className="col col-1">Title</div>
                   <div className="col col-2">Status</div>
                   <div className="col col-3">User</div>
@@ -291,41 +291,41 @@ export default function TasksList() {
                 <>
                   {tasksList.length > 0 ? (
                     tasksList.map((task: TaksInterface) => (
-                      <ul className="responsive-table-categories">
-                        <li key={task.id} className="table-row">
-                          <div className="col col-1" data-label="Title :">
+                      <ul className="responsive-table-categories ">
+                        <li key={task.id} className="table-row dark-tabel">
+                          <div className="col col-1 dark-p" data-label="Title :">
                             <span className="fw-semibold">{task.title}</span>
                           </div>
-                          <div className="col col-2" data-label="Status :">
+                          <div className="col col-2 dark-p" data-label="Status :">
                             {task.status}
                           </div>
-                          <div className="col col-3" data-label="User :">
+                          <div className="col col-3 dark-p" data-label="User :">
                             {task.employee?.userName}
                           </div>
-                          <div className="col col-4" data-label="Project :">
+                          <div className="col col-4 dark-p" data-label="Project :">
                             {task.project?.title}
                           </div>
                           <div
-                            className="col col-5"
+                            className="col col-5 dark-p"
                             data-label="Date Created :"
                           >
                             {task.creationDate.slice(0, 10)}
                           </div>
-                          <div className="col col-6" data-label="Actions :">
+                          <div className="col col-6 " data-label="Actions :">
                             <div className="dropdown">
                               <button
-                                className="btn"
+                                className="btn dark-icon"
                                 type="button"
                                 data-bs-toggle="dropdown"
                                 aria-expanded="false"
                               >
                                 <i className="fa fa-ellipsis-vertical"></i>
                               </button>
-                              <ul className="dropdown-menu bg-success-subtl border-0 shadow-lg rounded-5 pt-2">
+                              <ul className="dropdown-menu bg-success-subtl border-0 shadow-lg rounded-5 pt-2 dark-tabel">
                                 <div>
                                   <li>
                                     <a
-                                      className="dropdown-item text-decoration-none text-black"
+                                      className="dropdown-item text-decoration-none text-black dark-p"
                                       href="#"
                                       onClick={() => handleViewModal(task)}
                                     >
@@ -336,7 +336,7 @@ export default function TasksList() {
 
                                   <li>
                                     <Link
-                                      className="dropdown-item text-decoration-none text-black"
+                                      className="dropdown-item text-decoration-none text-black dark-p"
                                       to={`/dashboard/tasksedit/${task.id}`}
                                       state={{ type: "edit", taskData: task }}
                                     >
@@ -347,7 +347,7 @@ export default function TasksList() {
 
                                   <li>
                                     <a
-                                      className="dropdown-item text-decoration-none text-black"
+                                      className="dropdown-item text-decoration-none text-black dark-p"
                                       onClick={() => handleDeleteShow(task.id)}
                                       href="#"
                                     >

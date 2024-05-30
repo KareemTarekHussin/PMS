@@ -93,28 +93,28 @@ export default function TasksData() {
 
   return (
     <>
-      <div className="add-headers rounded-3 my-5 bg-white p-4 shadow-lg">
+      <div className="add-headers rounded-3 my-5 bg-white p-4 shadow-lg dark-tabel">
         <span>
           <Link to="/dashboard/tasks">
-            <i className="fa fa-chevron-left me-2 text-black"></i>
+            <i className="fa fa-chevron-left me-2 text-black dark-icon"></i>
           </Link>
-          <span>View all Tasks</span>
+          <span className="dark-p">View all Tasks</span>
         </span>
 
-        <h3 className="mt-4">Add a New Task</h3>
+        <h3 className="mt-4 dark-p">Add a New Task</h3>
       </div>
 
       <div className="containe">
         <div className="row justify-content-center">
           <div className="col-md-10 col-lg-9">
             <div className="bg-inf">
-              <div className="formContainer container m-auto bg-white p-4 p-lg-5 rounded-4">
+              <div className="formContainer container m-auto bg-white p-4 p-lg-5 rounded-4 dark-tabel">
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <h5 className="text-muted">Title</h5>
-                  <div className="input-group mb-3">
+                  <h5 className="text-muted dark-p">Title</h5>
+                  <div className="input-group mb-3 ">
                     <input
                       type="text"
-                      className="form-control p-2 rounded-3"
+                      className="form-control p-2 rounded-3 dark-input"
                       placeholder="Title"
                       defaultValue={state ? taskData?.title : null}
                       {...register("title", {
@@ -128,20 +128,20 @@ export default function TasksData() {
                     </div>
                   )}
 
-                  <h5 className=" text-muted">Description</h5>
+                  <h5 className=" text-muted dark-p">Description</h5>
                   <textarea
                     rows={4}
                     defaultValue={state ? taskData?.description : null}
-                    className="form-control rounded-3"
+                    className="form-control rounded-3 dark-input"
                     placeholder="Description"
                     {...register("description")}
                   ></textarea>
 
                   <div className="row my-3 gap-4 gap-md-0">
                     <div className="col-md-6">
-                      <h5 className="text-muted">User</h5>
+                      <h5 className="text-muted dark-p">User</h5>
                       <select
-                        className="form-control rounded-3 p-2"
+                        className="form-control rounded-3 p-2 dark-input"
                         {...register("employeeId")}
                         value={employeeId}
                         onChange={(e) => setEmployeeId(e.target.value)}
@@ -154,15 +154,15 @@ export default function TasksData() {
                         ))}
                       </select>
                       {errors.employeeId && (
-                        <div className="p-1 alert alert-danger">
+                        <div className="p-1 alert alert-danger ">
                           {errors.employeeId.message}
                         </div>
                       )}
                     </div>
                     <div className="col-md-6">
-                      <h5 className="text-muted">Project</h5>
+                      <h5 className="text-muted dark-p">Project</h5>
                       <select
-                        className="form-control rounded-3 p-2"
+                        className="form-control rounded-3 p-2 dark-input "
                         {...register("projectId")}
                         onChange={(e) => setProjectId(e.target.value)}
                         value={projectId}
@@ -185,7 +185,7 @@ export default function TasksData() {
                   <div className="d-flex justify-content-between my-5">
                     <button
                       onClick={navigatetoTasks}
-                      className="white-btn rounded-pill px-4"
+                      className="white-btn rounded-pill px-4 dark-input dark-p"
                     >
                       Cancel
                     </button>

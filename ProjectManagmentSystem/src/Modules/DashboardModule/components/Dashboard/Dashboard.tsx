@@ -3,9 +3,9 @@ import Styles from "./Dashboard.module.css";
 import axios from "axios";
 import { useAuth } from "../../../Context/AuthContext";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-
 import { Pie } from "react-chartjs-2";
 import { ActiveUserData, TaskData } from "../../../../Interfaces/Interface";
+
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function Dashboard() {
@@ -20,22 +20,22 @@ export default function Dashboard() {
     done: 0,
   });
 
-  const [isAciveUser, setActiveUser] = useState<ActiveUserData>({
+  const [isActiveUser, setActiveUser] = useState<ActiveUserData>({
     activatedEmployeeCount: 0,
     deactivatedEmployeeCount: 0,
   });
+
   const getUsersList = async () => {
     try {
       let response = await axios.get(`${baseUrl}/Users/manager`, {
         headers: requestHeaders,
       });
       setUsersList(response.data.data);
-
-      // console.log("Number try", response.data.data);
     } catch (error) {
       console.log(error);
     }
   };
+
   const getProjectsList = async () => {
     try {
       let response = await axios.get(`${baseUrl}/Project/manager`, {
@@ -46,13 +46,14 @@ export default function Dashboard() {
       console.log(error);
     }
   };
+
   const getTasksList = async () => {
     try {
       let response = await axios.get(`${baseUrl}/Task/manager`, {
         headers: requestHeaders,
       });
       setTasksList(response.data.data);
-    } catch (error: any) {}
+    } catch (error) {}
   };
 
   const getTaskData = async () => {
@@ -61,7 +62,7 @@ export default function Dashboard() {
         headers: requestHeaders,
       });
       setTaskData(response.data);
-    } catch (error: any) {
+    } catch (error:any) {
       console.log(error.response.message);
     }
   };
@@ -71,9 +72,8 @@ export default function Dashboard() {
       const response = await axios.get(`${baseUrl}/Users/count`, {
         headers: requestHeaders,
       });
-      // console.log(response.data);
       setActiveUser(response.data);
-    } catch (error: any) {
+    } catch (error:any) {
       console.log(error.response.message);
     }
   };
@@ -90,19 +90,17 @@ export default function Dashboard() {
   };
 
   const isActive = {
-    lable: ["Active", "InActive"],
     datasets: [
       {
         data: [
-          isAciveUser.activatedEmployeeCount,
-          isAciveUser.deactivatedEmployeeCount,
+          isActiveUser.activatedEmployeeCount,
+          isActiveUser.deactivatedEmployeeCount,
         ],
         backgroundColor: ["#E7C3D7", "#E4E4BC"],
         hoverOffset: 4,
       },
     ],
     labels: ["Active", "InActive"],
-
   };
 
   useEffect(() => {
@@ -112,6 +110,7 @@ export default function Dashboard() {
     getTaskData();
     getIsActive();
   }, []);
+
   const countUsersByActivation = (users: any) => {
     return users.reduce(
       (counts: any, user: any) => {
@@ -125,7 +124,9 @@ export default function Dashboard() {
       { active: 0, inactive: 0 }
     );
   };
+
   const { active, inactive } = countUsersByActivation(usersList);
+
   return (
     <>
       <div
@@ -149,16 +150,16 @@ export default function Dashboard() {
       </div>
       {loginUser?.userGroup == "Manager" ? (
         <div>
-          <div className={`${Styles.textPadding} container-fluid`}>
+          <div className={`${Styles.textPadding} container-fluid `}>
             <div className="row">
-              <div className="col-md-6 bg-white rounded-2 p-3 my-2">
-                <b>Tasks</b>
-                <p className="text-muted">
+              <div className="col-md-5 bg-white rounded-2 p-3 my-2 dark-tabel">
+                <b className="dark-p">Tasks</b>
+                <p className="text-muted dark-p">
                   Number of Projects that have Tasks in Progress{" "}
                 </p>
                 <div className="row g-2 mt-4">
                   <div
-                    className={`${Styles.bgProgress} col-md-3 mx-1  rounded-4 p-2`}
+                    className={`${Styles.bgProgress} col-md-3 mx-1 rounded-4 p-2`}
                   >
                     <div className="p-2">
                       <span
@@ -203,13 +204,14 @@ export default function Dashboard() {
                     </div>
                   </div>
                 </div>
-                <div className={`${Styles.chart} mt-4 pt-1`}>
-                  <Pie className="" data={data} />
+                <div className={`${Styles.chart} mt-4 pt-1`} style={{ height: '300px', width: '300px' }}>
+                  <Pie data={data} options={{ responsive: true, maintainAspectRatio: false }} />
                 </div>
               </div>
-              <div className="col-md-6 bg-white rounded-2 p-3 my-2">
-                <b>Users</b>
-                <p className="text-muted">
+              <div className="col-md-1"></div>
+              <div className="col-md-5 bg-white rounded-2 p-3 my-2 dark-tabel">
+                <b className="dark-p">Users</b>
+                <p className="text-muted dark-p">
                   Number of Users Active and Inactive
                 </p>
                 <div className="row g-2 mt-4">
@@ -244,8 +246,8 @@ export default function Dashboard() {
                     </div>
                   </div>
                 </div>
-                <div className={`${Styles.chart} mt-4 pt-1`}>
-                  <Pie className="" data={isActive} />
+                <div className={`${Styles.chart} mt-4 pt-1`} style={{ height: '300px', width: '300px' }}>
+                  <Pie data={isActive} options={{ responsive: true, maintainAspectRatio: false }} />
                 </div>
               </div>
             </div>

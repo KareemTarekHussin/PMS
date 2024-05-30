@@ -178,10 +178,10 @@ export default function ProjectsList() {
     </Modal>
 
       <div
-      className="w-100 compTitle header-project d-flex flex-column align-items-center flex-md-row justify-content-md-between mt-5 mb-4 bg-whit rounded-3 p-4 gap-2 gap-md-0 shadow-sm">
+      className="w-100 compTitle header-project d-flex flex-column align-items-center flex-md-row justify-content-md-between mt-5 mb-4 bg-whit rounded-3 p-4 gap-2 gap-md-0 shadow-sm dark-tabel">
 
-        <h1 className="fw-semibold mb-2 mb-md-0 title-project">Projects</h1>
-
+        <h1 className="fw-semibold mb-2 mb-md-0 title-project h2-dark">Projects</h1>
+     
         <div>
         {loginUser?.userGroup=='Manager'?
         <button
@@ -198,17 +198,18 @@ export default function ProjectsList() {
       </div>
 
 
-      <div className='py-4 bg-inf px-lg-5 rounded-3 shadow-s'>
+      <div className='py-4 bg-inf px-lg-5 rounded-3 shadow-s '>
 
         <div className="col-lg-4">
-          <div className="input-group mb-3">
-            <span className="input-group-text rounded-5 rounded-end-0" id="basic-addon1">
-              <i className="fa fa-search"></i>
+          <div className="input-group mb-3 ">
+            <span className="input-group-text rounded-5 rounded-end-0 dark-tabel " id="basic-addon1">
+              <i className="fa fa-search dark-icon"></i>
             </span>
+            <div></div>
             <input
               onChange={getNameValue}
               type="text"
-              className="form-control rounded-5 rounded-start-0 py-2"
+              className="form-control rounded-5 rounded-start-0 py-2 dark-tabel"
               placeholder="Search By Title"
               aria-label="Username"
               aria-describedby="basic-addon1"
@@ -216,9 +217,9 @@ export default function ProjectsList() {
           </div>
         </div>
 
-        <div className="categories-body">
+        <div className="categories-body ">
           <ul className="responsive-table-categories">
-            <li className="table-header">
+            <li className="table-header dark-hh">
               <div className="col col-1">#</div>
               <div className="col col-2">Project Name</div>
               <div className="col col-3">Creation Date</div>
@@ -232,39 +233,39 @@ export default function ProjectsList() {
           ) : (
             <>
               {projectsList.length > 0 ? (
-                projectsList.map((project:any, index) => (
+                projectsList.map((project:ProjectInterface, index) => (
                   <ul  className="responsive-table-categories">
-                    <li key={project.id} className="table-row">
-                      <div className="col col-1 fw-semibold" data-label="#">{index + 1}</div>
-                      <div className="col col-2" data-label="Category Name :">{project.title}</div>
-                      <div className="col col-3" data-label="Creation Date :">{project.creationDate.slice(0, 10)}</div>
-                      <div className="col col-4" data-label="Last Update :">{project.modificationDate.slice(0, 10)}</div>
-                      <div className="col col-5" data-label="Actions :">
+                    <li key={project.id} className="table-row dark-tabel ">
+                      <div className="col col-1 fw-semibold h2-dark" data-label="#">{index + 1}</div>
+                      <div className="col col-2 h2-dark" data-label="Category Name :">{project.title}</div>
+                      <div className="col col-3 h2-dark" data-label="Creation Date :">{project.creationDate.slice(0, 10)}</div>
+                      <div className="col col-4 h2-dark" data-label="Last Update :">{project.modificationDate.slice(0, 10)}</div>
+                      <div className="col col-5 h2-dark" data-label="Actions :">
                         <div className="dropdown">
-                          <button className="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <button className="btn dark-icon" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i className="fa fa-ellipsis-vertical"></i>
                           </button>
-                          <ul className="dropdown-menu bg-success-subtl border-0 shadow-lg rounded-5 pt-2">
+                          <ul className="dropdown-menu bg-success-subtl border-0 shadow-lg rounded-5 pt-2 dark-tabel">
                             <div>
 
                             <li className="dropdown-option">
-                              <a className="dropdown-item text-decoration-none text-black" href="#" onClick={()=>handleViewModal(project)}>
-                                <i className="fa fa-eye text-info me-2"></i>
-                                <span>View</span>
+                              <a className="dropdown-item text-decoration-none text-black h2-dark " href="#" onClick={()=>handleViewModal(project)}>
+                                <i className="fa fa-eye text-info me-2 "></i>
+                                <span className="dark-p">View</span>
                               </a>
                             </li>
                             
                             <li className="dropdown-option">
                               <a className="dropdown-item text-decoration-none text-black" href="#" onClick={() => navigateToEdit(project.id)}>
-                                <i className="fa fa-edit text-warning me-2"></i>
-                                <span>Edit</span>
+                                <i className="fa fa-edit text-warning me-2 "></i>
+                                <span  className="dark-p">Edit</span>
                               </a>
                             </li>
 
                             <li className="dropdown-option">
                               <a className="dropdown-item text-decoration-none text-black" onClick={() => handleDeleteShow(project.id)}  href="#">
                                 <i className="fa fa-trash text-danger me-2"></i>
-                                <span>Delete</span>
+                                <span  className="dark-p">Delete</span>
                               </a>
                             </li>
                             </div>

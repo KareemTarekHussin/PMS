@@ -12,7 +12,7 @@ export default function MasterLayout() {
         <div>
           <SideBar/>
         </div>
-        <div className='w-100 overflow-aut p-2 p-md-3 bg-body-secondary'>
+        <div className={`${Styles.greybackground} w-100 overflow-aut p-2 p-md-3 darkMood-MasterLayout`}>
           <Outlet/>
         </div>
       </div>
