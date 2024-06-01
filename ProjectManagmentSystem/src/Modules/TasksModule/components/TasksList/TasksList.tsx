@@ -158,10 +158,10 @@ export default function TasksList() {
       {loginUser?.userGroup == "Manager" ? (
         <div className="font-main">
           <Modal show={showDelete} onHide={handleDeleteClose}>
-            <Modal.Body>
+            <Modal.Body className="dark-tabel">
               <DeleteData deleteItem={"task"} />
             </Modal.Body>
-            <Modal.Footer>
+            <Modal.Footer className="dark-tabel">
               <Button variant="danger" onClick={onDeleteSubmit}>
                 Delete
               </Button>
@@ -174,15 +174,16 @@ export default function TasksList() {
             className="font-main"
             aria-labelledby="contained-modal-title-vcenter"
             centered
+            
           >
-            <Modal.Header closeButton>
-              <Modal.Title id="contained-modal-title-vcenter">
+            <Modal.Header closeButton className="dark-tabel">
+              <Modal.Title id="contained-modal-title-vcenter" className="dark-p">
                 Task Details
               </Modal.Title>
             </Modal.Header>
-            <Modal.Body>
+            <Modal.Body className="dark-tabel">
               {viewedTask && (
-                <>
+                <div className="dark-p">
                   {/* <p>{viewedProject.id}</p> */}
                   <h4 className="fst-italic fw-semibold text-success">
                     {viewedTask.title}
@@ -203,10 +204,10 @@ export default function TasksList() {
                     <span className="fw-bold">Creation Date : </span>{" "}
                     {viewedTask.creationDate}
                   </p>
-                </>
+                </div>
               )}
             </Modal.Body>
-            <Modal.Footer>
+            <Modal.Footer className="dark-tabel">
               <Button
                 onClick={handleCloseViewModal}
                 className="btn btn-success"

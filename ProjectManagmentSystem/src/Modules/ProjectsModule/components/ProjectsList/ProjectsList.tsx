@@ -138,10 +138,10 @@ export default function ProjectsList() {
     <div className='font-main'>
       
       <Modal show={showDelete} onHide={handleDeleteClose}>
-        <Modal.Body>
+        <Modal.Body className="dark-tabel">
           <DeleteData deleteItem={"Project"} />
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="dark-tabel">
           <Button className="red-btn rounded-pill px-4" onClick={onDeleteSubmit}>
             Delete
           </Button>
@@ -156,12 +156,12 @@ export default function ProjectsList() {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
+      <Modal.Header closeButton className="dark-tabel">
+          <Modal.Title id="contained-modal-title-vcenter" className="dark-p">
             Project Details
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="dark-tabel dark-p">
           {viewedProject && (
             <>
               <h4 className="fst-italic fw-semibold text-success">
@@ -172,7 +172,7 @@ export default function ProjectsList() {
             </>
           )}
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="dark-tabel">
           <Button onClick={handleCloseViewModal} className="btn btn-success">Close</Button>
         </Modal.Footer>
     </Modal>

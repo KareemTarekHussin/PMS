@@ -138,12 +138,12 @@ export default function UsersList() {
   // * ========================================> JSX <====================================================
   return (
     <>
-    <Modal show={showDelete} onHide={handleDeleteClose}>
-        <Modal.Body>
+    <Modal show={showDelete} onHide={handleDeleteClose} >
+        <Modal.Body className="dark-tabel">
           <DeleteData deleteItem={"Project"} />
         </Modal.Body>
-        <Modal.Footer>
-          <Button className="red-btn rounded-pill px-4" onClick={onDeleteSubmit}>
+        <Modal.Footer className="dark-tabel">
+          <Button className="red-btn rounded-pill px-4 " onClick={onDeleteSubmit}>
             Delete
           </Button>
         </Modal.Footer>
@@ -158,22 +158,22 @@ export default function UsersList() {
       aria-labelledby="contained-modal-title-vcenter"
       centered
     >
-      <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">
+      <Modal.Header closeButton className="dark-tabel">
+          <Modal.Title id="contained-modal-title-vcenter" className="dark-p">
             User Details
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="dark-tabel">
           {viewedUser && (
-            <>
+            <div className="dark-p">
               <h4 className="fst-itali fw-semibold text-succes">{viewedUser.userName}</h4>
               <p><span className="fw-bold">Email : </span> {viewedUser.email}</p>
               <p><span className="fw-bold">Phone Number : </span> {viewedUser.phoneNumber}</p>
               <p>{viewedUser.status}</p>
-            </>
+            </div>
           )}
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="dark-tabel">
           <Button onClick={handleCloseViewModal} className="btn btn-success">Close</Button>
         </Modal.Footer>
     </Modal>
@@ -252,13 +252,6 @@ export default function UsersList() {
                                 </a>
                               </li>
                               
-                              <li>
-                                <a className="dropdown-item text-decoration-none text-black dark-p" href="#">
-                                  <i className="fa fa-edit text-warning me-2"></i>
-                                  <span>Edit</span>
-                                </a>
-                              </li>
-      
                               <li>
                                 <a className="dropdown-item text-decoration-none text-black dark-p" onClick={() => handleDeleteShow(user.id)}  href="#">
                                   <i className="fa fa-trash text-danger me-2"></i>
