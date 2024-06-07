@@ -325,14 +325,14 @@ export default function TasksList() {
                               <ul className="dropdown-menu bg-success-subtl border-0 shadow-lg rounded-5 pt-2 dark-tabel">
                                 <div>
                                   <li>
-                                    <a
+                                    <button
                                       className="dropdown-item text-decoration-none text-black dark-p"
-                                      href="#"
+                                     
                                       onClick={() => handleViewModal(task)}
                                     >
                                       <i className="fa fa-eye text-info me-2"></i>
                                       <span>View</span>
-                                    </a>
+                                    </button>
                                   </li>
 
                                   <li>
@@ -347,14 +347,14 @@ export default function TasksList() {
                                   </li>
 
                                   <li>
-                                    <a
+                                    <button
                                       className="dropdown-item text-decoration-none text-black dark-p"
                                       onClick={() => handleDeleteShow(task.id)}
-                                      href="#"
+                                     
                                     >
                                       <i className="fa fa-trash text-danger me-2"></i>
                                       <span>Delete</span>
-                                    </a>
+                                    </button>
                                   </li>
                                 </div>
                               </ul>
