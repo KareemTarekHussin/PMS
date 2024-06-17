@@ -80,7 +80,7 @@ export default function ProjectsData() {
 
   return (
     <>
-      <div className="add-headers rounded-3 my-5 bg-white p-4 shadow-lg dark-tabel">
+      <div className="add-headers rounded-3 my-5 bg-white p-4 shadow-sm dark-tabel">
         <span>
           <i onClick={navigatetoProjects} className="fa fa-chevron-left me-2 dark-icon"></i>
           <span className="dark-p">View all Projects</span>

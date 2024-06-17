@@ -4,7 +4,6 @@ import { useContext } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Context/AuthContext";
-import Styles from "./TasksData.module.css";
 import { useToast } from "../../../Context/ToastContext";
 
 export default function TasksData() {
@@ -37,7 +36,7 @@ export default function TasksData() {
     formState: { errors },
   } = useForm<Inputs>();
 
-  /////////////API's
+
 
   //SubmitProjectAPI for Task
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
@@ -93,7 +92,7 @@ export default function TasksData() {
 
   return (
     <>
-      <div className="add-headers rounded-3 my-5 bg-white p-4 shadow-lg dark-tabel">
+      <div className="add-headers rounded-3 my-5 bg-white p-4 shadow-sm dark-tabel">
         <span>
           <Link to="/dashboard/tasks">
             <i className="fa fa-chevron-left me-2 text-black dark-icon"></i>
