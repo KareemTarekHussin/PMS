@@ -13,7 +13,7 @@ type AuthInputs = {
 };
 
 export default function Login() {
-  const [showPass, setShowPass] = useState(true);
+  const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { getUserData } = useAuth();
@@ -70,11 +70,16 @@ export default function Login() {
                     <p>Welcome to PMS</p>
                     <h4>Login</h4>
                   </div>
-                  <form className="d-flex flex-column gap-3" onSubmit={handleSubmit(onSubmit)}>
-
-
+                  <form
+                    className="d-flex flex-column gap-3"
+                    onSubmit={handleSubmit(onSubmit)}
+                  >
                     <div className="bg-blac">
-                      <div className={`${styles.inputContainer} ${errors.email && styles.inputError}`}>
+                      <div
+                        className={`${styles.inputContainer} ${
+                          errors.email && styles.inputError
+                        }`}
+                      >
                         <label htmlFor="email">E-mail</label>
                         <input
                           type="text"
@@ -90,12 +95,19 @@ export default function Login() {
                           placeholder="Enter your E-mail"
                         />
                       </div>
-                      {errors.email && <p className='text-warning mt-1'>{(errors.email as FieldError).message}</p>}
+                      {errors.email && (
+                        <p className="text-warning mt-1">
+                          {(errors.email as FieldError).message}
+                        </p>
+                      )}
                     </div>
 
                     <div className="bg-inf">
-
-                      <div className={`${styles.inputContainer} ${errors.email && styles.inputError}`}>
+                      <div
+                        className={`${styles.inputContainer} ${
+                          errors.email && styles.inputError
+                        }`}
+                      >
                         <label htmlFor="password">Password</label>
                         <div className="d-flex align-items-center">
                           <input
@@ -114,15 +126,23 @@ export default function Login() {
                             className={styles.inputLogin}
                           />
                           <i
-                            className={`fa-regular ${showPass ? 'fa-eye' : 'fa-eye-slash'} ${styles.showPass}`}
+                            className={`fa-regular ${
+                              showPass ? "fa-eye" : "fa-eye-slash"
+                            } ${styles.showPass}`}
                             onClick={() => setShowPass(!showPass)}
                           ></i>
                         </div>
                       </div>
-                      {errors.password && <p className='text-warning mt-1'>{(errors.password as FieldError).message}</p>}
+                      {errors.password && (
+                        <p className="text-warning mt-1">
+                          {(errors.password as FieldError).message}
+                        </p>
+                      )}
                     </div>
 
-                    <div className={`d-flex align-items-center justify-content-between mb-4 ${styles.textGold}`}>
+                    <div
+                      className={`d-flex align-items-center justify-content-between mb-4 ${styles.textGold}`}
+                    >
                       <Link
                         to="/register"
                         className={`text-decoration-none  ${styles.textGold}`}
@@ -132,7 +152,6 @@ export default function Login() {
                       <Link
                         to="/forgetpass"
                         className={`text-decoration-none   ${styles.textGold} `}
-                        
                       >
                         Forget Password ?
                       </Link>
@@ -156,6 +175,4 @@ export default function Login() {
       </div>
     </>
   );
-    
-  
 }
